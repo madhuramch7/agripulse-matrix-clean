@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriPulse Matrix - Crop Traceability Scan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col font-sans">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-emerald-900 text-white px-6 py-4 flex justify-between items-center shadow-md">
+        <div class="flex items-center space-x-3">
+            <a href="dashboard.html" class="text-2xl font-bold tracking-wide">AgriPulse Matrix</a>
+            <span class="bg-emerald-800 text-xs text-emerald-200 px-2 py-1 rounded-full">Consumer Traceability Engine</span>
+        </div>
+        <a href="dashboard.html" class="text-xs font-semibold text-emerald-200 hover:text-white transition">← Back to Dashboard</a>
+    </header>
+
+    <div class="flex-1 max-w-4xl w-full mx-auto p-6 space-y-6">
+        
+        <!-- Batch Search Input Card -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-center space-y-4">
+            <h2 class="text-xl font-bold text-slate-800">Verify Harvest Batch Quality</h2>
+            <p class="text-xs text-slate-500 max-w-md mx-auto">Enter a harvest batch code or scan a product QR code to inspect soil origin, pesticide-free verification, and supply chain timeline.</p>
+            
+            <div class="flex max-w-md mx-auto gap-2">
+                <input type="text" id="batchIdInput" value="BATCH-2026-WHEAT-09" placeholder="Enter Batch ID (e.g. BATCH-2026-WHEAT-09)"
+                    class="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                <button onclick="traceBatch()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition">
+                    Inspect Batch
+                </button>
+            </div>
+        </div>
+
+        <!-- Trace Results Container -->
+        <div id="traceResults" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-4 gap-2">
+                <div>
+                    <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">Verified Authentic Batch</span>
+                    <h3 class="text-lg font-bold text-slate-800">Organically Grown Durum Wheat</h3>
+                </div>
+                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Soil Health Score: A+</span>
+            </div>
+
+            <!-- Supply Chain Timeline -->
+            <div class="space-y-4">
+                <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Provenance Timeline</h4>
+                
+                <div class="border-l-2 border-emerald-500 pl-4 space-y-4 ml-2">
+                    <div>
+                        <span class="text-xs text-slate-400">March 12, 2026</span>
+                        <h5 class="text-sm font-bold text-slate-800">Planted at North Field (Plot A)</h5>
+                        <p class="text-xs text-slate-500">Loamy soil with Nitrogen index 45 mg/kg, Organic Matter 90%.</p>
+                    </div>
+
+                    <div>
+                        <span class="text-xs text-slate-400">August 28, 2026</span>
+                        <h5 class="text-sm font-bold text-slate-800">Harvested & Logged</h5>
+                        <p class="text-xs text-slate-500">Yield: 12.4 Metric Tons. Tested zero chemical pesticide residue.</p>
+                    </div>
+
+                    <div>
+                        <span class="text-xs text-slate-400">September 15, 2026</span>
+                        <h5 class="text-sm font-bold text-slate-800">Quality Inspection Passed</h5>
+                        <p class="text-xs text-slate-500">Certified by AgriPulse Matrix Quality Inspector (ID: INSP-882).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function traceBatch() {
+            const batchId = document.getElementById('batchIdInput').value;
+            if (!batchId) return;
+            alert(`Querying traceability record for ${batchId}... Data loaded!`);
+        }
+    </script>
+</body>
+</html>
