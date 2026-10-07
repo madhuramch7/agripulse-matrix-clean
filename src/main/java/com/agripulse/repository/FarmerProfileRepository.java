@@ -2,8 +2,8 @@ package com.agripulse.repository;
 
 import com.agripulse.entity.FarmerProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.Optional;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface FarmerProfileRepository extends JpaRepository<FarmerProfile, Long> {
-    Optional<FarmerProfile> findByUserAccount_UserId(Long userId);
 }

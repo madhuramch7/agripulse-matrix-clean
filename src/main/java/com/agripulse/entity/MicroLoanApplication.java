@@ -1,30 +1,32 @@
 package com.agripulse.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import java.time.LocalDateTime;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 @Entity
+@Table(name = "micro_loan_application")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class MicroLoanApplication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long applicationId;
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "farmer_id")
-    private FarmerProfile farmerProfile;
+    @Column(name = "farmer_id")
+    private Long farmerId;
 
-    @ManyToOne
-    @JoinColumn(name = "scheme_id")
-    private LoanSchemeMaster loanScheme;
+    @Column(name = "scheme_id")
+    private Long schemeId;
 
-    private Double requestedAmount;
-    private String applicationStatus;
+    @Column(precision = 12, scale = 2)
+    private BigDecimal amount;
 
-    @Column(length = 2000) // Extends column size from 255 to 2000 characters
-    private String signedJwtPayload;
-
-    private LocalDateTime appliedAt = LocalDateTime.now();
+    private String status;
+    private String jwtRef;
 }

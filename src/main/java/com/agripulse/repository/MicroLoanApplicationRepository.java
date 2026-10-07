@@ -2,8 +2,8 @@ package com.agripulse.repository;
 
 import com.agripulse.entity.MicroLoanApplication;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface MicroLoanApplicationRepository extends JpaRepository<MicroLoanApplication, Long> {
-    List<MicroLoanApplication> findByFarmerProfile_FarmerId(Long farmerId);
 }

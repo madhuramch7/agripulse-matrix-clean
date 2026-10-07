@@ -1,7 +1,9 @@
 package com.agripulse.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -10,34 +12,21 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class UserAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long userId;
+    private Long id;
 
-    @Column(name = "email", unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password_hash")
+    @Column(nullable = false)
     private String passwordHash;
 
-    @Column(name = "role_name")
-    private String roleName;
+    private String role;
 
-    @Column(name = "is_active")
-    private Boolean isActive;
+    private Boolean onboardingComplete;
 
-    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        if (this.isActive == null) {
-            this.isActive = true;
-        }
-    }
 }

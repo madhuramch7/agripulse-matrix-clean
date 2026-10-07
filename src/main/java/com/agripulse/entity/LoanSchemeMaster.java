@@ -1,9 +1,11 @@
 package com.agripulse.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "loan_scheme_master")
@@ -14,14 +16,17 @@ public class LoanSchemeMaster {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long schemeId;
+    private Long id;
 
-    @Column(nullable = false)
     private String schemeName;
+    private Double minApci;
 
-    private String bankName;
-    private Double maxAmount;
-    private Double interestRatePct;
-    private Integer minApciScore;
-    private String description;
+    @Column(precision = 12, scale = 2)
+    private BigDecimal maxAmount;
+
+    private Double interestRate;
+    private Integer tenureMonths;
+
+    @Column(name = "bank_id")
+    private Long bankId;
 }

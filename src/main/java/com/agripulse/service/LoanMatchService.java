@@ -2,33 +2,25 @@ package com.agripulse.service;
 
 import com.agripulse.entity.LoanSchemeMaster;
 import com.agripulse.repository.LoanSchemeRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class LoanMatchService {
 
-    private final ApciService apciService;
     private final LoanSchemeRepository loanSchemeRepository;
 
-    /**
-     * Finds all loan schemes that match or fall below a farmer's calculated APCI credit score.
-     */
-    public List<LoanSchemeMaster> getEligibleSchemesForFarmer(Long farmerId) {
-        // 1. Calculate or retrieve current APCI score
-        Integer apciScore = apciService.calculateApciScore(farmerId);
-
-        // 2. Fetch schemes where minApciScore <= farmer's APCI score
-        return loanSchemeRepository.findByMinApciScoreLessThanEqual(apciScore);
+    public LoanMatchService(LoanSchemeRepository loanSchemeRepository) {
+        this.loanSchemeRepository = loanSchemeRepository;
     }
 
-    /**
-     * Retrieves all loan schemes available in the system.
-     */
-    public List<LoanSchemeMaster> getAllSchemes() {
-        return loanSchemeRepository.findAll();
+    public List<LoanSchemeMaster> getEligibleSchemes(double farmerApci, BigDecimal requestedAmount) {
+        return loanSchemeRepository.findAll().stream()
+                .filter(scheme -> farmerApci >= scheme.getMinApci())
+                .filter(scheme -> requestedAmount.compareTo(scheme.getMaxAmount()) <= 0)
+                .collect(Collectors.toList());
     }
 }

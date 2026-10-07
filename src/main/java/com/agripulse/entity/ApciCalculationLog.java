@@ -1,9 +1,11 @@
 package com.agripulse.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,15 +17,13 @@ public class ApciCalculationLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long apciLogId;
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "farmer_id", nullable = false)
-    private FarmerProfile farmerProfile;
+    @Column(name = "farmer_id")
+    private Long farmerId;
 
-    private Integer calculatedScore;
-    private Double soilHealthFactor;
-    private Double creditBureauFactor;
-    private Double climateRiskFactor;
-    private LocalDateTime calculatedAt = LocalDateTime.now();
+    @Column(precision = 5, scale = 2)
+    private BigDecimal score;
+
+    private LocalDateTime calculatedAt;
 }

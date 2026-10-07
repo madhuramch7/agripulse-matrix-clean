@@ -1,9 +1,11 @@
 package com.agripulse.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -15,10 +17,15 @@ public class MarketPriceIndex {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long priceId;
+    private Long id;
 
-    private String commodityName;
-    private String marketMandi;
-    private Double modalPricePerQuintal;
-    private LocalDate priceDate;
+    private String state;
+    private String district;
+    private String market;
+    private String commodity;
+    
+    @Column(precision = 12, scale = 2)
+    private BigDecimal modalPrice;
+    
+    private LocalDate arrivalDate;
 }

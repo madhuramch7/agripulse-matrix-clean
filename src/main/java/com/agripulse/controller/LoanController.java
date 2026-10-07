@@ -4,43 +4,31 @@ import com.agripulse.entity.LoanSchemeMaster;
 import com.agripulse.repository.LoanSchemeRepository;
 import com.agripulse.service.ApciService;
 import com.agripulse.service.BankRedirectService;
-import lombok.RequiredArgsConstructor;
+import com.agripulse.service.LoanMatchService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Exposes the APCI credit scoring and bank-partner loan matching services
- * (ApciService, BankRedirectService) over REST. Previously these services
- * existed but had no controller, so /loans.html and /sbi-portal.html had
- * nothing to call.
- */
 @RestController
 @RequestMapping("/api/loans")
-@CrossOrigin(origins = "*")
-@RequiredArgsConstructor
 public class LoanController {
 
+    private final LoanSchemeRepository loanSchemeRepository;
+    private final LoanMatchService loanMatchService;
     private final ApciService apciService;
     private final BankRedirectService bankRedirectService;
-    private final LoanSchemeRepository loanSchemeRepository;
 
-    // --- APCI Score ---
-
-    @GetMapping("/apci/{farmerId}")
-    public ResponseEntity<Map<String, Object>> getApciScore(@PathVariable Long farmerId) {
-        Integer score = apciService.calculateApciScore(farmerId);
-        return ResponseEntity.ok(Map.of("farmerId", farmerId, "apciScore", score));
-    }
-
-    // --- Matched Loan Schemes (based on current APCI score) ---
-
-    @GetMapping("/schemes/{farmerId}")
-    public ResponseEntity<List<LoanSchemeMaster>> getMatchedSchemes(@PathVariable Long farmerId) {
-        Integer score = apciService.calculateApciScore(farmerId);
-        return ResponseEntity.ok(loanSchemeRepository.findByMinApciScoreLessThanEqual(score));
+    public LoanController(LoanSchemeRepository loanSchemeRepository, 
+                          LoanMatchService loanMatchService,
+                          ApciService apciService,
+                          BankRedirectService bankRedirectService) {
+        this.loanSchemeRepository = loanSchemeRepository;
+        this.loanMatchService = loanMatchService;
+        this.apciService = apciService;
+        this.bankRedirectService = bankRedirectService;
     }
 
     @GetMapping("/schemes")
@@ -48,13 +36,19 @@ public class LoanController {
         return ResponseEntity.ok(loanSchemeRepository.findAll());
     }
 
-    // --- Apply: generates signed JWT hand-off and redirect URL to the partner bank portal ---
+    @GetMapping("/apci/{farmerId}")
+    public ResponseEntity<?> getApciScore(@PathVariable Long farmerId) {
+        double score = apciService.calculateApciScore(farmerId);
+        return ResponseEntity.ok(Map.of("farmerId", farmerId, "apciScore", score));
+    }
 
     @PostMapping("/apply")
-    public ResponseEntity<Map<String, String>> applyForLoan(@RequestBody Map<String, Long> request) {
-        Long farmerId = request.get("farmerId");
-        Long schemeId = request.get("schemeId");
-        String redirectUrl = bankRedirectService.generateBankRedirectUrl(farmerId, schemeId);
+    public ResponseEntity<?> applyForLoan(@RequestBody Map<String, Object> request) {
+        Long farmerId = Long.valueOf(request.getOrDefault("farmerId", 1L).toString());
+        Long schemeId = Long.valueOf(request.getOrDefault("schemeId", 1L).toString());
+        BigDecimal amount = new BigDecimal(request.getOrDefault("amount", "50000").toString());
+
+        String redirectUrl = bankRedirectService.generateBankRedirectUrl(farmerId, schemeId, amount);
         return ResponseEntity.ok(Map.of("redirectUrl", redirectUrl));
     }
 }

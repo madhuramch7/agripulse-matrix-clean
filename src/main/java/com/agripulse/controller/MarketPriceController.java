@@ -1,24 +1,30 @@
 package com.agripulse.controller;
 
-import com.agripulse.entity.MarketPrice;
-import com.agripulse.repository.MarketPriceRepository;
+import com.agripulse.entity.MarketPriceIndex;
+import com.agripulse.repository.MarketPriceIndexRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/market-prices")
-@CrossOrigin(origins = "*") // Allows fetch requests from frontend pages
 public class MarketPriceController {
 
-    private final MarketPriceRepository repository;
+    private final MarketPriceIndexRepository marketPriceIndexRepository;
 
-    public MarketPriceController(MarketPriceRepository repository) {
-        this.repository = repository;
+    public MarketPriceController(MarketPriceIndexRepository marketPriceIndexRepository) {
+        this.marketPriceIndexRepository = marketPriceIndexRepository;
     }
 
     @GetMapping
-    public List<MarketPrice> getAllMarketPrices() {
-        return repository.findAll();
+    public ResponseEntity<List<MarketPriceIndex>> getMarketPrices(
+            @RequestParam(required = false) String state,
+            @RequestParam(required = false) String district,
+            @RequestParam(required = false) String commodity) {
+        
+        List<MarketPriceIndex> prices = marketPriceIndexRepository.findAll();
+        // Return filtered list or all records as baseline
+        return ResponseEntity.ok(prices);
     }
 }
