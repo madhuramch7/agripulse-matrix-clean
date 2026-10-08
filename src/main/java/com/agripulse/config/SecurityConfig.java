@@ -1,5 +1,6 @@
 package com.agripulse.config;
 
+import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,28 +24,42 @@ public class SecurityConfig {
     }
 
     @Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .csrf(csrf -> csrf.disable())
-        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .authorizeHttpRequests(auth -> auth
-            .requestMatchers(
-                "/", 
-                "/index.html", 
-                "/welcome.html", 
-                "/login.html", 
-                "/register.html", 
-                "/css/**", 
-                "/js/**", 
-                "/images/**", 
-                "/api/auth/**"
-            ).permitAll()
-            .anyRequest().authenticated()
-        )
-        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .exceptionHandling(ex -> ex.authenticationEntryPoint((request, response, authException) -> {
+                if (request.getRequestURI().startsWith("/api/")) {
+                    response.setStatus(401);
+                    response.setContentType("application/json");
+                    response.getWriter().write("{\"error\":\"Unauthorized\"}");
+                } else {
+                    response.sendRedirect("/welcome.html");
+                }
+            }))
+            .authorizeHttpRequests(auth -> auth
+                .dispatcherTypeMatchers(DispatcherType.ERROR, DispatcherType.FORWARD).permitAll()
+                .requestMatchers(
+                    "/",
+                    "/index.html",
+                    "/welcome.html",
+                    "/login",
+                    "/login.html",
+                    "/register.html",
+                    "/error",
+                    "/favicon.ico",
+                    "/css/**",
+                    "/js/**",
+                    "/images/**",
+                    "/api/auth/**",
+                    "/api/test/**"
+                ).permitAll()
+                .anyRequest().authenticated()
+            )
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
-    return http.build();
-}
+        return http.build();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

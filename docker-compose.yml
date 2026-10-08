@@ -10,6 +10,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d agripulse"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
 
   app:
     build: .
@@ -17,9 +22,13 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - postgres-db
+      postgres-db:
+        condition: service_healthy
     environment:
-    - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
-    - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/agripulse?options=-c%20TimeZone=Asia/Kolkata
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres123
+      JWT_SECRET: ${JWT_SECRET:-defaultSecretKeyWithAtLeast32BytesLengthForHS256Security}
+
 volumes:
   postgres_data:

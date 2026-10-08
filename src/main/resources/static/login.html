@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AgriPulse Matrix</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-[#FAF8F5] min-h-screen flex flex-col text-[#3D312A]">
+    <header class="bg-[#3D312A] px-6 py-4 flex items-center space-x-3 shadow-md">
+        <div class="w-10 h-10 rounded-xl bg-[#A0522D] flex items-center justify-center text-white text-xl shadow-md">
+            <i class="fa-solid fa-wheat-awn"></i>
+        </div>
+        <div>
+            <h1 class="text-xl font-bold tracking-tight text-[#FAF8F5]">AgriPulse Matrix</h1>
+            <p class="text-xs text-[#D9A378] font-medium tracking-wide">SMART AGRICULTURAL INTELLIGENCE</p>
+        </div>
+    </header>
+    <main class="flex-grow flex items-center justify-center px-4 py-10">
+        <div class="max-w-md w-full bg-white border border-[#EAE3D2] rounded-2xl p-8 shadow-sm">
+            <h2 class="text-xl font-bold mb-1">Existing user login</h2>
+            <p class="text-xs text-[#7A6A5E] mb-6">Sign in with your email and password.</p>
+            <div id="msg" class="hidden mb-4 text-xs rounded-lg px-3 py-2 bg-red-50 text-red-700 border border-red-200"></div>
+            <form id="authForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold mb-1" for="email">Email</label>
+                    <input id="email" type="email" required autocomplete="email" class="w-full border border-[#EAE3D2] rounded-lg px-4 py-2.5 text-sm bg-white focus:outline-none focus:border-[#A0522D]" placeholder="you@example.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1" for="password">Password</label>
+                    <input id="password" type="password" required minlength="6" autocomplete="current-password" class="w-full border border-[#EAE3D2] rounded-lg px-4 py-2.5 text-sm bg-white focus:outline-none focus:border-[#A0522D]" placeholder="Minimum 6 characters">
+                </div>
+                <button type="submit" id="submitBtn" class="w-full bg-[#A0522D] hover:bg-[#8B4726] text-white font-semibold rounded-lg py-2.5 text-sm transition-all">Sign in</button>
+            </form>
+            <p class="text-xs text-center mt-5 text-[#7A6A5E]">New here? <a class="text-[#A0522D] font-semibold" href="/register.html">Create an account</a></p>
+        </div>
+        <script>
+            const msg = document.getElementById('msg');
+            function showError(t) { msg.textContent = t; msg.classList.remove('hidden'); }
+            document.getElementById('authForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                msg.classList.add('hidden');
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                
+                const btn = document.getElementById('submitBtn');
+                btn.disabled = true;
+                try {
+                    const res = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        credentials: 'same-origin',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password })
+                    });
+                    const data = await res.json().catch(() => ({}));
+                    if (!res.ok) { showError(data.error || 'Request failed'); btn.disabled = false; return; }
+                    const me = await fetch('/api/auth/me', { credentials: 'same-origin' });
+                    const user = me.ok ? await me.json() : {};
+                    window.location.href = user.onboardingComplete ? '/dashboard.html' : '/onboarding.html';
+                } catch (err) {
+                    showError('Network error. Please try again.');
+                    btn.disabled = false;
+                }
+            });
+        </script>
+    </main>
+</body>
+</html>

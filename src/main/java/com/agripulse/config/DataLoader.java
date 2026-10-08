@@ -6,13 +6,19 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class DataLoader implements CommandLineRunner {
+
+    private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private final MarketPriceIndexRepository marketPriceIndexRepository;
 
@@ -21,43 +27,68 @@ public class DataLoader implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if (marketPriceIndexRepository.count() == 0) {
             loadMarketPrices();
         }
     }
 
     private void loadMarketPrices() {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(
-                getClass().getResourceAsStream("/data/market_prices.csv"), StandardCharsets.UTF_8))) {
-            
-            String line;
-            boolean firstLine = true;
+        InputStream in = getClass().getResourceAsStream("/data/market_prices.csv");
+        if (in == null) {
+            System.err.println("market_prices.csv not found on classpath under /data/");
+            return;
+        }
+        List<MarketPriceIndex> batch = new ArrayList<>();
+        int loaded = 0;
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
+            String line = br.readLine();
             while ((line = br.readLine()) != null) {
-                if (firstLine) {
-                    firstLine = false;
-                    continue;
-                }
-                
-                String[] data = line.split(",");
-                if (data.length >= 9) {
-                    MarketPriceIndex mpi = new MarketPriceIndex();
-                    mpi.setState(data[0].trim());
-                    mpi.setDistrict(data[1].trim());
-                    mpi.setMarket(data[2].trim());
-                    mpi.setCommodity(data[3].trim());
-                    
-                    // Modal price is the final column (index 8)
-                    String priceStr = data[data.length - 1].trim();
-                    mpi.setModalPrice(new BigDecimal(priceStr.isEmpty() ? "0.00" : priceStr));
-                    mpi.setArrivalDate(LocalDate.now());
-                    
-                    marketPriceIndexRepository.save(mpi);
+                if (line.isBlank()) continue;
+                try {
+                    String[] d = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                    if (d.length < 9) continue;
+                    MarketPriceIndex m = new MarketPriceIndex();
+                    m.setState(clean(d[0]));
+                    m.setDistrict(clean(d[1]));
+                    m.setMarket(clean(d[2]));
+                    m.setCommodity(clean(d[3]));
+                    m.setModalPrice(toDecimal(d[8]));
+                    m.setArrivalDate(toDate(d[5]));
+                    batch.add(m);
+                    if (batch.size() >= 500) {
+                        marketPriceIndexRepository.saveAll(batch);
+                        loaded += batch.size();
+                        batch.clear();
+                    }
+                } catch (Exception rowError) {
+                    // skip malformed row
                 }
             }
-            System.out.println("Successfully loaded market prices into MarketPriceIndex.");
+            if (!batch.isEmpty()) {
+                marketPriceIndexRepository.saveAll(batch);
+                loaded += batch.size();
+            }
+            System.out.println("Loaded " + loaded + " market price rows.");
         } catch (Exception e) {
             System.err.println("Could not load market_prices.csv: " + e.getMessage());
+        }
+    }
+
+    private static String clean(String v) {
+        return v == null ? "" : v.trim().replaceAll("^\"|\"$", "").trim();
+    }
+
+    private static BigDecimal toDecimal(String v) {
+        String c = clean(v).replace(",", "");
+        return c.isEmpty() ? BigDecimal.ZERO : new BigDecimal(c);
+    }
+
+    private static LocalDate toDate(String v) {
+        try {
+            return LocalDate.parse(clean(v), DATE_FMT);
+        } catch (Exception e) {
+            return LocalDate.now();
         }
     }
 }

@@ -9,7 +9,6 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Identity Services SDK -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         .news-bulletin-item {
             transition: all 0.2s ease-in-out;
@@ -51,20 +50,12 @@
             <div class="flex items-center border-l border-[#524238] pl-6">
                 <!-- Google Sign-In Button (When Logged Out) -->
                 <div id="google-signin-btn">
-                    <div id="g_id_onload"
-                         data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
-                         data-callback="handleCredentialResponse"
-                         data-auto_prompt="false">
-                    </div>
-                    <div class="g_id_signin" 
-                         data-type="standard" 
-                         data-size="medium" 
-                         data-theme="outline" 
-                         data-text="sign_in_with" 
-                         data-shape="pill" 
-                         data-logo_alignment="left">
-                    </div>
+                    <a href="/welcome.html" class="inline-flex items-center space-x-2 bg-white text-[#3D312A] text-xs font-semibold px-4 py-2 rounded-full border border-[#EAE3D2] hover:bg-[#FAF8F5] transition-all">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        <span>Sign in</span>
+                    </a>
                 </div>
+
 
                 <!-- Profile Badge (When Logged In) -->
                 <div id="user-profile-badge" class="hidden flex items-center space-x-3">
@@ -328,53 +319,28 @@
             overlay.classList.toggle('hidden');
         }
 
-        // Helper function to decode JWT token from Google Identity Services
-        function decodeJwtResponse(token) {
-            let base64Url = token.split('.')[1];
-            let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            return JSON.parse(jsonPayload);
-        }
-
-        // Callback function invoked when user successfully signs in with Google
-        function handleCredentialResponse(response) {
-            const responsePayload = decodeJwtResponse(response.credential);
-            
-            const userData = {
-                name: responsePayload.name,
-                email: responsePayload.email,
-                picture: responsePayload.picture
-            };
-
-            // Save session to localStorage
-            localStorage.setItem('agripulse_user', JSON.stringify(userData));
-            renderUserProfile(userData);
-        }
-
         // Render profile details in the top header
         function renderUserProfile(user) {
             document.getElementById('google-signin-btn').classList.add('hidden');
             document.getElementById('user-profile-badge').classList.remove('hidden');
-            document.getElementById('user-avatar').src = user.picture || 'https://via.placeholder.com/40';
-            document.getElementById('user-name').textContent = user.name;
-            document.getElementById('user-email').textContent = user.email;
+            document.getElementById('user-avatar').src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="%23A0522D"/><text x="20" y="26" font-size="18" text-anchor="middle" fill="white">' + (user.email || '?').charAt(0).toUpperCase() + '</text></svg>';
+            document.getElementById('user-name').textContent = (user.email || '').split('@')[0];
+            document.getElementById('user-email').textContent = user.email || '';
         }
 
         // Logout function
-        function logoutGoogle() {
-            localStorage.removeItem('agripulse_user');
-            document.getElementById('google-signin-btn').classList.remove('hidden');
-            document.getElementById('user-profile-badge').classList.add('hidden');
+        async function logoutGoogle() {
+            try { await fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' }); } catch (e) {}
+            window.location.href = '/welcome.html';
         }
+        const logoutUser = logoutGoogle;
 
         // Check for existing login session on page load
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedUser = localStorage.getItem('agripulse_user');
-            if (savedUser) {
-                renderUserProfile(JSON.parse(savedUser));
-            }
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const res = await fetch('/api/auth/me', { credentials: 'same-origin' });
+                if (res.ok) renderUserProfile(await res.json());
+            } catch (e) {}
         });
     </script>
 </body>

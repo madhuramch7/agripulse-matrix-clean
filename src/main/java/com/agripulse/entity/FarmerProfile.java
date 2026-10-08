@@ -30,6 +30,8 @@ public class FarmerProfile {
     private Integer farmingExperienceYears;
     private String irrigationSource;
     private String primarycrops;
+    private BigDecimal farmSize;
+    private String soilType;
     
     @Column(precision = 12, scale = 2)
     private BigDecimal loanNeedAmount;

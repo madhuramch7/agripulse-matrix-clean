@@ -286,5 +286,29 @@
   document.addEventListener("DOMContentLoaded", loadMarketPrices);
 </script>
 
+<script>
+    // Fetch and populate live farmer profile data on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        fetch('/api/farmer/profile', { credentials: 'same-origin' })
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    // Update farm size / total area if element exists
+                    const totalAreaEl = document.getElementById('total-area');
+                    if (totalAreaEl && data.farmSize) {
+                        totalAreaEl.textContent = data.farmSize + ' Acres';
+                    }
+
+                    // Update soil type if element exists
+                    const soilTypeEl = document.getElementById('soil-type');
+                    if (soilTypeEl && data.soilType) {
+                        soilTypeEl.textContent = data.soilType;
+                    }
+                }
+            })
+            .catch(err => console.error('Could not load profile data:', err));
+    });
+</script>
+
 </body>
 </html>
