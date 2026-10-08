@@ -3,99 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgriPulse Matrix - Farm Onboarding</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>AgriPulse Matrix - Farm Onboarding Wizard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Assistant Widget Stylesheet -->
+    <link rel="stylesheet" href="/css/assistant.css">
 </head>
-<body class="bg-gray-50 flex items-center justify-center min-h-screen">
-    <div class="max-w-lg w-full bg-white shadow-lg rounded-xl p-8 m-4">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-green-700">AgriPulse Matrix</h1>
-            <p class="text-gray-600 mt-2">Complete your farm profile to unlock personalized agricultural intelligence.</p>
+<body class="bg-[#FAF8F5] text-[#2C241E] font-sans min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <!-- Top Navigation Header -->
+    <header class="bg-[#3D312A] text-white px-6 py-3.5 flex items-center justify-between sticky top-0 z-40 shadow-md">
+        <div class="flex items-center space-x-4">
+            <!-- 3-Line Hamburger Menu Toggle Button -->
+            <button onclick="toggleSidebar()" class="text-[#EFE9DF] hover:text-[#D9A378] text-xl focus:outline-none p-1 transition-colors">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-[#A0522D] flex items-center justify-center text-white font-bold text-xl shadow-md">
+                    <i class="fa-solid fa-wheat-awn"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-[#FAF8F5]">AgriPulse Matrix</h1>
+                    <p class="text-xs text-[#D9A378] font-medium tracking-wide">SMART AGRICULTURAL INTELLIGENCE</p>
+                </div>
+            </div>
         </div>
 
-        <form id="onboardingForm" class="space-y-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Farm Size (Acres)</label>
-                <input type="number" step="0.1" id="farmSize" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500" placeholder="e.g., 5.5">
+        <div class="flex items-center space-x-4">
+            <span class="text-xs text-[#EFE9DF]">Transactional Onboarding Wizard</span>
+        </div>
+    </header>
+
+    <!-- Sliding Collapsible Sidebar Drawer -->
+    <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-[#3D312A]/50 backdrop-blur-sm z-40 hidden transition-opacity"></div>
+    
+    <aside id="sidebar" class="fixed top-0 left-0 h-full w-80 bg-[#312721] text-[#EFE9DF] border-r border-[#4A3B32] flex flex-col justify-between p-4 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl overflow-y-auto">
+        <div class="space-y-6">
+            <div class="flex items-center justify-between pb-3 border-b border-[#4A3B32]">
+                <span class="text-sm font-bold text-[#D9A378] tracking-wider uppercase">Navigation Hub</span>
+                <button onclick="toggleSidebar()" class="text-[#B8A79B] hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700">State</label>
-                <input type="text" id="state" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500" placeholder="e.g., Maharashtra">
+            <div class="space-y-4">
+                <div>
+                    <p class="text-[10px] font-bold text-[#B8A79B] uppercase tracking-widest px-3 mb-2">Core Modules</p>
+                    <nav class="space-y-1">
+                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
+                            <i class="fa-solid fa-chart-line text-[#D9A378] w-5"></i>
+                            <span>Comprehensive Soil & Crop Dashboard</span>
+                        </a>
+                        <a href="index.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
+                            <i class="fa-solid fa-language text-blue-400 w-5"></i>
+                            <span>Multilingual Conversational Hub (22 Languages)</span>
+                        </a>
+                        <a href="loans.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
+                            <i class="fa-solid fa-hand-holding-dollar text-[#D9A378] w-5"></i>
+                            <span>APCI Credit Score & Underwriting</span>
+                        </a>
+                        <a href="sbi-portal.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
+                            <i class="fa-solid fa-building-columns text-green-400 w-5"></i>
+                            <span>Direct Bank Portal Redirection</span>
+                        </a>
+                        <a href="loans.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
+                            <i class="fa-solid fa-shield-heart text-amber-400 w-5"></i>
+                            <span>Automated Disaster Relief & Insurance</span>
+                        </a>
+                        <a href="traceability.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
+                            <i class="fa-solid fa-barcode text-purple-400 w-5"></i>
+                            <span>Farm-to-Consumer QR Traceability</span>
+                        </a>
+                    </nav>
+                </div>
+
+                <div>
+                    <p class="text-[10px] font-bold text-[#B8A79B] uppercase tracking-widest px-3 mb-2">Software Add-Ons</p>
+                    <nav class="space-y-1">
+                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
+                            <i class="fa-solid fa-camera text-teal-400 w-5"></i>
+                            <span>AI Crop Pest & Disease Diagnostic</span>
+                        </a>
+                        <a href="loans.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
+                            <i class="fa-solid fa-file-contract text-yellow-400 w-5"></i>
+                            <span>Smart Government Scheme Matcher</span>
+                        </a>
+                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
+                            <i class="fa-solid fa-scale-balanced text-orange-400 w-5"></i>
+                            <span>Multi-Market Price Arbitrage Finder</span>
+                        </a>
+                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
+                            <i class="fa-solid fa-satellite text-indigo-400 w-5"></i>
+                            <span>Satellite Vegetation & Moisture Overlay</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-[#3D312A] border border-[#4A3B32] p-3 rounded-xl text-center mt-4">
+            <p class="text-xs text-[#B8A79B]">Connected System</p>
+            <p class="text-sm font-bold text-[#D9A378]">APCI Credit Rating: 780</p>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 max-w-3xl w-full mx-auto px-6 py-12">
+        <div class="bg-white border border-[#EAE3D2] rounded-2xl p-8 shadow-sm space-y-6">
+            <div class="text-center space-y-2">
+                <span class="bg-[#EFE9DF] text-[#6B513E] text-xs font-bold px-3 py-1 rounded-full">Step 1 of 6: Farm Profile & Land Telemetry</span>
+                <h2 class="text-2xl font-black text-[#3D312A] mt-2">Complete Your Farm Profile</h2>
+                <p class="text-xs text-[#6B574B]">Provide verified land acreage, soil composition, and regional data to initialize your AI underwriting score.</p>
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700">District</label>
-                <input type="text" id="district" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500" placeholder="e.g., Pune">
-            </div>
+            <form id="onboarding-form" onsubmit="handleOnboardingSubmit(event)" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-[#6B574B] uppercase mb-1">Farm Size (Acres)</label>
+                        <input type="number" id="farm-size" step="0.1" required value="10.5" class="w-full bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl px-4 py-2.5 text-xs text-[#3D312A] focus:outline-none focus:border-[#A0522D]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-[#6B574B] uppercase mb-1">State</label>
+                        <input type="text" id="farm-state" required value="Maharashtra" class="w-full bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl px-4 py-2.5 text-xs text-[#3D312A] focus:outline-none focus:border-[#A0522D]">
+                    </div>
+                </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Primary Crop</label>
-                <input type="text" id="primaryCrop" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500" placeholder="e.g., Wheat, Soybean">
-            </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-[#6B574B] uppercase mb-1">District</label>
+                        <input type="text" id="farm-district" required value="Pune" class="w-full bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl px-4 py-2.5 text-xs text-[#3D312A] focus:outline-none focus:border-[#A0522D]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-[#6B574B] uppercase mb-1">Soil Type</label>
+                        <select id="soil-type" class="w-full bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl px-4 py-2.5 text-xs text-[#3D312A] focus:outline-none focus:border-[#A0522D]">
+                            <option value="Black (Regur)">Black (Regur)</option>
+                            <option value="Alluvial">Alluvial</option>
+                            <option value="Red Soil">Red Soil</option>
+                            <option value="Laterite">Laterite</option>
+                        </select>
+                    </div>
+                </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Soil Type</label>
-                <select id="soilType" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
-                    <option value="">Select Soil Type</option>
-                    <option value="Alluvial">Alluvial</option>
-                    <option value="Black">Black (Regur)</option>
-                    <option value="Red">Red</option>
-                    <option value="Laterite">Laterite</option>
-                    <option value="Sandy">Sandy</option>
-                </select>
-            </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-[#6B574B] uppercase mb-1">Nitrogen (N ppm)</label>
+                        <input type="number" id="soil-n" required value="45" class="w-full bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl px-4 py-2.5 text-xs text-[#3D312A] focus:outline-none focus:border-[#A0522D]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-[#6B574B] uppercase mb-1">Phosphorus (P ppm)</label>
+                        <input type="number" id="soil-p" required value="25" class="w-full bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl px-4 py-2.5 text-xs text-[#3D312A] focus:outline-none focus:border-[#A0522D]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-[#6B574B] uppercase mb-1">Potassium (K ppm)</label>
+                        <input type="number" id="soil-k" required value="35" class="w-full bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl px-4 py-2.5 text-xs text-[#3D312A] focus:outline-none focus:border-[#A0522D]">
+                    </div>
+                </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Irrigation Type</label>
-                <select id="irrigationType" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
-                    <option value="">Select Irrigation Method</option>
-                    <option value="Canal">Canal</option>
-                    <option value="Borewell/TubeWell">Borewell / Tubewell</option>
-                    <option value="Drip">Drip Irrigation</option>
-                    <option value="Rainfed">Rainfed</option>
-                </select>
-            </div>
+                <div id="onboarding-error" class="text-xs text-red-600 hidden"></div>
 
-            <button type="submit" class="w-full bg-green-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-green-700 transition duration-200 shadow-md">
-                Save Profile & Access Dashboard
-            </button>
-        </form>
-    </div>
+                <button type="submit" class="w-full bg-[#2d5a27] hover:bg-[#1e3d1a] text-white font-bold text-xs py-3.5 rounded-xl transition-colors shadow-sm mt-4">
+                    Save Profile & Access Dashboard &raquo;
+                </button>
+            </form>
+        </div>
+    </main>
 
+    <!-- Footer -->
+    <footer class="bg-[#3D312A] text-[#B8A79B] text-xs py-6 px-6 border-t border-[#524238] mt-auto">
+        <div class="max-w-7xl mx-auto text-center space-y-1">
+            <p class="font-semibold text-[#FAF8F5]">AgriPulse Matrix Intelligence System</p>
+            <p>Ministry of Agriculture & Farmers Welfare Integrated Portal</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript & Assistant Integration -->
+    <script src="/js/api-client.js"></script>
+    <script src="/js/assistant.js"></script>
     <script>
-        document.getElementById('onboardingForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
 
+        async function handleOnboardingSubmit(event) {
+            event.preventDefault();
             const payload = {
-                farmSize: parseFloat(document.getElementById('farmSize').value),
-                state: document.getElementById('state').value,
-                district: document.getElementById('district').value,
-                primaryCrop: document.getElementById('primaryCrop').value,
-                soilType: document.getElementById('soilType').value,
-                irrigationType: document.getElementById('irrigationType').value
+                areaInAcres: parseFloat(document.getElementById('farm-size').value),
+                state: document.getElementById('farm-state').value,
+                district: document.getElementById('farm-district').value,
+                soilType: document.getElementById('soil-type').value,
+                nitrogen: parseFloat(document.getElementById('soil-n').value),
+                phosphorus: parseFloat(document.getElementById('soil-p').value),
+                potassium: parseFloat(document.getElementById('soil-k').value)
             };
 
-            try {
-                const response = await fetch('/api/onboarding/submit', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
+            const errDiv = document.getElementById('onboarding-error');
+            errDiv.classList.add('hidden');
 
-                if (response.ok) {
+            try {
+                const res = await fetch('/api/onboarding/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                    credentials: 'same-origin'
+                });
+                if (res.ok) {
                     window.location.href = '/dashboard.html';
                 } else {
-                    const err = await response.json();
-                    alert('Error: ' + (err.error || 'Failed to submit onboarding data.'));
+                    const data = await res.json().catch(() => ({}));
+                    errDiv.textContent = data.message || 'Onboarding submission failed.';
+                    errDiv.classList.remove('hidden');
                 }
-            } catch (error) {
-                console.error('Submission error:', error);
-                alert('Network error while saving profile.');
+            } catch (e) {
+                errDiv.textContent = 'Network error during onboarding.';
+                errDiv.classList.remove('hidden');
             }
-        });
+        }
     </script>
 </body>
 </html>
