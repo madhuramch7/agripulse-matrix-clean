@@ -40,13 +40,15 @@ public class DataLoader implements CommandLineRunner {
                 }
                 
                 String[] data = line.split(",");
-                if (data.length >= 7) {
+                if (data.length >= 9) {
                     MarketPriceIndex mpi = new MarketPriceIndex();
                     mpi.setState(data[0].trim());
                     mpi.setDistrict(data[1].trim());
                     mpi.setMarket(data[2].trim());
                     mpi.setCommodity(data[3].trim());
-                    String priceStr = data[6].trim();
+                    
+                    // Modal price is the final column (index 8)
+                    String priceStr = data[data.length - 1].trim();
                     mpi.setModalPrice(new BigDecimal(priceStr.isEmpty() ? "0.00" : priceStr));
                     mpi.setArrivalDate(LocalDate.now());
                     

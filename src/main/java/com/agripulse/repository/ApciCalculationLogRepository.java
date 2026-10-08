@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ApciCalculationLogRepository extends JpaRepository<ApciCalculationLog, Long> {
-    List<ApciCalculationLog> findByFarmerProfile_FarmerId(Long farmerId);
+    List<ApciCalculationLog> findByFarmerId(Long farmerId);
 }
