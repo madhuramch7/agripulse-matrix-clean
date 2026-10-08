@@ -3,20 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgriPulse Matrix - Farm Analytics</title>
+    <title>AgriPulse Matrix - Farm Intelligence Dashboard</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .active-nav-item {
-            background-color: #524238;
-            border-left: 4px solid #A0522D;
-            color: #ffffff !important;
-        }
-    </style>
+    <!-- Assistant Widget Stylesheet -->
+    <link rel="stylesheet" href="/css/assistant.css">
 </head>
 <body class="bg-[#FAF8F5] text-[#2C241E] font-sans min-h-screen flex flex-col relative overflow-x-hidden">
 
@@ -24,7 +17,7 @@
     <header class="bg-[#3D312A] text-white px-6 py-3.5 flex items-center justify-between sticky top-0 z-40 shadow-md">
         <div class="flex items-center space-x-4">
             <!-- 3-Line Hamburger Menu Toggle Button -->
-            <button onclick="toggleSidebar()" class="text-[#EFE9DF] hover:text-[#D9A378] text-xl focus:outline-none p-1">
+            <button onclick="toggleSidebar()" class="text-[#EFE9DF] hover:text-[#D9A378] text-xl focus:outline-none p-1 transition-colors">
                 <i class="fa-solid fa-bars"></i>
             </button>
             
@@ -40,12 +33,16 @@
         </div>
 
         <div class="flex items-center space-x-6">
-            <div class="hidden md:flex items-center space-x-2 text-xs bg-[#524238] px-3 py-1.5 rounded-full border border-[#6B574B]">
-                <span class="w-2 h-2 rounded-full bg-[#8A9A86] animate-pulse"></span>
-                <span class="text-[#EFE9DF] font-medium">IoT Sensors Active</span>
-            </div>
-            <div class="flex items-center space-x-3 border-l border-[#524238] pl-6">
-                <span class="text-sm font-medium text-[#EFE9DF]">Welcome, <strong class="text-[#D9A378]">Farmer John</strong></span>
+            <!-- Profile Badge (Dynamic User Binding) -->
+            <div id="user-profile-badge" class="flex items-center space-x-3">
+                <img id="user-avatar" src="" alt="Profile" class="w-8 h-8 rounded-full border-2 border-[#D9A378] object-cover">
+                <div class="text-xs">
+                    <span class="text-[#EFE9DF] block font-medium">Welcome, <strong id="user-name" class="text-[#D9A378]">Farmer</strong></span>
+                    <span id="user-email" class="text-[10px] text-[#B8A79B] block">Loading session...</span>
+                </div>
+                <button onclick="logoutGoogle()" title="Sign Out" class="ml-2 text-[#B8A79B] hover:text-red-400 text-sm p-1 transition-colors">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -53,132 +50,191 @@
     <!-- Sliding Collapsible Sidebar Drawer -->
     <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-[#3D312A]/50 backdrop-blur-sm z-40 hidden transition-opacity"></div>
     
-    <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[#312721] text-[#EFE9DF] border-r border-[#4A3B32] flex flex-col justify-between p-4 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl">
+    <aside id="sidebar" class="fixed top-0 left-0 h-full w-80 bg-[#312721] text-[#EFE9DF] border-r border-[#4A3B32] flex flex-col justify-between p-4 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl overflow-y-auto">
         <div class="space-y-6">
             <div class="flex items-center justify-between pb-3 border-b border-[#4A3B32]">
-                <span class="text-sm font-bold text-[#D9A378] tracking-wider uppercase">Navigation</span>
+                <span class="text-sm font-bold text-[#D9A378] tracking-wider uppercase">Navigation Hub</span>
                 <button onclick="toggleSidebar()" class="text-[#B8A79B] hover:text-white text-lg">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
-            <div>
-                <p class="text-[10px] font-bold text-[#B8A79B] uppercase tracking-widest px-3 mb-2">Main</p>
-                <nav class="space-y-1">
-                    <a href="index.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                        <i class="fa-solid fa-house text-[#D9A378] w-5"></i>
-                        <span>Home</span>
-                    </a>
-                </nav>
-            </div>
+            <!-- Core Features & Services Navigation -->
+            <div class="space-y-4">
+                <div>
+                    <p class="text-[10px] font-bold text-[#B8A79B] uppercase tracking-widest px-3 mb-2">Core Modules</p>
+                    <nav class="space-y-1">
+                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-white bg-[#524238] border-l-4 border-[#A0522D] text-sm font-medium">
+                            <i class="fa-solid fa-chart-line text-[#D9A378] w-5"></i>
+                            <span>Comprehensive Soil & Crop Dashboard</span>
+                        </a>
+                        <a href="index.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
+                            <i class="fa-solid fa-language text-blue-400 w-5"></i>
+                            <span>Multilingual Conversational Hub (22 Languages)</span>
+                        </a>
+                        <a href="loans.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
+                            <i class="fa-solid fa-hand-holding-dollar text-[#D9A378] w-5"></i>
+                            <span>APCI Credit Score & Underwriting</span>
+                        </a>
+                        <a href="sbi-portal.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
+                            <i class="fa-solid fa-building-columns text-green-400 w-5"></i>
+                            <span>Direct Bank Portal Redirection</span>
+                        </a>
+                        <a href="loans.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
+                            <i class="fa-solid fa-shield-heart text-amber-400 w-5"></i>
+                            <span>Automated Disaster Relief & Insurance</span>
+                        </a>
+                        <a href="traceability.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
+                            <i class="fa-solid fa-barcode text-purple-400 w-5"></i>
+                            <span>Farm-to-Consumer QR Traceability</span>
+                        </a>
+                    </nav>
+                </div>
 
-            <div>
-                <p class="text-[10px] font-bold text-[#B8A79B] uppercase tracking-widest px-3 mb-2">Select Plot View</p>
-                <nav class="space-y-1">
-                    <button onclick="switchView('overview')" id="nav-overview" class="active-nav-item w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#EFE9DF] hover:bg-[#42342C] transition-all text-sm font-medium">
-                        <i class="fa-solid fa-chart-line text-[#D9A378] w-5"></i>
-                        <span>Farm Overview</span>
-                    </button>
-                    <button onclick="switchView('fieldA')" id="nav-fieldA" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                        <i class="fa-solid fa-vector-square text-[#A0522D] w-5"></i>
-                        <span>North Field (Plot A)</span>
-                    </button>
-                    <button onclick="switchView('fieldB')" id="nav-fieldB" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                        <i class="fa-solid fa-vector-square text-[#8A9A86] w-5"></i>
-                        <span>South Field (Plot B)</span>
-                    </button>
-                </nav>
-            </div>
-
-            <div>
-                <p class="text-[10px] font-bold text-[#B8A79B] uppercase tracking-widest px-3 mb-2">Services & Portals</p>
-                <nav class="space-y-1">
-                    <a href="sbi-portal.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                        <i class="fa-solid fa-building-columns text-blue-400 w-5"></i>
-                        <span>SBI Banking Portal</span>
-                    </a>
-                    <a href="loans.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                        <i class="fa-solid fa-hand-holding-dollar text-[#D9A378] w-5"></i>
-                        <span>Agri Loans</span>
-                    </a>
-                    <a href="traceability.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                        <i class="fa-solid fa-barcode text-purple-400 w-5"></i>
-                        <span>Crop Traceability</span>
-                    </a>
-                </nav>
+                <div>
+                    <p class="text-[10px] font-bold text-[#B8A79B] uppercase tracking-widest px-3 mb-2">Software Add-Ons</p>
+                    <nav class="space-y-1">
+                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
+                            <i class="fa-solid fa-camera text-teal-400 w-5"></i>
+                            <span>AI Crop Pest & Disease Diagnostic</span>
+                        </a>
+                        <a href="loans.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
+                            <i class="fa-solid fa-file-contract text-yellow-400 w-5"></i>
+                            <span>Smart Government Scheme Matcher</span>
+                        </a>
+                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
+                            <i class="fa-solid fa-scale-balanced text-orange-400 w-5"></i>
+                            <span>Multi-Market Price Arbitrage Finder</span>
+                        </a>
+                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
+                            <i class="fa-solid fa-satellite text-indigo-400 w-5"></i>
+                            <span>Satellite Vegetation & Moisture Overlay</span>
+                        </a>
+                    </nav>
+                </div>
             </div>
         </div>
 
-        <div class="bg-[#3D312A] border border-[#4A3B32] p-3 rounded-xl text-center">
+        <div class="bg-[#3D312A] border border-[#4A3B32] p-3 rounded-xl text-center mt-4">
             <p class="text-xs text-[#B8A79B]">Connected System</p>
-            <p class="text-sm font-bold text-[#D9A378]">APCI Credit Rating: 780</p>
+            <p id="sidebar-apci-display" class="text-sm font-bold text-[#D9A378]">APCI Rating: Loading...</p>
         </div>
     </aside>
 
-    <!-- Main Content Area -->
-    <main class="flex-1 p-6 space-y-6 max-w-7xl mx-auto w-full">
-
-        <!-- Dynamic Section Title & Action Button -->
-        <div class="flex items-center justify-between border-b border-[#EAE3D2] pb-3">
-            <h2 id="view-title" class="text-xl font-bold text-[#3D312A]">Farm Overview Analytics</h2>
-            <button onclick="openPlotModal()" class="bg-[#A0522D] hover:bg-[#834122] text-white text-sm font-semibold px-4 py-2 rounded-lg shadow-md transition-all flex items-center space-x-2">
-                <i class="fa-solid fa-plus"></i>
-                <span>Add New Plot</span>
-            </button>
-        </div>
-
-        <!-- Dynamic Field Analytics Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Line Chart -->
-            <div class="lg:col-span-2 bg-white border border-[#EAE3D2] rounded-2xl p-5 shadow-sm">
-                <h3 id="chart-heading" class="text-sm font-bold text-[#3D312A] mb-4">Soil N-P-K Trends Across Fields</h3>
-                <div class="h-64">
-                    <canvas id="soilChart"></canvas>
-                </div>
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-6 py-8 space-y-8">
+        
+        <!-- Dashboard Header Summary -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm gap-4">
+            <div>
+                <span class="bg-[#EFE9DF] text-[#6B513E] text-xs font-bold px-3 py-1 rounded-full">Active Farm Telemetry</span>
+                <h2 class="text-2xl font-black text-[#3D312A] mt-2">Comprehensive Soil & Crop Analytics</h2>
+                <p id="farmer-location-subtitle" class="text-xs text-[#6B574B] mt-1">Fetching telemetry and verified land records from PostgreSQL database...</p>
             </div>
-
-            <!-- Radar Chart / Metrics -->
-            <div class="bg-white border border-[#EAE3D2] rounded-2xl p-5 shadow-sm flex flex-col justify-between">
-                <h3 class="text-sm font-bold text-[#3D312A] mb-2">Nutrient & Health Profile</h3>
-                <div class="h-52">
-                    <canvas id="radarChart"></canvas>
-                </div>
-                <div id="field-metrics-box" class="mt-3 bg-[#FAF8F5] p-3 rounded-lg border border-[#EAE3D2] text-xs space-y-1">
-                    <div class="flex justify-between"><span class="text-[#8C7A6D]">Soil Type:</span> <span class="font-semibold text-[#3D312A]">Loamy / Clay Mix</span></div>
-                    <div class="flex justify-between"><span class="text-[#8C7A6D]">Total Area:</span> <span class="font-semibold text-[#A0522D]">7.3 Acres</span></div>
-                </div>
+            <div class="flex items-center space-x-3">
+                <a href="/onboarding.html" class="bg-[#A0522D] hover:bg-[#804122] text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-colors shadow-sm">
+                    <i class="fa-solid fa-plus mr-1.5"></i> Add New Plot
+                </a>
             </div>
         </div>
 
+        <!-- Main Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left 2 Columns: Soil N-P-K Trends & Radar Analytics -->
+            <div class="lg:col-span-2 space-y-8">
+                
+                <!-- Soil N-P-K Trends Section -->
+                <div class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-4">
+                    <div class="flex justify-between items-center border-b border-[#EAE3D2] pb-3">
+                        <h3 class="text-base font-bold text-[#3D312A]">Soil N-P-K Trends Across Fields</h3>
+                        <span class="text-xs text-[#8C7A6D]">Real-Time Telemetry</span>
+                    </div>
+                    <div class="h-64 flex items-center justify-center bg-[#FAF8F5] border border-dashed border-[#EAE3D2] rounded-xl text-xs text-[#6B574B]">
+                        <canvas id="npkTrendChart" class="w-full h-full p-2"></canvas>
+                    </div>
+                </div>
+
+                <!-- Nutrient & Health Profile -->
+                <div class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-4">
+                    <div class="flex justify-between items-center border-b border-[#EAE3D2] pb-3">
+                        <h3 class="text-base font-bold text-[#3D312A]">Nutrient & Health Profile</h3>
+                        <span class="text-xs text-[#8C7A6D]">Soil Health Card API</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                        <div class="bg-[#FAF8F5] p-4 rounded-xl border border-[#EAE3D2] space-y-2">
+                            <div class="flex justify-between text-xs font-semibold">
+                                <span class="text-[#6B574B]">Soil Type:</span>
+                                <span id="val-soil-type" class="text-[#3D312A]">Black (Regur) / Alluvial</span>
+                            </div>
+                            <div class="flex justify-between text-xs font-semibold">
+                                <span class="text-[#6B574B]">Total Registered Area:</span>
+                                <span id="val-total-acres" class="text-[#3D312A]">-- Acres</span>
+                            </div>
+                            <div class="flex justify-between text-xs font-semibold">
+                                <span class="text-[#6B574B]">Irrigation Source:</span>
+                                <span id="val-irrigation" class="text-[#3D312A]">Borewell / Canal</span>
+                            </div>
+                        </div>
+                        <div class="bg-[#FAF8F5] p-4 rounded-xl border border-[#EAE3D2] text-center">
+                            <span class="text-xs text-[#8C7A6D] block">Calculated AgriPulse Credit Index</span>
+                            <span id="card-apci-score" class="text-3xl font-black text-[#A0522D] block mt-1">-- / 100</span>
+                            <span class="text-[10px] text-[#6B574B] mt-1 block">Eligible for Institutional Loan Underwriting</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Market Prices & Scheme Recommendations -->
+            <div class="space-y-8">
+                
+                <!-- Recommended Crops & Market Prices -->
+                <div class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-4">
+                    <div class="flex justify-between items-center border-b border-[#EAE3D2] pb-3">
+                        <h3 class="text-base font-bold text-[#3D312A]">Top Recommended Crops</h3>
+                        <span class="text-xs text-[#8C7A6D]">Euclidean Model</span>
+                    </div>
+                    <div id="recommended-crops-list" class="space-y-3">
+                        <div class="p-3 bg-[#FAF8F5] rounded-xl border border-[#EAE3D2] text-xs text-[#6B574B]">
+                            Loading AI crop recommendations based on your soil N-P-K...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Local Mandi Arbitrage -->
+                <div class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-4">
+                    <div class="flex justify-between items-center border-b border-[#EAE3D2] pb-3">
+                        <h3 class="text-base font-bold text-[#3D312A]">Local Mandi Price Index</h3>
+                        <span class="text-xs text-[#8C7A6D]">Agmarknet Live</span>
+                    </div>
+                    <div id="market-prices-list" class="space-y-2 text-xs">
+                        <div class="p-3 bg-[#FAF8F5] rounded-xl border border-[#EAE3D2] text-[#6B574B]">
+                            Fetching wholesale prices for your district...
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
     </main>
 
-    <!-- Add New Plot Modal -->
-    <div id="plotModal" class="fixed inset-0 bg-[#3D312A]/60 backdrop-blur-sm flex items-center justify-center hidden z-50">
-        <div class="bg-white border border-[#EAE3D2] p-6 rounded-2xl w-full max-w-md shadow-2xl space-y-4">
-            <h3 class="text-lg font-bold text-[#3D312A] flex items-center space-x-2">
-                <i class="fa-solid fa-plus-circle text-[#A0522D]"></i>
-                <span>Register New Land Plot</span>
-            </h3>
-            <div class="space-y-3 text-sm">
-                <div>
-                    <label class="text-xs text-[#8C7A6D] block mb-1">Plot Name</label>
-                    <input type="text" id="modalPlotName" placeholder="e.g. East Field (Plot C)" class="w-full bg-[#FAF8F5] border border-[#EAE3D2] rounded-lg px-3 py-2 text-[#3D312A] focus:border-[#A0522D] focus:outline-none">
-                </div>
-                <div>
-                    <label class="text-xs text-[#8C7A6D] block mb-1">Area (Acres)</label>
-                    <input type="number" id="modalPlotArea" placeholder="e.g. 3.5" class="w-full bg-[#FAF8F5] border border-[#EAE3D2] rounded-lg px-3 py-2 text-[#3D312A] focus:border-[#A0522D] focus:outline-none">
-                </div>
-            </div>
-            <div class="flex justify-end space-x-3 pt-2">
-                <button onclick="closePlotModal()" class="px-4 py-2 bg-[#EAE3D2] hover:bg-[#DDD3BD] text-[#3D312A] rounded-lg text-sm font-medium">Cancel</button>
-                <button onclick="savePlot()" class="px-4 py-2 bg-[#A0522D] hover:bg-[#834122] text-white rounded-lg text-sm font-semibold">Save Plot</button>
+    <!-- Footer -->
+    <footer class="bg-[#3D312A] text-[#B8A79B] text-xs py-6 px-6 border-t border-[#524238] mt-auto">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div>
+                <p class="font-semibold text-[#FAF8F5]">AgriPulse Matrix Intelligence System</p>
+                <p>Ministry of Agriculture & Farmers Welfare Integrated Portal</p>
             </div>
         </div>
-    </div>
+    </footer>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript & Assistant Integration -->
+    <script src="/js/api-client.js"></script>
+    <script src="/js/session.js"></script>
+    <script src="/js/assistant.js"></script>
     <script>
-        // Toggle Sidebar Drawer
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
@@ -186,129 +242,46 @@
             overlay.classList.toggle('hidden');
         }
 
-        // Setup Charts
-        const lineCtx = document.getElementById('soilChart').getContext('2d');
-        const radarCtx = document.getElementById('radarChart').getContext('2d');
-
-        const soilChart = new Chart(lineCtx, {
-            type: 'line',
-            data: {
-                labels: ['Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-                datasets: [
-                    { label: 'Nitrogen (N)', data: [15, 28, 36, 34, 46, 40, 65], borderColor: '#A0522D', backgroundColor: 'rgba(160, 82, 45, 0.1)', tension: 0.4 },
-                    { label: 'Phosphorus (P)', data: [12, 35, 25, 53, 30, 58, 40], borderColor: '#8A9A86', backgroundColor: 'rgba(138, 154, 134, 0.1)', tension: 0.4 }
-                ]
-            },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#3D312A' } } } }
-        });
-
-        const radarChart = new Chart(radarCtx, {
-            type: 'radar',
-            data: {
-                labels: ['Nitrogen', 'Phosphorus', 'Potassium', 'Organic Matter', 'Moisture'],
-                datasets: [{ label: 'Nutrients', data: [80, 65, 70, 85, 90], backgroundColor: 'rgba(138, 154, 134, 0.25)', borderColor: '#8A9A86' }]
-            },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-        });
-
-        // Switch Plot Views
-        const viewData = {
-            overview: {
-                title: "Farm Overview Analytics",
-                heading: "Soil N-P-K Trends (All Plots Combined)",
-                lineN: [15, 28, 36, 34, 46, 40, 65],
-                lineP: [12, 35, 25, 53, 30, 58, 40],
-                radar: [80, 65, 70, 85, 90],
-                metrics: `<div class="flex justify-between"><span class="text-[#8C7A6D]">Soil Type:</span> <span class="font-semibold text-[#3D312A]">Loamy / Clay Mix</span></div><div class="flex justify-between"><span class="text-[#8C7A6D]">Total Area:</span> <span class="font-semibold text-[#A0522D]">7.3 Acres</span></div>`
-            },
-            fieldA: {
-                title: "North Field (Plot A) Details",
-                heading: "Nutrient Levels - Plot A (Wheat)",
-                lineN: [40, 42, 45, 48, 50, 52, 55],
-                lineP: [30, 32, 35, 33, 36, 38, 40],
-                radar: [90, 85, 80, 88, 92],
-                metrics: `<div class="flex justify-between"><span class="text-[#8C7A6D]">Soil Type:</span> <span class="font-semibold text-[#3D312A]">Rich Loam</span></div><div class="flex justify-between"><span class="text-[#8C7A6D]">Area:</span> <span class="font-semibold text-[#A0522D]">4.5 Acres</span></div><div class="flex justify-between"><span class="text-[#8C7A6D]">Status:</span> <span class="font-semibold text-[#8A9A86]">Optimal</span></div>`
-            },
-            fieldB: {
-                title: "South Field (Plot B) Details",
-                heading: "Nutrient Levels - Plot B (Corn)",
-                lineN: [18, 20, 22, 21, 23, 22, 24],
-                lineP: [15, 18, 20, 22, 25, 24, 26],
-                radar: [50, 60, 55, 65, 70],
-                metrics: `<div class="flex justify-between"><span class="text-[#8C7A6D]">Soil Type:</span> <span class="font-semibold text-[#3D312A]">Heavy Clay</span></div><div class="flex justify-between"><span class="text-[#8C7A6D]">Area:</span> <span class="font-semibold text-[#A0522D]">2.8 Acres</span></div><div class="flex justify-between"><span class="text-[#8C7A6D]">Status:</span> <span class="font-semibold text-[#A0522D]">Low Nitrogen Warning</span></div>`
+        // Render dynamic user details and dashboard telemetry
+        function renderDashboard(data) {
+            if (data.displayName || data.email) {
+                document.getElementById('user-name').textContent = data.displayName || (data.email || '').split('@')[0];
+                document.getElementById('user-email').textContent = data.email || '';
+                document.getElementById('user-avatar').src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="%23A0522D"/><text x="20" y="26" font-size="18" text-anchor="middle" fill="white">' + (data.email || 'F').charAt(0).toUpperCase() + '</text></svg>';
             }
-        };
-
-        function switchView(viewKey) {
-            document.querySelectorAll('aside nav button').forEach(btn => btn.classList.remove('active-nav-item'));
-            document.getElementById(`nav-${viewKey}`).classList.add('active-nav-item');
-
-            const data = viewData[viewKey];
-            document.getElementById('view-title').textContent = data.title;
-            document.getElementById('chart-heading').textContent = data.heading;
-            document.getElementById('field-metrics-box').innerHTML = data.metrics;
-
-            soilChart.data.datasets[0].data = data.lineN;
-            soilChart.data.datasets[1].data = data.lineP;
-            soilChart.update();
-
-            radarChart.data.datasets[0].data = data.radar;
-            radarChart.update();
-
-            toggleSidebar(); // Close drawer after selection
+            if (data.apciScore) {
+                document.getElementById('card-apci-score').textContent = data.apciScore + ' / 100';
+                document.getElementById('sidebar-apci-display').textContent = 'APCI Rating: ' + (300 + Math.round(data.apciScore * 6));
+            }
+            if (data.plots && data.plots.length > 0) {
+                const plot = data.plots[0];
+                document.getElementById('val-total-acres').textContent = plot.areaInAcres + ' Acres';
+                document.getElementById('val-soil-type').textContent = plot.soilType || 'Black (Regur)';
+                document.getElementById('farmer-location-subtitle').textContent = 'Telemetry active for registered land parcel in ' + (plot.district || 'Maharashtra') + ' (' + plot.areaInAcres + ' Acres)';
+            }
         }
 
-        // Modal Controls
-        function openPlotModal() { document.getElementById('plotModal').classList.remove('hidden'); }
-        function closePlotModal() { document.getElementById('plotModal').classList.add('hidden'); }
-        function savePlot() {
-            const name = document.getElementById('modalPlotName').value;
-            if(name) {
-                alert(`Plot "${name}" registered successfully!`);
-                closePlotModal();
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const authRes = await fetch('/api/auth/me', { credentials: 'same-origin' });
+                if (authRes.ok) {
+                    const user = await authRes.json();
+                    renderDashboard(user);
+                }
+                const dashRes = await fetch('/api/me/dashboard', { credentials: 'same-origin' });
+                if (dashRes.ok) {
+                    const dash = await dashRes.json();
+                    renderDashboard(dash);
+                }
+            } catch (e) {
+                console.error("Error loading dashboard telemetry:", e);
             }
+        });
+
+        async function logoutGoogle() {
+            try { await fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' }); } catch (e) {}
+            window.location.href = '/welcome.html';
         }
     </script>
-<script>
-  async function loadMarketPrices() {
-    try {
-      const response = await fetch('/api/market-prices');
-      const data = await response.json();
-      console.log("Market Prices from Backend:", data);
-      
-      // Example: Display record count or render dynamically into your dashboard
-    } catch (error) {
-      console.error("Error loading market prices:", error);
-    }
-  }
-
-  // Load prices when page loads
-  document.addEventListener("DOMContentLoaded", loadMarketPrices);
-</script>
-
-<script>
-    // Fetch and populate live farmer profile data on page load
-    window.addEventListener('DOMContentLoaded', () => {
-        fetch('/api/farmer/profile', { credentials: 'same-origin' })
-            .then(res => res.json())
-            .then(data => {
-                if (data) {
-                    // Update farm size / total area if element exists
-                    const totalAreaEl = document.getElementById('total-area');
-                    if (totalAreaEl && data.farmSize) {
-                        totalAreaEl.textContent = data.farmSize + ' Acres';
-                    }
-
-                    // Update soil type if element exists
-                    const soilTypeEl = document.getElementById('soil-type');
-                    if (soilTypeEl && data.soilType) {
-                        soilTypeEl.textContent = data.soilType;
-                    }
-                }
-            })
-            .catch(err => console.error('Could not load profile data:', err));
-    });
-</script>
-
 </body>
 </html>
