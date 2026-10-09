@@ -1,138 +1,67 @@
 /**
- * AgriPulse Matrix Dashboard - Dynamic Chart.js Analytics Engine
- * Renders real-time graphs for soil pH, moisture, and N-P-K nutrient composition.
+ * AgriPulse Dashboard Chart Controller
+ * Handles initialization, lazy observation, and dynamic re-rendering on visibility changes.
  */
+class DashboardCharts {
+    constructor() {
+        this.instances = new Map();
+        this.observer = null;
+        this.init();
+    }
 
-const DashboardCharts = {
-    instances: {},
-
-    /**
-     * Initializes or updates the Soil Health Composition Chart
-     * @param {string} canvasId Canvas element ID
-     * @param {object} soilMetrics { nitrogen, phosphorus, potassium, ph, moisture }
-     */
-    renderSoilNutrientChart(canvasId, soilMetrics) {
-        const ctx = document.getElementById(canvasId);
-        if (!ctx) return;
-
-        // Destroy pre-existing chart instance if re-rendering dynamically
-        if (this.instances[canvasId]) {
-            this.instances[canvasId].destroy();
+    init() {
+        if (typeof Chart === 'undefined') {
+            console.error('[DashboardCharts] Chart.js runtime not found in window context.');
+            return;
         }
 
-        this.instances[canvasId] = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Nitrogen (N)', 'Phosphorus (P)', 'Potassium (K)', 'Moisture (%)'],
-                datasets: [{
-                    label: 'Current Field Levels',
-                    data: [
-                        soilMetrics.nitrogen || 0,
-                        soilMetrics.phosphorus || 0,
-                        soilMetrics.potassium || 0,
-                        soilMetrics.moisture || 0
-                    ],
-                    backgroundColor: [
-                        'rgba(34, 197, 94, 0.7)',
-                        'rgba(59, 130, 246, 0.7)',
-                        'rgba(168, 85, 247, 0.7)',
-                        'rgba(14, 165, 233, 0.7)'
-                    ],
-                    borderColor: [
-                        '#22c55e',
-                        '#3b82f6',
-                        '#a855f7',
-                        '#0ea5e9'
-                    ],
-                    borderWidth: 2,
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: { enabled: true }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                        ticks: { color: '#9ca3af' }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: '#9ca3af' }
-                    }
+        this.observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.target.dataset.chartId) {
+                    this.renderChart(entry.target.dataset.chartId);
                 }
-            }
-        });
-    },
+            });
+        }, { threshold: 0.1 });
 
-    /**
-     * Renders the Graph & Illustration-Based Diagnosis Telemetry Chart
-     * @param {string} canvasId Canvas element ID
-     * @param {object} diagnosisData { nitrogen, phosphorus, potassium, ph }
-     */
-    renderSoilDiagnosisChart(canvasId, diagnosisData) {
-        const ctx = document.getElementById(canvasId);
-        if (!ctx) return;
-
-        if (this.instances[canvasId]) {
-            this.instances[canvasId].destroy();
-        }
-
-        this.instances[canvasId] = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Nitrogen (N)', 'Phosphorus (P)', 'Potassium (K)', 'pH Level'],
-                datasets: [{
-                    label: 'Farmer Telemetry Values',
-                    data: [
-                        diagnosisData.nitrogen || 0,
-                        diagnosisData.phosphorus || 0,
-                        diagnosisData.potassium || 0,
-                        diagnosisData.ph || 0
-                    ],
-                    backgroundColor: [
-                        'rgba(212, 175, 55, 0.8)', // Golden Amber accent
-                        'rgba(46, 139, 87, 0.8)',  // Forest Green
-                        'rgba(60, 179, 113, 0.8)', // Medium Sea Green
-                        'rgba(244, 164, 96, 0.8)'  // Sandy Brown
-                    ],
-                    borderColor: [
-                        '#D4AF37',
-                        '#2E8B57',
-                        '#3CB371',
-                        '#F4A460'
-                    ],
-                    borderWidth: 2,
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: { enabled: true }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: 'rgba(212, 175, 55, 0.1)' },
-                        ticks: { color: '#FAF8F5' }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: '#FAF8F5' }
-                    }
-                }
-            }
+        document.querySelectorAll('canvas[data-chart-id]').forEach(canvas => {
+            this.observer.observe(canvas);
         });
     }
-};
 
-// Export to window object for global availability
-window.DashboardCharts = DashboardCharts;
+    renderChart(chartId) {
+        const canvas = document.querySelector(`canvas[data-chart-id="${chartId}"]`);
+        if (!canvas) return;
+
+        const rect = canvas.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return;
+
+        if (this.instances.has(chartId)) {
+            this.instances.get(chartId).destroy();
+        }
+
+        let chartConfig = {
+            type: 'line',
+            data: {
+                labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                datasets: [{
+                    label: 'Yield (Metric Tons)',
+                    data: [12.4, 19.2, 15.8, 22.1],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.35,
+                    fill: true
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        };
+
+        const ctx = canvas.getContext('2d');
+        const instance = new Chart(ctx, chartConfig);
+        this.instances.set(chartId, instance);
+        this.observer.unobserve(canvas);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    window.agriPulseCharts = new DashboardCharts();
+});

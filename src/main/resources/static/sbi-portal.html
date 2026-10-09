@@ -41,77 +41,60 @@
     </header>
 
     <!-- Sliding Collapsible Sidebar Drawer -->
-    <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-[#3D312A]/50 backdrop-blur-sm z-40 hidden transition-opacity"></div>
-    
-    <aside id="sidebar" class="fixed top-0 left-0 h-full w-80 bg-[#312721] text-[#EFE9DF] border-r border-[#4A3B32] flex flex-col justify-between p-4 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl overflow-y-auto">
-        <div class="space-y-6">
-            <div class="flex items-center justify-between pb-3 border-b border-[#4A3B32]">
-                <span class="text-sm font-bold text-[#D9A378] tracking-wider uppercase">Navigation Hub</span>
-                <button onclick="toggleSidebar()" class="text-[#B8A79B] hover:text-white text-lg">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+    <!-- Unified Sidebar Navigation Component -->
+<aside id="sidebar-drawer" class="fixed inset-y-0 left-0 z-40 w-64 bg-slate-900 text-white transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out flex flex-col justify-between shadow-xl">
+    <div class="p-6">
+        <div class="flex items-center space-x-3 mb-8">
+            <div class="h-9 w-9 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-lg text-white">
+                🌱
             </div>
-
-            <div class="space-y-4">
-                <div>
-                    <p class="text-[10px] font-bold text-[#B8A79B] uppercase tracking-widest px-3 mb-2">Core Modules</p>
-                    <nav class="space-y-1">
-                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                            <i class="fa-solid fa-chart-line text-[#D9A378] w-5"></i>
-                            <span>Comprehensive Soil & Crop Dashboard</span>
-                        </a>
-                        <a href="index.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                            <i class="fa-solid fa-language text-blue-400 w-5"></i>
-                            <span>Multilingual Conversational Hub (22 Languages)</span>
-                        </a>
-                        <a href="loans.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                            <i class="fa-solid fa-hand-holding-dollar text-[#D9A378] w-5"></i>
-                            <span>APCI Credit Score & Underwriting</span>
-                        </a>
-                        <a href="sbi-portal.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-white bg-[#524238] border-l-4 border-[#A0522D] text-sm font-medium">
-                            <i class="fa-solid fa-building-columns text-green-400 w-5"></i>
-                            <span>Direct Bank Portal Redirection</span>
-                        </a>
-                        <a href="loans.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                            <i class="fa-solid fa-shield-heart text-amber-400 w-5"></i>
-                            <span>Automated Disaster Relief & Insurance</span>
-                        </a>
-                        <a href="traceability.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                            <i class="fa-solid fa-barcode text-purple-400 w-5"></i>
-                            <span>Farm-to-Consumer QR Traceability</span>
-                        </a>
-                    </nav>
-                </div>
-
-                <div>
-                    <p class="text-[10px] font-bold text-[#B8A79B] uppercase tracking-widest px-3 mb-2">Software Add-Ons</p>
-                    <nav class="space-y-1">
-                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
-                            <i class="fa-solid fa-camera text-teal-400 w-5"></i>
-                            <span>AI Crop Pest & Disease Diagnostic</span>
-                        </a>
-                        <a href="loans.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
-                            <i class="fa-solid fa-file-contract text-yellow-400 w-5"></i>
-                            <span>Smart Government Scheme Matcher</span>
-                        </a>
-                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
-                            <i class="fa-solid fa-scale-balanced text-orange-400 w-5"></i>
-                            <span>Multi-Market Price Arbitrage Finder</span>
-                        </a>
-                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
-                            <i class="fa-solid fa-satellite text-indigo-400 w-5"></i>
-                            <span>Satellite Vegetation & Moisture Overlay</span>
-                        </a>
-                    </nav>
-                </div>
-            </div>
+            <span class="text-xl font-bold tracking-tight text-white">AgriPulse Matrix</span>
         </div>
 
-        <div class="bg-[#3D312A] border border-[#4A3B32] p-3 rounded-xl text-center mt-4">
-            <p class="text-xs text-[#B8A79B]">Connected System</p>
-            <p class="text-sm font-bold text-[#D9A378]">APCI Credit Rating: 780</p>
-        </div>
-    </aside>
+        <nav class="space-y-1" id="nav-links-container">
+            <a href="dashboard.html" data-route="dashboard" class="nav-item flex items-center px-4 py-3 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                Dashboard
+            </a>
+            <a href="onboarding.html" data-route="onboarding" class="nav-item flex items-center px-4 py-3 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+                Farmer Onboarding
+            </a>
+            <a href="loans.html" data-route="loans" class="nav-item flex items-center px-4 py-3 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                KCC Loans
+            </a>
+            <a href="traceability.html" data-route="traceability" class="nav-item flex items-center px-4 py-3 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                Traceability
+            </a>
+            <a href="sbi-portal.html" data-route="sbi-portal" class="nav-item flex items-center px-4 py-3 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                SBI Partner Portal
+            </a>
+        </nav>
+    </div>
+
+    <div class="p-4 border-t border-slate-800">
+        <a href="index.html" class="flex items-center px-4 py-2 text-sm text-red-400 hover:text-red-300 rounded-lg hover:bg-slate-800 transition-colors">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+            Sign Out / Exit
+        </a>
+    </div>
+</aside>
+
+<script>
+    // Automatically highlight active route based on current URL path
+    document.addEventListener('DOMContentLoaded', () => {
+        const currentPath = window.location.pathname.split('/').pop() || 'dashboard.html';
+        document.querySelectorAll('#nav-links-container .nav-item').forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('bg-emerald-600', 'text-white');
+                link.classList.remove('text-slate-300');
+            }
+        });
+    });
+</script>
 
     <!-- MAIN CONTENT AREA -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-6 py-8 space-y-8">

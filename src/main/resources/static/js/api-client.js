@@ -1,65 +1,58 @@
 /**
- * AgriPulse Matrix Dashboard - Centralized API Client Module
- * Handles asynchronous fetch calls, JSON parsing, dynamic error handling, and standard headers.
+ * AgriPulse Secure HTTP Client
+ * Ensures authentication credentials, CSRF tokens, and proper headers on every request.
  */
+const ApiClient = (() => {
+    function getCsrfToken() {
+        const match = document.cookie.match(new RegExp('(^| )XSRF-TOKEN=([^;]+)'));
+        return match ? decodeURIComponent(match[2]) : null;
+    }
 
-const ApiClient = {
-    // Base URL for Spring Boot REST API Endpoints
-    baseUrl: '/api',
+    async function request(endpoint, options = {}) {
+        const defaultHeaders = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        };
 
-    /**
-     * Generic HTTP Request Wrapper
-     * @param {string} endpoint - API route (e.g., '/auth/login', '/farmer/profile')
-     * @param {string} method - HTTP Method (GET, POST, PUT, DELETE)
-     * @param {object|null} data - Request payload DTO
-     * @returns {Promise<object>} JSON response from server
-     */
-    async request(endpoint, method = 'GET', data = null) {
+        const csrfToken = getCsrfToken();
+        if (csrfToken) {
+            defaultHeaders['X-XSRF-TOKEN'] = csrfToken;
+        }
+
         const config = {
-            method: method,
+            ...options,
+            credentials: 'include',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                ...defaultHeaders,
+                ...(options.headers || {})
             }
         };
 
-        if (data && (method === 'POST' || method === 'PUT')) {
-            config.body = JSON.stringify(data);
-        }
-
         try {
-            const response = await fetch(`${this.baseUrl}${endpoint}`, config);
-            const responseData = await response.json().catch(() => ({}));
+            const response = await fetch(endpoint, config);
 
-            if (!response.ok) {
-                const errorMessage = responseData.message || `Request failed with status ${response.status}`;
-                throw new Error(errorMessage);
+            if (response.status === 401) {
+                console.warn('[ApiClient] 401 Unauthorized encountered. Redirecting to auth flow.');
+                window.location.href = 'index.html?error=session_expired';
+                return null;
             }
 
-            return responseData;
+            if (!response.ok) {
+                const errorBody = await response.json().catch(() => ({}));
+                throw new Error(errorBody.message || `HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            return await response.json();
         } catch (error) {
-            console.error(`API Error [${method} ${endpoint}]:`, error.message);
+            console.error(`[ApiClient] Request failure at ${endpoint}:`, error);
             throw error;
         }
-    },
-
-    // Convenience Methods
-    get(endpoint) {
-        return this.request(endpoint, 'GET');
-    },
-
-    post(endpoint, data) {
-        return this.request(endpoint, 'POST', data);
-    },
-
-    put(endpoint, data) {
-        return this.request(endpoint, 'PUT', data);
-    },
-
-    delete(endpoint) {
-        return this.request(endpoint, 'DELETE');
     }
-};
 
-// Export to window object for global availability in frontend HTML files
-window.ApiClient = ApiClient;
+    return {
+        get: (url, headers = {}) => request(url, { method: 'GET', headers }),
+        post: (url, body, headers = {}) => request(url, { method: 'POST', body: JSON.stringify(body), headers }),
+        put: (url, body, headers = {}) => request(url, { method: 'PUT', body: JSON.stringify(body), headers }),
+        delete: (url, headers = {}) => request(url, { method: 'DELETE', headers })
+    };
+})();
