@@ -1,110 +1,108 @@
 package com.agripulse.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import com.agripulse.entity.FarmerProfile;
+import com.agripulse.entity.UserAccount;
+import com.agripulse.repository.FarmerProfileRepository;
+import com.agripulse.repository.UserAccountRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
+import java.security.Principal;
 import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/onboarding")
-@CrossOrigin(origins = "*", allowCredentials = "true")
+@RequestMapping("/api/onboarding")
 public class OnboardingController {
 
-    // Fixed: changed OnboardingController.java to OnboardingController.class
-    private static final Logger log = LoggerFactory.getLogger(OnboardingController.class);
+    private final UserAccountRepository userAccountRepository;
+    private final FarmerProfileRepository farmerProfileRepository;
 
-    public static class FarmerOnboardingRequest {
-        private String fullName;
-        private String aadharNumber;
-        private String contactNumber;
-        private String village;
-        private String state;
-        private Object landSizeAcres;
-        private Object annualIncome;
-        private String cropType;
-
-        // Getters
-        public String getFullName() { return fullName; }
-        public String getAadharNumber() { return aadharNumber; }
-        public String getContactNumber() { return contactNumber; }
-        public String getVillage() { return village; }
-        public String getState() { return state; }
-        public Object getLandSizeAcres() { return landSizeAcres; }
-        public Object getAnnualIncome() { return annualIncome; }
-        public String getCropType() { return cropType; }
-
-        // Setters
-        public void setFullName(String fullName) { this.fullName = fullName; }
-        public void setAadharNumber(String aadharNumber) { this.aadharNumber = aadharNumber; }
-        public void setContactNumber(String contactNumber) { this.contactNumber = contactNumber; }
-        public void setVillage(String village) { this.village = village; }
-        public void setState(String state) { this.state = state; }
-        public void setLandSizeAcres(Object landSizeAcres) { this.landSizeAcres = landSizeAcres; }
-        public void setAnnualIncome(Object annualIncome) { this.annualIncome = annualIncome; }
-        public void setCropType(String cropType) { this.cropType = cropType; }
+    public OnboardingController(UserAccountRepository userAccountRepository, 
+                                FarmerProfileRepository farmerProfileRepository) {
+        this.userAccountRepository = userAccountRepository;
+        this.farmerProfileRepository = farmerProfileRepository;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<Map<String, Object>> registerFarmer(@RequestBody(required = false) FarmerOnboardingRequest request) {
-        Map<String, Object> response = new HashMap<>();
-
-        if (request == null) {
-            response.put("success", false);
-            response.put("message", "Request body cannot be empty");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    @GetMapping("/status")
+    public ResponseEntity<?> getStatus(Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(401).body(Map.of("error", "Unauthorized"));
         }
-
-        String fullName = Optional.ofNullable(request.getFullName())
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .orElse("Unknown Farmer");
-
-        String aadhar = Optional.ofNullable(request.getAadharNumber())
-                .map(String::trim)
-                .orElse("");
-
-        if (!aadhar.matches("^\\d{12}$")) {
-            response.put("success", false);
-            response.put("message", "Invalid identifier format. Expected 12 digits.");
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
+        Optional<UserAccount> userOpt = userAccountRepository.findByEmail(principal.getName());
+        if (userOpt.isPresent()) {
+            boolean complete = userOpt.get().getOnboardingComplete() != null && userOpt.get().getOnboardingComplete();
+            return ResponseEntity.ok(Map.of("onboardingComplete", complete));
         }
-
-        BigDecimal landSize = parseBigDecimal(request.getLandSizeAcres(), BigDecimal.ZERO);
-        BigDecimal income = parseBigDecimal(request.getAnnualIncome(), BigDecimal.ZERO);
-
-        String crop = Optional.ofNullable(request.getCropType())
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .orElse("Paddy");
-
-        log.info("Processing onboarding for farmer: {} with land: {} acres", fullName, landSize);
-
-        response.put("success", true);
-        response.put("farmerId", "APM-" + System.currentTimeMillis());
-        response.put("registeredName", fullName);
-        response.put("landSizeAcres", landSize);
-        response.put("annualIncome", income);
-        response.put("cropType", crop);
-        response.put("status", "VERIFIED");
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(404).body(Map.of("error", "User not found"));
     }
 
-    private BigDecimal parseBigDecimal(Object value, BigDecimal fallback) {
-        if (value == null) return fallback;
+    @GetMapping("/profile")
+    public ResponseEntity<?> getFarmerProfile(Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(401).body(Map.of("error", "Unauthorized"));
+        }
+        Optional<UserAccount> userOpt = userAccountRepository.findByEmail(principal.getName());
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(404).body(Map.of("error", "User not found"));
+        }
+        
+        Optional<FarmerProfile> profileOpt = farmerProfileRepository.findByUserId(userOpt.get().getId());
+        if (profileOpt.isPresent()) {
+            return ResponseEntity.ok(profileOpt.get());
+        }
+        return ResponseEntity.status(404).body(Map.of("error", "Profile not found"));
+    }
+
+    private static String str(Map<String, Object> m, String def, String... keys) {
+        for (String k : keys) {
+            Object v = m.get(k);
+            if (v != null && !v.toString().isBlank()) return v.toString();
+        }
+        return def;
+    }
+
+    @PostMapping("/submit")
+    public ResponseEntity<?> submitOnboarding(@RequestBody Map<String, Object> request, Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(401).body(Map.of("error", "Unauthorized", "message", "Please log in again."));
+        }
         try {
-            String strVal = String.valueOf(value).replaceAll("[^0-9.]", "").trim();
-            if (strVal.isEmpty()) return fallback;
-            return new BigDecimal(strVal);
-        } catch (Exception ex) {
-            log.warn("Failed to parse numeric input: {}. Using fallback: {}", value, fallback);
-            return fallback;
+            Optional<UserAccount> userOpt = userAccountRepository.findByEmail(principal.getName());
+            if (userOpt.isEmpty()) {
+                return ResponseEntity.status(404).body(Map.of("error", "User not found", "message", "User not found"));
+            }
+            UserAccount user = userOpt.get();
+
+            FarmerProfile profile = farmerProfileRepository.findByUserId(user.getId()).orElse(new FarmerProfile());
+            profile.setUserId(user.getId());
+            profile.setFullName(str(request, "Farmer", "fullName"));
+            profile.setState(str(request, "Maharashtra", "state"));
+            profile.setDistrict(str(request, "Pune", "district"));
+            profile.setVillage(str(request, "Goverdhan", "village"));
+            profile.setPreferredLanguage(str(request, "hi", "preferredLanguage"));
+            profile.setFarmSize(new BigDecimal(str(request, "20", "farmSize", "areaInAcres")));
+            profile.setSoilType(str(request, "Black (Regur)", "soilType"));
+            profile.setFarmingExperienceYears((int) Double.parseDouble(str(request, "5", "farmingExperienceYears")));
+            profile.setIrrigationSource(str(request, "Borewell / Tubewell", "irrigationSource", "irrigationType"));
+            profile.setPrimarycrops(str(request, "Wheat", "primarycrops", "primaryCrop"));
+            profile.setLoanNeedAmount(new BigDecimal(str(request, "50000", "loanNeedAmount")));
+            profile.setBureauScore(720);
+            if (profile.getMobileHash() == null) profile.setMobileHash("");
+            if (profile.getAadhaarHash() == null) profile.setAadhaarHash("");
+            if (profile.getPanHash() == null) profile.setPanHash("");
+            if (profile.getBankAccountNo() == null) profile.setBankAccountNo("");
+
+            farmerProfileRepository.save(profile);
+
+            user.setOnboardingComplete(true);
+            userAccountRepository.save(user);
+
+            return ResponseEntity.ok(Map.of("message", "Onboarding completed successfully"));
+        } catch (Exception e) {
+            String msg = e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage();
+            return ResponseEntity.status(400).body(Map.of("error", msg, "message", "Onboarding failed: " + msg));
         }
     }
 }
