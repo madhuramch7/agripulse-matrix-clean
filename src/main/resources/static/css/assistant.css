@@ -1,0 +1,40 @@
+/* Bhashini AI Assistant Floating Widget Styles */
+#bhashini-ai-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    background: linear-gradient(135deg, #A0522D, #3D312A);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 2px solid #D9A378;
+}
+
+#bhashini-ai-fab:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+}
+
+#bhashini-ai-window {
+    position: fixed;
+    bottom: 96px;
+    right: 24px;
+    width: 380px;
+    height: 520px;
+    background: #FAF8F5;
+    border: 1px solid #EAE3D2;
+    border-radius: 20px;
+    z-index: 10000;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+    display: flex;
+    flex-col: column;
+    overflow: hidden;
+}
