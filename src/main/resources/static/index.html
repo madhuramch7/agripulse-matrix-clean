@@ -31,17 +31,18 @@
         .hero-slide.active {
             opacity: 1;
         }
-        /* Golden Tree / Forest Geometric Watermark Pattern */
-        .forest-pattern-bg {
-            background-color: #0D2318;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cpath fill='%23D4AF37' fill-opacity='0.08' d='M80 0l20 40h-10l15 35h-10l20 45H45l20-45h-10l15-35H60zM30 60l15 30H35l20 40H10l20-40H20zM130 60l15 30h-10l20 40H110l20-40h-10l15-30z'/%3E%3C/svg%3E");
+        /* Majestic Golden Canopy Tree Watermark Pattern matching reference shade */
+        .golden-tree-bg {
+            background-color: #041C14;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cpath fill='%23D4AF37' fill-opacity='0.10' d='M150 20c-15 25-45 35-65 50-20 15-35 30-35 55 0 20 15 35 35 40-10 15-20 30-20 50 0 25 20 45 45 50h80c25-5 45-25 45-50 0-20-10-35-20-50 20-5 35-20 35-40 0-25-15-40-35-55-20-15-50-25-65-50zM130 90c10-10 20-10 30 0 15 15 30 25 30 45 0 15-10 25-25 25h-40c-15 0-25-10-25-25 0-20 15-30 30-45zM120 190h60c10 0 20 10 20 20 0 15-10 25-25 35h-50c-15-10-25-20-25-35 0-10 10-20 20-20z'/%3E%3C/svg%3E");
+            background-repeat: repeat;
         }
     </style>
 </head>
-<body class="bg-[#0D2318] text-[#F4EBE1] font-sans min-h-screen flex flex-col relative overflow-x-hidden">
+<body class="bg-[#041C14] text-[#F4EBE1] font-sans min-h-screen flex flex-col relative overflow-x-hidden">
 
     <!-- Transparent Header Banner Overlaid on Carousel -->
-    <header class="absolute top-0 left-0 w-full bg-[#1B3022]/40 backdrop-blur-md text-white px-8 py-5 flex items-center justify-between shadow-lg z-30 border-b border-white/10">
+    <header class="absolute top-0 left-0 w-full bg-[#041C14]/30 backdrop-blur-md text-white px-8 py-5 flex items-center justify-between shadow-lg z-30 border-b border-white/10">
         <div class="flex items-center space-x-4">
             <div>
                 <h1 class="text-2xl md:text-3xl font-black tracking-wider text-[#F4EBE1] font-serif uppercase drop-shadow-md">AgriPulse Matrix</h1>
@@ -53,7 +54,7 @@
             <div class="flex items-center pl-6">
                 <!-- Google Sign-In Button (When Logged Out) -->
                 <div id="google-signin-btn">
-                    <a href="/welcome.html" class="inline-flex items-center space-x-2 bg-white/90 text-[#1B3022] text-xs font-bold px-5 py-2.5 rounded-full border border-[#D4AF37]/50 hover:bg-[#F4EBE1] transition-all shadow-md">
+                    <a href="/welcome.html" class="inline-flex items-center space-x-2 bg-white/95 text-[#041C14] text-xs font-bold px-5 py-2.5 rounded-full border border-[#D4AF37]/50 hover:bg-[#F4EBE1] transition-all shadow-md">
                         <i class="fa-solid fa-right-to-bracket"></i>
                         <span>Sign in</span>
                     </a>
@@ -78,7 +79,7 @@
     <main class="flex-1 w-full space-y-8 pb-12">
 
         <!-- 1. ROLLING SEQUENCE MULTI-IMAGE CAROUSEL HEADER -->
-        <section class="w-full relative bg-[#0D2318]">
+        <section class="w-full relative bg-[#041C14]">
             <div id="hero-carousel" class="w-full relative min-h-[420px] md:min-h-[520px] flex items-center overflow-hidden pt-16">
                 <!-- Slide 1 -->
                 <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1920&q=80" alt="Smart Farm 1" class="hero-slide active">
@@ -89,10 +90,10 @@
                 <!-- Slide 4 -->
                 <img src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?auto=format&fit=crop&w=1920&q=80" alt="Harvest Crops 4" class="hero-slide">
                 
-                <div class="absolute inset-0 bg-gradient-to-r from-[#0D2318]/95 via-[#0D2318]/60 to-transparent z-10"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-[#041C14]/95 via-[#041C14]/60 to-transparent z-10"></div>
                 
                 <div class="relative z-20 w-full max-w-7xl mx-auto px-6 py-16 md:py-20 text-white space-y-3">
-                    <span class="inline-block bg-[#D4AF37] text-xs font-bold uppercase tracking-wider text-[#0D2318] px-3.5 py-1 rounded-full shadow-sm">
+                    <span class="inline-block bg-[#D4AF37] text-xs font-bold uppercase tracking-wider text-[#041C14] px-3.5 py-1 rounded-full shadow-sm">
                         ROBUST NATIONAL AGRICULTURE
                     </span>
                     <h2 class="text-3xl md:text-5xl font-black text-[#F4EBE1] leading-tight max-w-2xl drop-shadow-lg font-serif">
@@ -105,30 +106,30 @@
             </div>
         </section>
 
-        <!-- Content Section Below Carousel with Dark Green Background & Golden Tree/Forest Pattern -->
-        <div class="forest-pattern-bg w-full py-10">
+        <!-- Content Section Below Carousel with Golden Tree Pattern & Beige Icon Containers -->
+        <div class="golden-tree-bg w-full py-10">
             <div class="max-w-7xl mx-auto px-6 space-y-8">
 
                 <!-- QUICK ACCESS PORTAL CARDS -->
                 <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <a href="dashboard.html" class="bg-[#122E21]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-xl hover:border-[#D4AF37] transition-all group">
-                        <div class="w-12 h-12 rounded-xl bg-[#1B3022] text-[#D4AF37] flex items-center justify-center text-xl mb-4 group-hover:bg-[#D4AF37] group-hover:text-[#0D2318] transition-colors">
+                    <a href="dashboard.html" class="bg-[#06241B]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-xl hover:border-[#D4AF37] transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-[#FAF8F5] text-[#A0522D] flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition-transform shadow-sm">
                             <i class="fa-solid fa-chart-line"></i>
                         </div>
                         <h3 class="text-lg font-bold text-[#F4EBE1] mb-1">Farm Analytics</h3>
                         <p class="text-xs text-[#C2D0C5]">View plot metrics, soil N-P-K levels, and live radar nutrient diagnostics.</p>
                     </a>
 
-                    <a href="sbi-portal.html" class="bg-[#122E21]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-xl hover:border-[#D4AF37] transition-all group">
-                        <div class="w-12 h-12 rounded-xl bg-[#1B3022] text-[#D4AF37] flex items-center justify-center text-xl mb-4 group-hover:bg-[#D4AF37] group-hover:text-[#0D2318] transition-colors">
+                    <a href="sbi-portal.html" class="bg-[#06241B]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-xl hover:border-[#D4AF37] transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-[#FAF8F5] text-[#3D312A] flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition-transform shadow-sm">
                             <i class="fa-solid fa-building-columns"></i>
                         </div>
                         <h3 class="text-lg font-bold text-[#F4EBE1] mb-1">SBI Banking Portal</h3>
                         <p class="text-xs text-[#C2D0C5]">Directly access bank services, subsidy disbursements, and loan transfers.</p>
                     </a>
 
-                    <a href="traceability.html" class="bg-[#122E21]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-xl hover:border-[#D4AF37] transition-all group">
-                        <div class="w-12 h-12 rounded-xl bg-[#1B3022] text-[#D4AF37] flex items-center justify-center text-xl mb-4 group-hover:bg-[#D4AF37] group-hover:text-[#0D2318] transition-colors">
+                    <a href="traceability.html" class="bg-[#06241B]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-xl hover:border-[#D4AF37] transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-[#FAF8F5] text-[#2D5A27] flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition-transform shadow-sm">
                             <i class="fa-solid fa-barcode"></i>
                         </div>
                         <h3 class="text-lg font-bold text-[#F4EBE1] mb-1">Crop Traceability</h3>
@@ -137,7 +138,7 @@
                 </section>
 
                 <!-- COMPLETE PLATFORM FEATURES & MODULES SHOWCASE -->
-                <section class="bg-[#122E21]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-2xl space-y-6">
+                <section class="bg-[#06241B]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-2xl space-y-6">
                     <div class="border-b border-[#D4AF37]/20 pb-4">
                         <h2 class="text-xl font-extrabold text-[#F4EBE1] tracking-tight">
                             Complete Website Features & Modules <span class="text-xs font-semibold text-[#D4AF37] ml-2">(Full Platform Capabilities)</span>
@@ -145,72 +146,72 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
-                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-blue-400 flex items-center justify-center text-lg shadow-sm">
+                        <div class="bg-[#041C14] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#FAF8F5] text-blue-700 flex items-center justify-center text-lg shadow-sm">
                                 <i class="fa-solid fa-language"></i>
                             </div>
                             <h4 class="text-sm font-bold text-[#F4EBE1]">Multilingual Conversational Hub</h4>
                             <p class="text-xs text-[#C2D0C5]">Interact via voice or chat in all 22 official regional languages powered by IndicTrans2 and LLMs.</p>
                         </div>
 
-                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
-                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-[#D4AF37] flex items-center justify-center text-lg shadow-sm">
+                        <div class="bg-[#041C14] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#FAF8F5] text-[#A0522D] flex items-center justify-center text-lg shadow-sm">
                                 <i class="fa-solid fa-hand-holding-dollar"></i>
                             </div>
                             <h4 class="text-sm font-bold text-[#F4EBE1]">APCI Credit Underwriting</h4>
                             <p class="text-xs text-[#C2D0C5]">Computes dynamic credit scores using satellite NDVI history and soil health cards for institutional loans.</p>
                         </div>
 
-                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
-                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-green-400 flex items-center justify-center text-lg shadow-sm">
+                        <div class="bg-[#041C14] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#FAF8F5] text-green-800 flex items-center justify-center text-lg shadow-sm">
                                 <i class="fa-solid fa-building-columns"></i>
                             </div>
                             <h4 class="text-sm font-bold text-[#F4EBE1]">Direct Bank Portal Redirection</h4>
                             <p class="text-xs text-[#C2D0C5]">Integrates partner bank APIs (SBI, NABARD) to route approved credit profiles for one-click disbursement.</p>
                         </div>
 
-                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
-                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-amber-400 flex items-center justify-center text-lg shadow-sm">
+                        <div class="bg-[#041C14] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#FAF8F5] text-amber-700 flex items-center justify-center text-lg shadow-sm">
                                 <i class="fa-solid fa-shield-heart"></i>
                             </div>
                             <h4 class="text-sm font-bold text-[#F4EBE1]">Automated Disaster Relief Triggers</h4>
                             <p class="text-xs text-[#C2D0C5]">Monitors real-time weather feeds and executes SQL triggers to file insurance claims during extreme weather.</p>
                         </div>
 
-                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
-                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-purple-400 flex items-center justify-center text-lg shadow-sm">
+                        <div class="bg-[#041C14] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#FAF8F5] text-purple-800 flex items-center justify-center text-lg shadow-sm">
                                 <i class="fa-solid fa-barcode"></i>
                             </div>
                             <h4 class="text-sm font-bold text-[#F4EBE1]">Crop Traceability Ledger</h4>
                             <p class="text-xs text-[#C2D0C5]">Generates server-side QR codes linking consumers directly to verified farm harvest batches and soil health records.</p>
                         </div>
 
-                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
-                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-teal-400 flex items-center justify-center text-lg shadow-sm">
+                        <div class="bg-[#041C14] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#FAF8F5] text-teal-800 flex items-center justify-center text-lg shadow-sm">
                                 <i class="fa-solid fa-camera"></i>
                             </div>
                             <h4 class="text-sm font-bold text-[#F4EBE1]">AI Pest & Disease Diagnostic</h4>
                             <p class="text-xs text-[#C2D0C5]">Allows uploading leaf photos directly to Gemini Vision models for instant pathology detection and remedies.</p>
                         </div>
 
-                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
-                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-orange-400 flex items-center justify-center text-lg shadow-sm">
+                        <div class="bg-[#041C14] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#FAF8F5] text-orange-700 flex items-center justify-center text-lg shadow-sm">
                                 <i class="fa-solid fa-file-contract"></i>
                             </div>
                             <h4 class="text-sm font-bold text-[#F4EBE1]">Smart Government Scheme Matcher</h4>
                             <p class="text-xs text-[#C2D0C5]">Catalogs and recommends central and state agricultural subsidies based on farm profile parameters.</p>
                         </div>
 
-                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
-                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-red-400 flex items-center justify-center text-lg shadow-sm">
+                        <div class="bg-[#041C14] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#FAF8F5] text-red-700 flex items-center justify-center text-lg shadow-sm">
                                 <i class="fa-solid fa-scale-balanced"></i>
                             </div>
                             <h4 class="text-sm font-bold text-[#F4EBE1]">Multi-Market Price Arbitrage Finder</h4>
                             <p class="text-xs text-[#C2D0C5]">Compares wholesale prices across mandis within a 50 km radius to highlight profitable market locations.</p>
                         </div>
 
-                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
-                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-indigo-400 flex items-center justify-center text-lg shadow-sm">
+                        <div class="bg-[#041C14] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#FAF8F5] text-indigo-800 flex items-center justify-center text-lg shadow-sm">
                                 <i class="fa-solid fa-satellite"></i>
                             </div>
                             <h4 class="text-sm font-bold text-[#F4EBE1]">Satellite Vegetation & Moisture Overlay</h4>
@@ -220,7 +221,7 @@
                 </section>
 
                 <!-- 2. LATEST NEWS RELATED TO AGRICULTURE SECTOR (कृषि समाचार) -->
-                <section class="bg-[#122E21]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-2xl space-y-6">
+                <section class="bg-[#06241B]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-2xl space-y-6">
                     <div class="flex items-center justify-between border-b border-[#D4AF37]/20 pb-4">
                         <div class="flex items-center space-x-3">
                             <div class="w-3 h-7 bg-[#D4AF37] rounded-full"></div>
@@ -228,7 +229,7 @@
                                 कृषि समाचार <span class="text-xs font-semibold text-[#D4AF37] ml-2">(Agriculture News & Policy Articles)</span>
                             </h2>
                         </div>
-                        <a href="javascript:void(0)" class="text-xs font-bold bg-[#1B3022] text-[#F4EBE1] border border-[#D4AF37]/40 px-3 py-1.5 rounded-lg hover:bg-[#D4AF37] hover:text-[#0D2318] transition-colors flex items-center space-x-1">
+                        <a href="javascript:void(0)" class="text-xs font-bold bg-[#041C14] text-[#F4EBE1] border border-[#D4AF37]/40 px-3 py-1.5 rounded-lg hover:bg-[#D4AF37] hover:text-[#041C14] transition-colors flex items-center space-x-1">
                             <span>और देखें</span>
                             <i class="fa-solid fa-angles-right text-[10px]"></i>
                         </a>
@@ -236,10 +237,10 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- News Card 1 -->
-                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between">
+                        <div class="bg-[#041C14] border border-[#D4AF37]/20 rounded-xl overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between">
                             <div class="p-5 space-y-3">
                                 <div class="flex items-center justify-between text-xs text-[#C2D0C5]">
-                                    <span class="bg-[#0D2318] text-[#D4AF37] px-2.5 py-0.5 rounded font-bold border border-[#D4AF37]/30">DAFW Scheme</span>
+                                    <span class="bg-[#06241B] text-[#D4AF37] px-2.5 py-0.5 rounded font-bold border border-[#D4AF37]/30">DAFW Scheme</span>
                                     <span>Updated May 2026</span>
                                 </div>
                                 <h3 class="text-base font-bold text-[#F4EBE1] leading-snug">
@@ -249,17 +250,17 @@
                                     Under MIDH, the Ministry of Agriculture grants 40% to 90% subsidies for fruit nurseries, tissue culture, greenhouse polyhouses, and cold-chain infrastructure across Indian states.
                                 </p>
                             </div>
-                            <div class="bg-[#0D2318] px-5 py-3 border-t border-[#D4AF37]/20 flex justify-between items-center text-xs text-[#D4AF37] font-medium">
+                            <div class="bg-[#06241B] px-5 py-3 border-t border-[#D4AF37]/20 flex justify-between items-center text-xs text-[#D4AF37] font-medium">
                                 <span>Official Portal: nhb.gov.in</span>
                                 <span class="font-bold">PDF Guidelines (2025-26)</span>
                             </div>
                         </div>
 
                         <!-- News Card 2 -->
-                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between">
+                        <div class="bg-[#041C14] border border-[#D4AF37]/20 rounded-xl overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between">
                             <div class="p-5 space-y-3">
                                 <div class="flex items-center justify-between text-xs text-[#C2D0C5]">
-                                    <span class="bg-[#0D2318] text-[#D4AF37] px-2.5 py-0.5 rounded font-bold border border-[#D4AF37]/30">National Conference</span>
+                                    <span class="bg-[#06241B] text-[#D4AF37] px-2.5 py-0.5 rounded font-bold border border-[#D4AF37]/30">National Conference</span>
                                     <span>28–29 May 2026</span>
                                 </div>
                                 <h3 class="text-base font-bold text-[#F4EBE1] leading-snug">
@@ -269,7 +270,7 @@
                                     Inaugurated by Union Minister Shri Shivraj Singh Chouhan at NASC Complex, New Delhi. Key focus on climate-resilient agriculture, digital farming, and self-reliance in pulses and oilseeds.
                                 </p>
                             </div>
-                            <div class="bg-[#0D2318] px-5 py-3 border-t border-[#D4AF37]/20 flex justify-between items-center text-xs text-[#D4AF37] font-medium">
+                            <div class="bg-[#06241B] px-5 py-3 border-t border-[#D4AF37]/20 flex justify-between items-center text-xs text-[#D4AF37] font-medium">
                                 <span>PIB Delhi Release</span>
                                 <span class="font-bold">Khet Bachao Initiative</span>
                             </div>
@@ -278,7 +279,7 @@
                 </section>
 
                 <!-- 3. LATEST NEWS BULLETINS AND IMPORTANT ANNOUNCEMENTS (नया क्या है) -->
-                <section class="bg-[#122E21]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-2xl space-y-5">
+                <section class="bg-[#06241B]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-2xl space-y-5">
                     <div class="flex items-center justify-between border-b border-[#D4AF37]/20 pb-4">
                         <div class="flex items-center space-x-3">
                             <div class="w-3 h-7 bg-[#D4AF37] rounded-full"></div>
@@ -286,34 +287,34 @@
                                 नया क्या है <span class="text-xs font-semibold text-[#D4AF37] ml-2">(Latest Bulletins & Government Announcements)</span>
                             </h2>
                         </div>
-                        <a href="javascript:void(0)" class="text-xs font-bold bg-[#1B3022] text-[#F4EBE1] border border-[#D4AF37]/40 px-3 py-1.5 rounded-lg hover:bg-[#D4AF37] hover:text-[#0D2318] transition-colors flex items-center space-x-1">
+                        <a href="javascript:void(0)" class="text-xs font-bold bg-[#041C14] text-[#F4EBE1] border border-[#D4AF37]/40 px-3 py-1.5 rounded-lg hover:bg-[#D4AF37] hover:text-[#041C14] transition-colors flex items-center space-x-1">
                             <span>और देखें</span>
                             <i class="fa-solid fa-angles-right text-[10px]"></i>
                         </a>
                     </div>
 
                     <div class="space-y-3">
-                        <div class="news-bulletin-item bg-[#1B3022] border border-[#D4AF37]/20 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
+                        <div class="news-bulletin-item bg-[#041C14] border border-[#D4AF37]/20 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
                             <div class="flex items-start space-x-3">
                                 <span class="text-[#D4AF37] font-black text-base mt-0.5">❯</span>
                                 <p class="text-xs md:text-sm font-medium text-[#F4EBE1]">
                                     DAFW का विस्तार निदेशालय (Directorate of Extension) में संयुक्त निदेशक (फार्म सूचना), संयुक्त निदेशक (विस्तार) और संयुक्त निदेशक (महिला कार्यक्रम) के पदों के लिए ड्राफ्ट RR (भर्ती नियमों) पर टिप्पणियाँ आमंत्रण।
                                 </p>
                             </div>
-                            <span class="bg-[#D4AF37] text-[#0D2318] text-[10px] font-bold px-2 py-0.5 rounded uppercase self-start md:self-center shrink-0">NEW</span>
+                            <span class="bg-[#D4AF37] text-[#041C14] text-[10px] font-bold px-2 py-0.5 rounded uppercase self-start md:self-center shrink-0">NEW</span>
                         </div>
 
-                        <div class="news-bulletin-item bg-[#1B3022] border border-[#D4AF37]/20 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
+                        <div class="news-bulletin-item bg-[#041C14] border border-[#D4AF37]/20 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
                             <div class="flex items-start space-x-3">
                                 <span class="text-[#D4AF37] font-black text-base mt-0.5">❯</span>
                                 <p class="text-xs md:text-sm font-medium text-[#F4EBE1]">
                                     कृषि और किसान कल्याण विभाग के अंतर्गत विपणन और निरीक्षण निदेशालय में स्टेनोग्राफर ग्रेड-I (सब-ऑफिस कैडर) के पद के लिए संशोधित भर्ती नियमों के मसौदे पर सभी संबंधित पक्षों से टिप्पणियां।
                                 </p>
                             </div>
-                            <span class="bg-[#D4AF37] text-[#0D2318] text-[10px] font-bold px-2 py-0.5 rounded uppercase self-start md:self-center shrink-0">NEW</span>
+                            <span class="bg-[#D4AF37] text-[#041C14] text-[10px] font-bold px-2 py-0.5 rounded uppercase self-start md:self-center shrink-0">NEW</span>
                         </div>
 
-                        <div class="news-bulletin-item bg-[#1B3022] border border-[#D4AF37]/20 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
+                        <div class="news-bulletin-item bg-[#041C14] border border-[#D4AF37]/20 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
                             <div class="flex items-start space-x-3">
                                 <span class="text-[#D4AF37] font-black text-base mt-0.5">❯</span>
                                 <p class="text-xs md:text-sm font-medium text-[#F4EBE1]">
@@ -322,7 +323,7 @@
                             </div>
                         </div>
 
-                        <div class="news-bulletin-item bg-[#1B3022] border border-[#D4AF37]/20 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
+                        <div class="news-bulletin-item bg-[#041C14] border border-[#D4AF37]/20 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
                             <div class="flex items-start space-x-3">
                                 <span class="text-[#D4AF37] font-black text-base mt-0.5">❯</span>
                                 <p class="text-xs md:text-sm font-medium text-[#F4EBE1]">
@@ -338,7 +339,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-[#0A1A12] text-[#D4AF37] text-xs py-6 px-6 border-t border-[#D4AF37]/20 mt-auto">
+    <footer class="bg-[#020E0A] text-[#D4AF37] text-xs py-6 px-6 border-t border-[#D4AF37]/20 mt-auto">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div>
                 <p class="font-semibold text-[#F4EBE1]">AgriPulse Matrix Intelligence System</p>
@@ -364,7 +365,7 @@
         function renderUserProfile(user) {
             document.getElementById('google-signin-btn').classList.add('hidden');
             document.getElementById('user-profile-badge').classList.remove('hidden');
-            document.getElementById('user-avatar').src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="%23D4AF37"/><text x="20" y="26" font-size="18" text-anchor="middle" fill="%230D2318">' + (user.email || '?').charAt(0).toUpperCase() + '</text></svg>';
+            document.getElementById('user-avatar').src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="%23D4AF37"/><text x="20" y="26" font-size="18" text-anchor="middle" fill="%23041C14">' + (user.email || '?').charAt(0).toUpperCase() + '</text></svg>';
             document.getElementById('user-name').textContent = (user.email || '').split('@')[0];
             document.getElementById('user-email').textContent = user.email || '';
         }
