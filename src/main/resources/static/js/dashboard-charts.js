@@ -8,8 +8,8 @@ const DashboardCharts = {
 
     /**
      * Initializes or updates the Soil Health Composition Chart
-     * @param {string} canvasId - HTML Canvas element ID
-     * @param {object} soilMetrics - { nitrogen, phosphorus, potassium, ph, moisture }
+     * @param {string} canvasId Canvas element ID
+     * @param {object} soilMetrics { nitrogen, phosphorus, potassium, ph, moisture }
      */
     renderSoilNutrientChart(canvasId, soilMetrics) {
         const ctx = document.getElementById(canvasId);
@@ -64,6 +64,69 @@ const DashboardCharts = {
                     x: {
                         grid: { display: false },
                         ticks: { color: '#9ca3af' }
+                    }
+                }
+            }
+        });
+    },
+
+    /**
+     * Renders the Graph & Illustration-Based Diagnosis Telemetry Chart
+     * @param {string} canvasId Canvas element ID
+     * @param {object} diagnosisData { nitrogen, phosphorus, potassium, ph }
+     */
+    renderSoilDiagnosisChart(canvasId, diagnosisData) {
+        const ctx = document.getElementById(canvasId);
+        if (!ctx) return;
+
+        if (this.instances[canvasId]) {
+            this.instances[canvasId].destroy();
+        }
+
+        this.instances[canvasId] = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Nitrogen (N)', 'Phosphorus (P)', 'Potassium (K)', 'pH Level'],
+                datasets: [{
+                    label: 'Farmer Telemetry Values',
+                    data: [
+                        diagnosisData.nitrogen || 0,
+                        diagnosisData.phosphorus || 0,
+                        diagnosisData.potassium || 0,
+                        diagnosisData.ph || 0
+                    ],
+                    backgroundColor: [
+                        'rgba(212, 175, 55, 0.8)', // Golden Amber accent
+                        'rgba(46, 139, 87, 0.8)',  // Forest Green
+                        'rgba(60, 179, 113, 0.8)', // Medium Sea Green
+                        'rgba(244, 164, 96, 0.8)'  // Sandy Brown
+                    ],
+                    borderColor: [
+                        '#D4AF37',
+                        '#2E8B57',
+                        '#3CB371',
+                        '#F4A460'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: true }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(212, 175, 55, 0.1)' },
+                        ticks: { color: '#FAF8F5' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#FAF8F5' }
                     }
                 }
             }

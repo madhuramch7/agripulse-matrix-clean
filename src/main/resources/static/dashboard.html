@@ -144,6 +144,98 @@
             </div>
         </div>
 
+        <!-- Graph and Illustration-Based Diagnosis Section -->
+<div class="relative overflow-hidden rounded-2xl bg-[#041C14]/90 border border-[#D4AF37]/30 p-6 shadow-2xl backdrop-blur-md mb-8">
+    <div class="absolute -left-10 -top-10 w-48 h-48 bg-[#D4AF37]/5 rounded-full pointer-events-none"></div>
+
+    <div class="flex items-center justify-between mb-6 border-b border-[#D4AF37]/20 pb-4">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-lg bg-[#FAF8F5] flex items-center justify-center text-[#041C14] font-bold shadow">
+                📊
+            </div>
+            <div>
+                <h3 class="text-xl font-bold text-[#FAF8F5]">Graph & Illustration-Based Diagnosis</h3>
+                <p class="text-xs text-[#D4AF37]/80">Visual telemetry breakdown, nutrient status, and AI crop matching</p>
+            </div>
+        </div>
+        <div id="health-score-badge" class="px-4 py-2 rounded-xl bg-[#FAF8F5] text-[#041C14] font-extrabold text-sm shadow">
+            Health Score: --
+        </div>
+    </div>
+
+    <!-- Diagnostic Input Trigger Form -->
+    <form id="diagnosis-form" class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div>
+            <label class="block text-xs font-medium text-[#FAF8F5]/80 mb-1">Farmer ID</label>
+            <input type="number" id="diag-farmer-id" value="1" required 
+                   class="w-full bg-[#041C14] border border-[#D4AF37]/30 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#D4AF37]">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-[#FAF8F5]/80 mb-1">Nitrogen (N)</label>
+            <input type="number" step="any" id="diag-n" value="90" required 
+                   class="w-full bg-[#041C14] border border-[#D4AF37]/30 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#D4AF37]">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-[#FAF8F5]/80 mb-1">Phosphorus (P)</label>
+            <input type="number" step="any" id="diag-p" value="42" required 
+                   class="w-full bg-[#041C14] border border-[#D4AF37]/30 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#D4AF37]">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-[#FAF8F5]/80 mb-1">Potassium (K)</label>
+            <input type="number" step="any" id="diag-k" value="43" required 
+                   class="w-full bg-[#041C14] border border-[#D4AF37]/30 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#D4AF37]">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-[#FAF8F5]/80 mb-1">Temperature (°C)</label>
+            <input type="number" step="any" id="diag-temp" value="20.8" required 
+                   class="w-full bg-[#041C14] border border-[#D4AF37]/30 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#D4AF37]">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-[#FAF8F5]/80 mb-1">Humidity (%)</label>
+            <input type="number" step="any" id="diag-humidity" value="82.0" required 
+                   class="w-full bg-[#041C14] border border-[#D4AF37]/30 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#D4AF37]">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-[#FAF8F5]/80 mb-1">pH Level</label>
+            <input type="number" step="any" id="diag-ph" value="6.5" required 
+                   class="w-full bg-[#041C14] border border-[#D4AF37]/30 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#D4AF37]">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-[#FAF8F5]/80 mb-1">Rainfall (mm)</label>
+            <input type="number" step="any" id="diag-rainfall" value="202.9" required 
+                   class="w-full bg-[#041C14] border border-[#D4AF37]/30 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#D4AF37]">
+        </div>
+        <div class="md:col-span-4 flex justify-end">
+            <button type="submit" 
+                    class="bg-[#D4AF37] hover:bg-[#c29f31] text-[#041C14] font-bold text-sm py-2 px-6 rounded-lg transition duration-200 shadow-md">
+                Generate Graphical Diagnosis
+            </button>
+        </div>
+    </form>
+
+    <!-- Results & Visualization Grid -->
+    <div id="diagnosis-results-area" class="hidden grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Chart Canvas Container -->
+        <div class="md:col-span-2 bg-[#041C14] p-4 rounded-xl border border-[#D4AF37]/20">
+            <h4 class="text-sm font-semibold text-[#FAF8F5] mb-3">Nutrient Telemetry Balance</h4>
+            <canvas id="soilNutrientChart" class="w-full h-64"></canvas>
+        </div>
+
+        <!-- Status & Recommendation Panel -->
+        <div class="bg-[#FAF8F5] text-[#041C14] p-5 rounded-xl flex flex-col justify-between shadow-inner">
+            <div>
+                <h4 class="text-sm uppercase tracking-wider font-bold text-gray-500 mb-3">Diagnostic Breakdown</h4>
+                <div id="status-list" class="space-y-2 text-sm mb-4">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+            <div class="border-t border-gray-300 pt-3">
+                <span class="text-xs uppercase tracking-wider font-semibold text-gray-500">Optimal Crop Match</span>
+                <h3 id="diag-recommended-crop" class="text-2xl font-black capitalize text-[#041C14]">--</h3>
+            </div>
+        </div>
+    </div>
+</div>
         <!-- Complete Feature Showcase Grid (Mirroring index.html) -->
         <div class="space-y-6">
             <div class="border-b border-[#EAE3D2] pb-4">
@@ -259,6 +351,63 @@
             window.location.href = '/welcome.html';
         }
     </script>
+    <script>
+document.getElementById('diagnosis-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const farmerId = document.getElementById('diag-farmer-id').value;
+    const params = new URLSearchParams({
+        nitrogen: document.getElementById('diag-n').value,
+        phosphorus: document.getElementById('diag-p').value,
+        potassium: document.getElementById('diag-k').value,
+        temperature: document.getElementById('diag-temp').value,
+        humidity: document.getElementById('diag-humidity').value,
+        ph: document.getElementById('diag-ph').value,
+        rainfall: document.getElementById('diag-rainfall').value
+    });
+
+    try {
+        const response = await fetch(`/api/crop-recommendations/diagnose/${farmerId}?${params.toString()}`);
+        if (response.ok) {
+            const data = await response.json();
+            
+            // Unhide results container
+            document.getElementById('diagnosis-results-area').classList.remove('hidden');
+            document.getElementById('health-score-badge').textContent = `Health Score: ${data.overallHealthScore}%`;
+            document.getElementById('diag-recommended-crop').textContent = data.recommended_crop;
+
+            // Render status items list
+            const statusContainer = document.getElementById('status-list');
+            statusContainer.innerHTML = '';
+            for (const [nutrient, status] of Object.entries(data.nutrientStatus)) {
+                const badgeColor = status === 'Optimal' ? 'text-green-700 bg-green-100' : 'text-amber-700 bg-amber-100';
+                statusContainer.innerHTML += `
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-semibold uppercase">${nutrient}:</span>
+                        <span class="px-2 py-0.5 rounded font-bold ${badgeColor}">${status}</span>
+                    </div>
+                `;
+            }
+
+            // Render the graphical illustration using our upgraded chart engine
+            if (window.DashboardCharts) {
+                window.DashboardCharts.renderSoilDiagnosisChart('soilNutrientChart', {
+                    nitrogen: data.nitrogen,
+                    phosphorus: data.phosphorus,
+                    potassium: data.potassium,
+                    ph: data.ph
+                });
+            }
+
+        } else {
+            alert('Failed to generate graphical diagnosis.');
+        }
+    } catch (err) {
+        console.error('Diagnosis connection error:', err);
+        alert('An error occurred while connecting to the backend server.');
+    }
+});
+</script>
     <script src="/js/assistant.js"></script>
 </body>
 </html>
