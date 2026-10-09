@@ -5,26 +5,25 @@
     // Create Floating Action Button (FAB)
     const fab = document.createElement('div');
     fab.id = 'bhashini-ai-fab';
-    fab.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles text-2xl"></i>';
+    fab.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles text-2xl font-bold"></i>';
     fab.title = 'Bhashini AI Assistant (22 Languages)';
     document.body.appendChild(fab);
 
-    // Create Chat Window Container
+    // Create Chat Window Container (Minimized by default)
     const win = document.createElement('div');
     win.id = 'bhashini-ai-window';
-    win.className = 'hidden flex-col shadow-2xl';
     win.innerHTML = `
-        <div class="bg-[#3D312A] text-white px-4 py-3 flex items-center justify-between border-b border-[#524238]">
+        <div class="bg-[#041C14] text-white px-4 py-3 flex items-center justify-between border-b border-[#D4AF37]/30">
             <div class="flex items-center space-x-2">
-                <div class="w-8 h-8 rounded-lg bg-[#A0522D] flex items-center justify-center text-white font-bold">
+                <div class="w-8 h-8 rounded-lg bg-[#D4AF37] flex items-center justify-center text-[#041C14] font-bold">
                     <i class="fa-solid fa-wheat-awn text-xs"></i>
                 </div>
                 <div>
-                    <h3 class="text-xs font-bold text-[#FAF8F5]">Bhashini AI Assistant</h3>
-                    <p class="text-[10px] text-[#D9A378]">22 Indian Languages & Voice Navigation</p>
+                    <h3 class="text-xs font-bold text-[#F4EBE1]">Bhashini AI Assistant</h3>
+                    <p class="text-[10px] text-[#D4AF37]">22 Indian Languages & Voice Navigation</p>
                 </div>
             </div>
-            <button id="bhashini-close" class="text-[#B8A79B] hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
+            <button id="bhashini-close" class="text-[#C2D0C5] hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div id="bhashini-messages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs bg-[#FAF8F5]">
             <div class="bg-white border border-[#EAE3D2] p-3 rounded-xl shadow-sm text-[#3D312A]">
@@ -52,13 +51,11 @@
 
     // Toggle Window Visibility
     fab.addEventListener('click', () => {
-        win.classList.toggle('hidden');
-        win.classList.toggle('flex');
+        win.classList.toggle('open');
     });
 
     document.getElementById('bhashini-close').addEventListener('click', () => {
-        win.classList.add('hidden');
-        win.classList.remove('flex');
+        win.classList.remove('open');
     });
 
     // Handle Chat Submission & Navigation
@@ -72,7 +69,7 @@
 
         // Append user message
         const userMsg = document.createElement('div');
-        userMsg.className = 'bg-[#3D312A] text-white p-2.5 rounded-xl ml-6 shadow-sm';
+        userMsg.className = 'bg-[#041C14] text-white p-2.5 rounded-xl ml-6 shadow-sm';
         userMsg.textContent = text;
         msgContainer.appendChild(userMsg);
         input.value = '';
