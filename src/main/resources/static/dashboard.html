@@ -10,17 +10,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Assistant Widget Stylesheet -->
     <link rel="stylesheet" href="/css/assistant.css">
+    <style>
+        .news-bulletin-item {
+            transition: all 0.2s ease-in-out;
+        }
+        .news-bulletin-item:hover {
+            background-color: #F3ECE1;
+            transform: translateX(4px);
+        }
+    </style>
 </head>
 <body class="bg-[#FAF8F5] text-[#2C241E] font-sans min-h-screen flex flex-col relative overflow-x-hidden">
 
-    <!-- Top Navigation Header -->
+    <!-- Top Navigation Header with Hamburger Sidebar Toggle (Accessible after sign-in) -->
     <header class="bg-[#3D312A] text-white px-6 py-3.5 flex items-center justify-between sticky top-0 z-40 shadow-md">
         <div class="flex items-center space-x-4">
-            <!-- 3-Line Hamburger Menu Toggle Button -->
-            <button onclick="toggleSidebar()" class="text-[#EFE9DF] hover:text-[#D9A378] text-xl focus:outline-none p-1 transition-colors">
+            <button onclick="toggleSidebar()" class="text-[#EFE9DF] hover:text-[#D9A378] text-xl focus:outline-none p-1 transition-colors" title="Open Navigation Menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
-            
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-[#A0522D] flex items-center justify-center text-white font-bold text-xl shadow-md">
                     <i class="fa-solid fa-wheat-awn"></i>
@@ -33,7 +40,6 @@
         </div>
 
         <div class="flex items-center space-x-6">
-            <!-- Profile Badge (Dynamic User Binding) -->
             <div id="user-profile-badge" class="flex items-center space-x-3">
                 <img id="user-avatar" src="" alt="Profile" class="w-8 h-8 rounded-full border-2 border-[#D9A378] object-cover">
                 <div class="text-xs">
@@ -59,7 +65,6 @@
                 </button>
             </div>
 
-            <!-- Core Features & Services Navigation -->
             <div class="space-y-4">
                 <div>
                     <p class="text-[10px] font-bold text-[#B8A79B] uppercase tracking-widest px-3 mb-2">Core Modules</p>
@@ -121,13 +126,13 @@
         </div>
     </aside>
 
-    <!-- MAIN CONTENT AREA -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-6 py-8 space-y-8">
+    <!-- Main Content Area mirroring index.html layout + telemetry summary -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-6 py-8 space-y-10">
         
-        <!-- Dashboard Header Summary -->
+        <!-- Header Summary -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm gap-4">
             <div>
-                <span class="bg-[#EFE9DF] text-[#6B513E] text-xs font-bold px-3 py-1 rounded-full">Active Farm Telemetry</span>
+                <span class="bg-[#EFE9DF] text-[#6B513E] text-xs font-bold px-3 py-1 rounded-full">Active Farmer Telemetry</span>
                 <h2 class="text-2xl font-black text-[#3D312A] mt-2">Comprehensive Soil & Crop Analytics</h2>
                 <p id="farmer-location-subtitle" class="text-xs text-[#6B574B] mt-1">Fetching telemetry and verified land records from PostgreSQL database...</p>
             </div>
@@ -138,86 +143,64 @@
             </div>
         </div>
 
-        <!-- Main Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
-            <!-- Left 2 Columns: Soil N-P-K Trends & Radar Analytics -->
-            <div class="lg:col-span-2 space-y-8">
-                
-                <!-- Soil N-P-K Trends Section -->
-                <div class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-4">
-                    <div class="flex justify-between items-center border-b border-[#EAE3D2] pb-3">
-                        <h3 class="text-base font-bold text-[#3D312A]">Soil N-P-K Trends Across Fields</h3>
-                        <span class="text-xs text-[#8C7A6D]">Real-Time Telemetry</span>
-                    </div>
-                    <div class="h-64 flex items-center justify-center bg-[#FAF8F5] border border-dashed border-[#EAE3D2] rounded-xl text-xs text-[#6B574B]">
-                        <canvas id="npkTrendChart" class="w-full h-full p-2"></canvas>
-                    </div>
-                </div>
-
-                <!-- Nutrient & Health Profile -->
-                <div class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-4">
-                    <div class="flex justify-between items-center border-b border-[#EAE3D2] pb-3">
-                        <h3 class="text-base font-bold text-[#3D312A]">Nutrient & Health Profile</h3>
-                        <span class="text-xs text-[#8C7A6D]">Soil Health Card API</span>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-                        <div class="bg-[#FAF8F5] p-4 rounded-xl border border-[#EAE3D2] space-y-2">
-                            <div class="flex justify-between text-xs font-semibold">
-                                <span class="text-[#6B574B]">Soil Type:</span>
-                                <span id="val-soil-type" class="text-[#3D312A]">Black (Regur) / Alluvial</span>
-                            </div>
-                            <div class="flex justify-between text-xs font-semibold">
-                                <span class="text-[#6B574B]">Total Registered Area:</span>
-                                <span id="val-total-acres" class="text-[#3D312A]">-- Acres</span>
-                            </div>
-                            <div class="flex justify-between text-xs font-semibold">
-                                <span class="text-[#6B574B]">Irrigation Source:</span>
-                                <span id="val-irrigation" class="text-[#3D312A]">Borewell / Canal</span>
-                            </div>
-                        </div>
-                        <div class="bg-[#FAF8F5] p-4 rounded-xl border border-[#EAE3D2] text-center">
-                            <span class="text-xs text-[#8C7A6D] block">Calculated AgriPulse Credit Index</span>
-                            <span id="card-apci-score" class="text-3xl font-black text-[#A0522D] block mt-1">-- / 100</span>
-                            <span class="text-[10px] text-[#6B574B] mt-1 block">Eligible for Institutional Loan Underwriting</span>
-                        </div>
-                    </div>
-                </div>
-
+        <!-- Complete Feature Showcase Grid (Mirroring index.html) -->
+        <div class="space-y-6">
+            <div class="border-b border-[#EAE3D2] pb-4">
+                <h3 class="text-xl font-extrabold text-[#3D312A]">Complete Platform Features & Modules</h3>
+                <p class="text-xs text-[#6B574B]">All integrated core services and software add-ons unlocked for your signed-in session.</p>
             </div>
 
-            <!-- Right Column: Market Prices & Scheme Recommendations -->
-            <div class="space-y-8">
-                
-                <!-- Recommended Crops & Market Prices -->
-                <div class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-4">
-                    <div class="flex justify-between items-center border-b border-[#EAE3D2] pb-3">
-                        <h3 class="text-base font-bold text-[#3D312A]">Top Recommended Crops</h3>
-                        <span class="text-xs text-[#8C7A6D]">Euclidean Model</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-[#FAF8F5] text-blue-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-language"></i>
                     </div>
-                    <div id="recommended-crops-list" class="space-y-3">
-                        <div class="p-3 bg-[#FAF8F5] rounded-xl border border-[#EAE3D2] text-xs text-[#6B574B]">
-                            Loading AI crop recommendations based on your soil N-P-K...
-                        </div>
-                    </div>
+                    <h4 class="text-base font-bold text-[#3D312A]">Multilingual Conversational Hub</h4>
+                    <p class="text-xs text-[#6B574B]">Powered by IndicTrans2 and LLMs, enabling farmers to interact via voice or chat in all 22 official regional languages.</p>
                 </div>
 
-                <!-- Local Mandi Arbitrage -->
-                <div class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-4">
-                    <div class="flex justify-between items-center border-b border-[#EAE3D2] pb-3">
-                        <h3 class="text-base font-bold text-[#3D312A]">Local Mandi Price Index</h3>
-                        <span class="text-xs text-[#8C7A6D]">Agmarknet Live</span>
+                <div class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-[#FAF8F5] text-[#A0522D] flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
                     </div>
-                    <div id="market-prices-list" class="space-y-2 text-xs">
-                        <div class="p-3 bg-[#FAF8F5] rounded-xl border border-[#EAE3D2] text-[#6B574B]">
-                            Fetching wholesale prices for your district...
-                        </div>
-                    </div>
+                    <h4 class="text-base font-bold text-[#3D312A]">APCI Credit Underwriting Engine</h4>
+                    <p class="text-xs text-[#6B574B]">Computes dynamic credit scores using alternative data (satellite NDVI, soil health cards) to qualify for institutional loans.</p>
                 </div>
 
+                <div class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-[#FAF8F5] text-green-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <h4 class="text-base font-bold text-[#3D312A]">Direct Bank Portal Redirection</h4>
+                    <p class="text-xs text-[#6B574B]">Integrates partner bank APIs (SBI, NABARD) to seamlessly route approved credit profiles for one-click disbursement.</p>
+                </div>
+
+                <div class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-[#FAF8F5] text-amber-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-shield-heart"></i>
+                    </div>
+                    <h4 class="text-base font-bold text-[#3D312A]">Automated Disaster Relief Triggers</h4>
+                    <p class="text-xs text-[#6B574B]">Monitors weather feeds and executes SQL triggers to file insurance claims when extreme weather crosses thresholds.</p>
+                </div>
+
+                <div class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-[#FAF8F5] text-purple-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-barcode"></i>
+                    </div>
+                    <h4 class="text-base font-bold text-[#3D312A]">Crop Traceability & Provenance Ledger</h4>
+                    <p class="text-xs text-[#6B574B]">Generates server-side QR codes linking consumers directly to verified farm harvest batches and soil health records.</p>
+                </div>
+
+                <div class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-[#FAF8F5] text-teal-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h4 class="text-base font-bold text-[#3D312A]">Comprehensive Soil & Crop Dashboard</h4>
+                    <p class="text-xs text-[#6B574B]">Centralized monitoring for real-time N-P-K soil health analytics, automated fertilizer dosages, and market intelligence.</p>
+                </div>
             </div>
-
         </div>
+
     </main>
 
     <!-- Footer -->
@@ -242,7 +225,6 @@
             overlay.classList.toggle('hidden');
         }
 
-        // Render dynamic user details and dashboard telemetry
         function renderDashboard(data) {
             if (data.displayName || data.email) {
                 document.getElementById('user-name').textContent = data.displayName || (data.email || '').split('@')[0];
@@ -250,13 +232,10 @@
                 document.getElementById('user-avatar').src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="%23A0522D"/><text x="20" y="26" font-size="18" text-anchor="middle" fill="white">' + (data.email || 'F').charAt(0).toUpperCase() + '</text></svg>';
             }
             if (data.apciScore) {
-                document.getElementById('card-apci-score').textContent = data.apciScore + ' / 100';
                 document.getElementById('sidebar-apci-display').textContent = 'APCI Rating: ' + (300 + Math.round(data.apciScore * 6));
             }
             if (data.plots && data.plots.length > 0) {
                 const plot = data.plots[0];
-                document.getElementById('val-total-acres').textContent = plot.areaInAcres + ' Acres';
-                document.getElementById('val-soil-type').textContent = plot.soilType || 'Black (Regur)';
                 document.getElementById('farmer-location-subtitle').textContent = 'Telemetry active for registered land parcel in ' + (plot.district || 'Maharashtra') + ' (' + plot.areaInAcres + ' Acres)';
             }
         }
@@ -265,17 +244,13 @@
             try {
                 const authRes = await fetch('/api/auth/me', { credentials: 'same-origin' });
                 if (authRes.ok) {
-                    const user = await authRes.json();
-                    renderDashboard(user);
+                    renderDashboard(await authRes.json());
                 }
                 const dashRes = await fetch('/api/me/dashboard', { credentials: 'same-origin' });
                 if (dashRes.ok) {
-                    const dash = await dashRes.json();
-                    renderDashboard(dash);
+                    renderDashboard(await dashRes.json());
                 }
-            } catch (e) {
-                console.error("Error loading dashboard telemetry:", e);
-            }
+            } catch (e) {}
         });
 
         async function logoutGoogle() {

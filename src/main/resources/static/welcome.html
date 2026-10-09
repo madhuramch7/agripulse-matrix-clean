@@ -11,24 +11,17 @@
     <!-- Assistant Widget Stylesheet -->
     <link rel="stylesheet" href="/css/assistant.css">
 </head>
-<body class="bg-[#FAF8F5] text-[#2C241E] font-sans min-h-screen flex flex-col relative overflow-x-hidden">
+<body class="bg-[#2C241E] text-[#2C241E] font-sans min-h-screen flex flex-col relative overflow-x-hidden">
 
     <!-- Top Navigation Header -->
-    <header class="bg-[#3D312A] text-white px-6 py-3.5 flex items-center justify-between sticky top-0 z-40 shadow-md">
-        <div class="flex items-center space-x-4">
-            <!-- 3-Line Hamburger Menu Toggle Button -->
-            <button onclick="toggleSidebar()" class="text-[#EFE9DF] hover:text-[#D9A378] text-xl focus:outline-none p-1 transition-colors">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-[#A0522D] flex items-center justify-center text-white font-bold text-xl shadow-md">
-                    <i class="fa-solid fa-wheat-awn"></i>
-                </div>
-                <div>
-                    <h1 class="text-xl font-bold tracking-tight text-[#FAF8F5]">AgriPulse Matrix</h1>
-                    <p class="text-xs text-[#D9A378] font-medium tracking-wide">SMART AGRICULTURAL INTELLIGENCE</p>
-                </div>
+    <header class="bg-[#3D312A]/90 backdrop-blur-md text-white px-6 py-3.5 flex items-center justify-between sticky top-0 z-40 shadow-md border-b border-[#524238]">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-[#A0522D] flex items-center justify-center text-white font-bold text-xl shadow-md">
+                <i class="fa-solid fa-wheat-awn"></i>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold tracking-tight text-[#FAF8F5]">AgriPulse Matrix</h1>
+                <p class="text-xs text-[#D9A378] font-medium tracking-wide">SMART AGRICULTURAL INTELLIGENCE</p>
             </div>
         </div>
 
@@ -42,96 +35,50 @@
         </div>
     </header>
 
-    <!-- Sliding Collapsible Sidebar Drawer -->
-    <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-[#3D312A]/50 backdrop-blur-sm z-40 hidden transition-opacity"></div>
-    
-    <aside id="sidebar" class="fixed top-0 left-0 h-full w-80 bg-[#312721] text-[#EFE9DF] border-r border-[#4A3B32] flex flex-col justify-between p-4 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl overflow-y-auto">
-        <div class="space-y-6">
-            <div class="flex items-center justify-between pb-3 border-b border-[#4A3B32]">
-                <span class="text-sm font-bold text-[#D9A378] tracking-wider uppercase">Navigation Hub</span>
-                <button onclick="toggleSidebar()" class="text-[#B8A79B] hover:text-white text-lg">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <div class="space-y-4">
-                <div>
-                    <p class="text-[10px] font-bold text-[#B8A79B] uppercase tracking-widest px-3 mb-2">Core Modules</p>
-                    <nav class="space-y-1">
-                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                            <i class="fa-solid fa-chart-line text-[#D9A378] w-5"></i>
-                            <span>Comprehensive Soil & Crop Dashboard</span>
-                        </a>
-                        <a href="index.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-white bg-[#524238] border-l-4 border-[#A0522D] text-sm font-medium">
-                            <i class="fa-solid fa-language text-blue-400 w-5"></i>
-                            <span>Multilingual Conversational Hub (22 Languages)</span>
-                        </a>
-                        <a href="loans.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                            <i class="fa-solid fa-hand-holding-dollar text-[#D9A378] w-5"></i>
-                            <span>APCI Credit Score & Underwriting</span>
-                        </a>
-                        <a href="sbi-portal.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                            <i class="fa-solid fa-building-columns text-green-400 w-5"></i>
-                            <span>Direct Bank Portal Redirection</span>
-                        </a>
-                        <a href="loans.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                            <i class="fa-solid fa-shield-heart text-amber-400 w-5"></i>
-                            <span>Automated Disaster Relief & Insurance</span>
-                        </a>
-                        <a href="traceability.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                            <i class="fa-solid fa-barcode text-purple-400 w-5"></i>
-                            <span>Farm-to-Consumer QR Traceability</span>
-                        </a>
-                    </nav>
-                </div>
-
-                <div>
-                    <p class="text-[10px] font-bold text-[#B8A79B] uppercase tracking-widest px-3 mb-2">Software Add-Ons</p>
-                    <nav class="space-y-1">
-                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
-                            <i class="fa-solid fa-camera text-teal-400 w-5"></i>
-                            <span>AI Crop Pest & Disease Diagnostic</span>
-                        </a>
-                        <a href="loans.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
-                            <i class="fa-solid fa-file-contract text-yellow-400 w-5"></i>
-                            <span>Smart Government Scheme Matcher</span>
-                        </a>
-                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
-                            <i class="fa-solid fa-scale-balanced text-orange-400 w-5"></i>
-                            <span>Multi-Market Price Arbitrage Finder</span>
-                        </a>
-                        <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-xs font-medium">
-                            <i class="fa-solid fa-satellite text-indigo-400 w-5"></i>
-                            <span>Satellite Vegetation & Moisture Overlay</span>
-                        </a>
-                    </nav>
-                </div>
-            </div>
+    <!-- Main Content with Full-Page Immersive Farm Background Image & Gradient Overlay -->
+    <main class="flex-1 relative flex items-center justify-center px-6 py-16">
+        <!-- Background Farm Image covering complete webpage -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1920&q=80" alt="Farm Background" class="w-full h-full object-cover object-center">
+            <div class="absolute inset-0 bg-gradient-to-br from-[#2C241E]/90 via-[#3D312A]/85 to-[#1e1713]/95"></div>
         </div>
 
-        <div class="bg-[#3D312A] border border-[#4A3B32] p-3 rounded-xl text-center mt-4">
-            <p class="text-xs text-[#B8A79B]">Connected System</p>
-            <p class="text-sm font-bold text-[#D9A378]">APCI Credit Rating: 780</p>
-        </div>
-    </aside>
-
-    <!-- MAIN CONTENT AREA -->
-    <main class="flex-1 flex items-center justify-center px-6 py-16">
-        <div class="max-w-xl w-full bg-white border border-[#EAE3D2] rounded-3xl p-8 md:p-12 shadow-sm text-center space-y-6">
+        <!-- Foreground Welcome Container -->
+        <div class="relative z-10 max-w-2xl w-full bg-white/95 backdrop-blur-md border border-[#EAE3D2] rounded-3xl p-8 md:p-12 shadow-2xl text-center space-y-8">
             <div class="w-16 h-16 bg-[#FAF8F5] text-[#A0522D] border border-[#EAE3D2] rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-sm">
                 <i class="fa-solid fa-seedling"></i>
             </div>
-            <div class="space-y-2">
-                <h2 class="text-3xl font-black text-[#3D312A] tracking-tight">Welcome to AgriPulse Matrix</h2>
-                <p class="text-xs md:text-sm text-[#6B574B] leading-relaxed">
-                    Your intelligent digital gateway for multilingual agricultural navigation, automated credit scoring, and direct institutional bank loan disbursement.
+
+            <div class="space-y-3">
+                <span class="bg-[#EFE9DF] text-[#6B513E] text-xs font-bold px-3 py-1 rounded-full">Ministry of Agriculture & Farmers Welfare Integrated Portal</span>
+                <h2 class="text-3xl md:text-4xl font-black text-[#3D312A] tracking-tight">Welcome to AgriPulse Matrix</h2>
+                <p class="text-xs md:text-sm text-[#6B574B] leading-relaxed max-w-lg mx-auto">
+                    Your intelligent digital gateway for multilingual agricultural navigation across 22 official languages, automated APCI credit scoring, satellite telemetry, and direct institutional bank loan disbursement.
                 </p>
             </div>
-            <div class="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-                <a href="/login.html" class="bg-[#3D312A] text-white font-bold text-xs px-6 py-3 rounded-xl hover:bg-[#524238] transition-colors shadow-sm">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-left">
+                <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-2xl p-4 space-y-1">
+                    <div class="text-[#A0522D] text-sm font-bold flex items-center space-x-2">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Smart Telemetry</span>
+                    </div>
+                    <p class="text-[11px] text-[#6B574B]">Real-time N-P-K soil health analytics and automated fertilizer dosages.</p>
+                </div>
+                <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-2xl p-4 space-y-1">
+                    <div class="text-green-700 text-sm font-bold flex items-center space-x-2">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <span>Instant SBI Handoff</span>
+                    </div>
+                    <p class="text-[11px] text-[#6B574B]">Secure JWT-signed partner bank credit approval and micro-loans.</p>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4 pt-2">
+                <a href="/login.html" class="flex-1 bg-[#3D312A] text-white font-bold text-xs py-3.5 px-6 rounded-xl hover:bg-[#524238] transition-colors shadow-sm text-center">
                     Sign In to Account
                 </a>
-                <a href="/register.html" class="bg-[#A0522D] text-white font-bold text-xs px-6 py-3 rounded-xl hover:bg-[#804122] transition-colors shadow-sm">
+                <a href="/register.html" class="flex-1 bg-[#A0522D] text-white font-bold text-xs py-3.5 px-6 rounded-xl hover:bg-[#804122] transition-colors shadow-sm text-center">
                     Register New Farmer
                 </a>
             </div>
@@ -139,23 +86,14 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-[#3D312A] text-[#B8A79B] text-xs py-6 px-6 border-t border-[#524238] mt-auto">
+    <footer class="bg-[#3D312A] text-[#B8A79B] text-xs py-6 px-6 border-t border-[#524238] mt-auto relative z-10">
         <div class="max-w-7xl mx-auto text-center space-y-1">
             <p class="font-semibold text-[#FAF8F5]">AgriPulse Matrix Intelligence System</p>
-            <p>Ministry of Agriculture & Farmers Welfare Integrated Portal</p>
+            <p>Integrated National Agricultural Infrastructure & Financial Ledger</p>
         </div>
     </footer>
 
-    <!-- JavaScript & Assistant Integration -->
-    <script src="/js/api-client.js"></script>
+    <!-- Assistant Script Integration -->
     <script src="/js/assistant.js"></script>
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-            sidebar.classList.toggle('-translate-x-full');
-            overlay.classList.toggle('hidden');
-        }
-    </script>
 </body>
 </html>

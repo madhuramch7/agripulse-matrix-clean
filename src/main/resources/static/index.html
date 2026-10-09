@@ -8,7 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Identity Services SDK -->
+    <!-- Assistant Widget Stylesheet -->
+    <link rel="stylesheet" href="/css/assistant.css">
     <style>
         .news-bulletin-item {
             transition: all 0.2s ease-in-out;
@@ -21,14 +22,9 @@
 </head>
 <body class="bg-[#FAF8F5] text-[#2C241E] font-sans min-h-screen flex flex-col relative overflow-x-hidden">
 
-    <!-- Top Navigation Header -->
+    <!-- Top Navigation Header (No Sidebar on Public Landing Page) -->
     <header class="bg-[#3D312A] text-white px-6 py-3.5 flex items-center justify-between sticky top-0 z-40 shadow-md">
         <div class="flex items-center space-x-4">
-            <!-- 3-Line Hamburger Menu Toggle Button -->
-            <button onclick="toggleSidebar()" class="text-[#EFE9DF] hover:text-[#D9A378] text-xl focus:outline-none p-1 transition-colors">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-[#A0522D] flex items-center justify-center text-white font-bold text-xl shadow-md">
                     <i class="fa-solid fa-wheat-awn"></i>
@@ -65,57 +61,6 @@
             </div>
         </div>
     </header>
-
-    <!-- Sliding Collapsible Sidebar Drawer -->
-    <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-[#3D312A]/50 backdrop-blur-sm z-40 hidden transition-opacity"></div>
-    
-    <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[#312721] text-[#EFE9DF] border-r border-[#4A3B32] flex flex-col justify-between p-4 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl">
-        <div class="space-y-6">
-            <div class="flex items-center justify-between pb-3 border-b border-[#4A3B32]">
-                <span class="text-sm font-bold text-[#D9A378] tracking-wider uppercase">Navigation Menu</span>
-                <button onclick="toggleSidebar()" class="text-[#B8A79B] hover:text-white text-lg">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <div>
-                <p class="text-[10px] font-bold text-[#B8A79B] uppercase tracking-widest px-3 mb-2">Main Navigation</p>
-                <nav class="space-y-1">
-                    <a href="index.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-white bg-[#524238] border-l-4 border-[#A0522D] text-sm font-medium">
-                        <i class="fa-solid fa-house text-[#D9A378] w-5"></i>
-                        <span>Home</span>
-                    </a>
-                    <a href="dashboard.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                        <i class="fa-solid fa-chart-line text-[#D9A378] w-5"></i>
-                        <span>Farm Analytics</span>
-                    </a>
-                </nav>
-            </div>
-
-            <div>
-                <p class="text-[10px] font-bold text-[#B8A79B] uppercase tracking-widest px-3 mb-2">Services & Portals</p>
-                <nav class="space-y-1">
-                    <a href="sbi-portal.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                        <i class="fa-solid fa-building-columns text-blue-400 w-5"></i>
-                        <span>SBI Banking Portal</span>
-                    </a>
-                    <a href="loans.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                        <i class="fa-solid fa-hand-holding-dollar text-[#D9A378] w-5"></i>
-                        <span>Agri Loans</span>
-                    </a>
-                    <a href="traceability.html" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-[#B8A79B] hover:text-[#FAF8F5] hover:bg-[#42342C] transition-all text-sm font-medium">
-                        <i class="fa-solid fa-barcode text-purple-400 w-5"></i>
-                        <span>Crop Traceability</span>
-                    </a>
-                </nav>
-            </div>
-        </div>
-
-        <div class="bg-[#3D312A] border border-[#4A3B32] p-3 rounded-xl text-center">
-            <p class="text-xs text-[#B8A79B]">Connected System</p>
-            <p class="text-sm font-bold text-[#D9A378]">APCI Credit Rating: 780</p>
-        </div>
-    </aside>
 
     <!-- MAIN CONTENT AREA -->
     <main class="flex-1 w-full space-y-8 pb-12">
@@ -170,6 +115,89 @@
                     <h3 class="text-lg font-bold text-[#3D312A] mb-1">Crop Traceability</h3>
                     <p class="text-xs text-[#6B574B]">Generate verified QR batch codes for market transparent produce tracking.</p>
                 </a>
+            </section>
+
+            <!-- COMPLETE PLATFORM FEATURES & MODULES SHOWCASE -->
+            <section class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-6">
+                <div class="border-b border-[#EAE3D2] pb-4">
+                    <h2 class="text-xl font-extrabold text-[#3D312A] tracking-tight">
+                        Complete Website Features & Modules <span class="text-xs font-semibold text-[#8C7A6D] ml-2">(Full Platform Capabilities)</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
+                        <div class="w-10 h-10 rounded-lg bg-white text-blue-600 flex items-center justify-center text-lg shadow-sm">
+                            <i class="fa-solid fa-language"></i>
+                        </div>
+                        <h4 class="text-sm font-bold text-[#3D312A]">Multilingual Conversational Hub</h4>
+                        <p class="text-xs text-[#6B574B]">Interact via voice or chat in all 22 official regional languages powered by IndicTrans2 and LLMs.</p>
+                    </div>
+
+                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
+                        <div class="w-10 h-10 rounded-lg bg-white text-[#A0522D] flex items-center justify-center text-lg shadow-sm">
+                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                        </div>
+                        <h4 class="text-sm font-bold text-[#3D312A]">APCI Credit Underwriting</h4>
+                        <p class="text-xs text-[#6B574B]">Computes dynamic credit scores using satellite NDVI history and soil health cards for institutional loans.</p>
+                    </div>
+
+                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
+                        <div class="w-10 h-10 rounded-lg bg-white text-green-600 flex items-center justify-center text-lg shadow-sm">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </div>
+                        <h4 class="text-sm font-bold text-[#3D312A]">Direct Bank Portal Redirection</h4>
+                        <p class="text-xs text-[#6B574B]">Integrates partner bank APIs (SBI, NABARD) to route approved credit profiles for one-click disbursement.</p>
+                    </div>
+
+                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
+                        <div class="w-10 h-10 rounded-lg bg-white text-amber-600 flex items-center justify-center text-lg shadow-sm">
+                            <i class="fa-solid fa-shield-heart"></i>
+                        </div>
+                        <h4 class="text-sm font-bold text-[#3D312A]">Automated Disaster Relief Triggers</h4>
+                        <p class="text-xs text-[#6B574B]">Monitors real-time weather feeds and executes SQL triggers to file insurance claims during extreme weather.</p>
+                    </div>
+
+                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
+                        <div class="w-10 h-10 rounded-lg bg-white text-purple-600 flex items-center justify-center text-lg shadow-sm">
+                            <i class="fa-solid fa-barcode"></i>
+                        </div>
+                        <h4 class="text-sm font-bold text-[#3D312A]">Crop Traceability Ledger</h4>
+                        <p class="text-xs text-[#6B574B]">Generates server-side QR codes linking consumers directly to verified farm harvest batches and soil health records.</p>
+                    </div>
+
+                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
+                        <div class="w-10 h-10 rounded-lg bg-white text-teal-600 flex items-center justify-center text-lg shadow-sm">
+                            <i class="fa-solid fa-camera"></i>
+                        </div>
+                        <h4 class="text-sm font-bold text-[#3D312A]">AI Pest & Disease Diagnostic</h4>
+                        <p class="text-xs text-[#6B574B]">Allows uploading leaf photos directly to Gemini Vision models for instant pathology detection and remedies.</p>
+                    </div>
+
+                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
+                        <div class="w-10 h-10 rounded-lg bg-white text-orange-600 flex items-center justify-center text-lg shadow-sm">
+                            <i class="fa-solid fa-file-contract"></i>
+                        </div>
+                        <h4 class="text-sm font-bold text-[#3D312A]">Smart Government Scheme Matcher</h4>
+                        <p class="text-xs text-[#6B574B]">Catalogs and recommends central and state agricultural subsidies based on farm profile parameters.</p>
+                    </div>
+
+                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
+                        <div class="w-10 h-10 rounded-lg bg-white text-red-600 flex items-center justify-center text-lg shadow-sm">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                        </div>
+                        <h4 class="text-sm font-bold text-[#3D312A]">Multi-Market Price Arbitrage Finder</h4>
+                        <p class="text-xs text-[#6B574B]">Compares wholesale prices across mandis within a 50 km radius to highlight profitable market locations.</p>
+                    </div>
+
+                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
+                        <div class="w-10 h-10 rounded-lg bg-white text-indigo-600 flex items-center justify-center text-lg shadow-sm">
+                            <i class="fa-solid fa-satellite"></i>
+                        </div>
+                        <h4 class="text-sm font-bold text-[#3D312A]">Satellite Vegetation & Moisture Overlay</h4>
+                        <p class="text-xs text-[#6B574B]">Uses Open-Meteo and Copernicus open APIs to provide root-zone soil moisture estimates.</p>
+                    </div>
+                </div>
             </section>
 
             <!-- 2. LATEST NEWS RELATED TO AGRICULTURE SECTOR (कृषि समाचार) -->
@@ -301,13 +329,6 @@
 
     <!-- JavaScript Logic -->
     <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-            sidebar.classList.toggle('-translate-x-full');
-            overlay.classList.toggle('hidden');
-        }
-
         // Render profile details in the top header
         function renderUserProfile(user) {
             document.getElementById('google-signin-btn').classList.add('hidden');
@@ -332,5 +353,6 @@
             } catch (e) {}
         });
     </script>
+    <script src="/js/assistant.js"></script>
 </body>
 </html>
