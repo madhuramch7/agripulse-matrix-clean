@@ -44,6 +44,6 @@ public class DisasterService {
      * Fetches all disaster claims for a given plot.
      */
     public List<DisasterReliefClaim> getClaimsForPlot(Long plotId) {
-        return claimRepository.findByLandPlot_PlotId(plotId);
+        return claimRepository.findByLandPlot_Id(plotId);
     }
 }
