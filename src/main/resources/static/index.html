@@ -18,21 +18,29 @@
             background-color: #F3ECE1;
             transform: translateX(4px);
         }
+        /* Rolling Carousel Fade Animation */
+        .hero-slide {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hero-slide.active {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="bg-[#FAF8F5] text-[#2C241E] font-sans min-h-screen flex flex-col relative overflow-x-hidden">
 
-    <!-- Top Navigation Header (No Sidebar on Public Landing Page) -->
-    <header class="bg-[#3D312A] text-white px-6 py-3.5 flex items-center justify-between sticky top-0 z-40 shadow-md">
+    <!-- Top Navigation Header (Unfixed, Professional Gradient, No Leaf Icon, Larger Dynamic Font) -->
+    <header class="bg-gradient-to-r from-[#1B3022] via-[#2D5A27] to-[#1F3A1E] text-white px-8 py-5 flex items-center justify-between shadow-lg z-30">
         <div class="flex items-center space-x-4">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-[#A0522D] flex items-center justify-center text-white font-bold text-xl shadow-md">
-                    <i class="fa-solid fa-wheat-awn"></i>
-                </div>
-                <div>
-                    <h1 class="text-xl font-bold tracking-tight text-[#FAF8F5]">AgriPulse Matrix</h1>
-                    <p class="text-xs text-[#D9A378] font-medium tracking-wide">SMART AGRICULTURAL INTELLIGENCE</p>
-                </div>
+            <div>
+                <h1 class="text-2xl md:text-3xl font-black tracking-wider text-[#F4EBE1] font-serif uppercase">AgriPulse Matrix</h1>
+                <p class="text-xs text-[#A3C1AD] font-semibold tracking-widest uppercase">Smart Agricultural Intelligence & Financial Ledger</p>
             </div>
         </div>
 
@@ -41,7 +49,7 @@
             <div class="flex items-center pl-6">
                 <!-- Google Sign-In Button (When Logged Out) -->
                 <div id="google-signin-btn">
-                    <a href="/welcome.html" class="inline-flex items-center space-x-2 bg-white text-[#3D312A] text-xs font-semibold px-4 py-2 rounded-full border border-[#EAE3D2] hover:bg-[#FAF8F5] transition-all">
+                    <a href="/welcome.html" class="inline-flex items-center space-x-2 bg-white text-[#1B3022] text-xs font-bold px-5 py-2.5 rounded-full border border-[#A3C1AD] hover:bg-[#F4EBE1] transition-all shadow-md">
                         <i class="fa-solid fa-right-to-bracket"></i>
                         <span>Sign in</span>
                     </a>
@@ -49,12 +57,12 @@
 
                 <!-- Profile Badge (When Logged In) -->
                 <div id="user-profile-badge" class="hidden flex items-center space-x-3">
-                    <img id="user-avatar" src="" alt="Profile" class="w-8 h-8 rounded-full border-2 border-[#D9A378] object-cover">
+                    <img id="user-avatar" src="" alt="Profile" class="w-9 h-9 rounded-full border-2 border-[#D9A378] object-cover">
                     <div class="text-xs">
-                        <span class="text-[#EFE9DF] block font-medium">Welcome, <strong id="user-name" class="text-[#D9A378]">Farmer John</strong></span>
-                        <span id="user-email" class="text-[10px] text-[#B8A79B] block">john@agripulse.gov.in</span>
+                        <span class="text-[#F4EBE1] block font-medium">Welcome, <strong id="user-name" class="text-[#D9A378]">Farmer John</strong></span>
+                        <span id="user-email" class="text-[10px] text-[#A3C1AD] block">john@agripulse.gov.in</span>
                     </div>
-                    <button onclick="logoutGoogle()" title="Sign Out" class="ml-2 text-[#B8A79B] hover:text-red-400 text-sm p-1 transition-colors">
+                    <button onclick="logoutGoogle()" title="Sign Out" class="ml-2 text-[#A3C1AD] hover:text-red-400 text-sm p-1 transition-colors">
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
                 </div>
@@ -65,23 +73,28 @@
     <!-- MAIN CONTENT AREA -->
     <main class="flex-1 w-full space-y-8 pb-12">
 
-        <!-- 1. FULL HORIZONTAL STRETCH DISPLAY IMAGE / CAROUSEL HEADER -->
+        <!-- 1. ROLLING SEQUENCE MULTI-IMAGE CAROUSEL HEADER -->
         <section class="w-full relative bg-[#2C241E]">
-            <div id="hero-carousel" class="w-full relative min-h-[320px] md:min-h-[420px] flex items-center overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1920&q=80" 
-                     alt="Smart Agriculture Farm" 
-                     class="absolute inset-0 w-full h-full object-cover object-center">
+            <div id="hero-carousel" class="w-full relative min-h-[380px] md:min-h-[480px] flex items-center overflow-hidden">
+                <!-- Slide 1 -->
+                <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1920&q=80" alt="Smart Farm 1" class="hero-slide active">
+                <!-- Slide 2 -->
+                <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1920&q=80" alt="Farm Landscape 2" class="hero-slide">
+                <!-- Slide 3 -->
+                <img src="https://images.unsplash.com/photo-1595974482597-4f8e8f6e8a76?auto=format&fit=crop&w=1920&q=80" alt="Agriculture Technology 3" class="hero-slide">
+                <!-- Slide 4 -->
+                <img src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?auto=format&fit=crop&w=1920&q=80" alt="Harvest Crops 4" class="hero-slide">
                 
-                <div class="absolute inset-0 bg-gradient-to-r from-[#2C241E]/90 via-[#2C241E]/60 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-[#1B3022]/95 via-[#1B3022]/60 to-transparent z-10"></div>
                 
-                <div class="relative z-10 w-full max-w-7xl mx-auto px-6 py-12 md:py-16 text-white space-y-3">
-                    <span class="inline-block bg-[#8A9A86] text-xs font-bold uppercase tracking-wider text-white px-3 py-1 rounded-full border border-white/20">
-                        AUTOMATED FARMING
+                <div class="relative z-20 w-full max-w-7xl mx-auto px-6 py-12 md:py-16 text-white space-y-3">
+                    <span class="inline-block bg-[#D9A378] text-xs font-bold uppercase tracking-wider text-[#1B3022] px-3.5 py-1 rounded-full shadow-sm">
+                        ROBUST NATIONAL AGRICULTURE
                     </span>
-                    <h2 class="text-3xl md:text-5xl font-black text-white leading-tight max-w-2xl drop-shadow-md">
+                    <h2 class="text-3xl md:text-5xl font-black text-white leading-tight max-w-2xl drop-shadow-lg font-serif">
                         Smart Water & Resource Management
                     </h2>
-                    <p class="text-sm md:text-base text-[#EFE9DF] max-w-xl font-medium drop-shadow">
+                    <p class="text-sm md:text-base text-[#F4EBE1] max-w-xl font-medium drop-shadow">
                         Optimize irrigation schedules using real-time satellite data and AI weather forecasts directly connected to your plot sensors.
                     </p>
                 </div>
@@ -298,7 +311,7 @@
                         <div class="flex items-start space-x-3">
                             <span class="text-[#A0522D] font-black text-base mt-0.5">❯</span>
                             <p class="text-xs md:text-sm font-medium text-[#3D312A]">
-                                DAFW के लिए क्लाउड सर्विसेज उपलब्ध कराने और उसके एप्लीकेशन/वेबसाइट को होस्ट करने हेतु मैनेज्ड सर्विस प्रोवाइडर (MSP) के चयन के लिए एक्सप्रेशन ऑफ़ इंटरेस्ट (EoI)।
+                                DAFW के लिए क्लाउड सर्विसेज उपलब्ध कराने और उसके एप्लीकेशन/वेबसाइट को होस्ट करने हेतु मैनेज्ड सर्विस प्रोवाइडर (MSP) के चयन के लिए एक्सप्रेशन ऑफ़ इंटरेस्ट (EoI)。
                             </p>
                         </div>
                     </div>
@@ -327,8 +340,19 @@
         </div>
     </footer>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Logic for Rolling Carousel & Session -->
     <script>
+        // Rolling Carousel Animation Logic
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        function nextSlide() {
+            if (slides.length === 0) return;
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        setInterval(nextSlide, 4500); // Rolls every 4.5 seconds
+
         // Render profile details in the top header
         function renderUserProfile(user) {
             document.getElementById('google-signin-btn').classList.add('hidden');
