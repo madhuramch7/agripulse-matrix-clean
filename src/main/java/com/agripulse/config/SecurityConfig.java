@@ -37,7 +37,7 @@ public class SecurityConfig {
                     response.sendRedirect("/welcome.html");
                 }
             }))
-            .authorizeHttpRequests(auth -> auth
+      .authorizeHttpRequests(auth -> auth
                 .dispatcherTypeMatchers(DispatcherType.ERROR, DispatcherType.FORWARD).permitAll()
                 .requestMatchers(
                     "/",
@@ -52,7 +52,8 @@ public class SecurityConfig {
                     "/js/**",
                     "/images/**",
                     "/api/auth/**",
-                    "/api/test/**"
+                    "/api/test/**",
+                    "/api/crop-recommendations/**"
                 ).permitAll()
                 .anyRequest().authenticated()
             )

@@ -38,8 +38,7 @@ public class OnboardingController {
         return ResponseEntity.status(404).body(Map.of("error", "User not found"));
     }
 
-    // <-- PASTE THE PROFILE ENDPOINT HERE -->
-   @GetMapping("/profile")
+    @GetMapping("/profile")
     public ResponseEntity<?> getFarmerProfile(Principal principal) {
         if (principal == null) {
             return ResponseEntity.status(401).body(Map.of("error", "Unauthorized"));
@@ -69,7 +68,7 @@ public class OnboardingController {
 
         UserAccount user = userOpt.get();
 
-        FarmerProfile profile = new FarmerProfile();
+        FarmerProfile profile = farmerProfileRepository.findByUserId(user.getId()).orElse(new FarmerProfile());
         profile.setUserId(user.getId());
         profile.setFullName((String) request.getOrDefault("fullName", "Farmer"));
         profile.setState((String) request.getOrDefault("state", "Maharashtra"));
@@ -81,19 +80,19 @@ public class OnboardingController {
         if (farmSizeObj != null && !farmSizeObj.toString().isBlank()) {
             profile.setFarmSize(new BigDecimal(farmSizeObj.toString()));
         } else {
-            profile.setFarmSize(new BigDecimal("50"));
+            profile.setFarmSize(new BigDecimal("20"));
         }
 
         profile.setSoilType((String) request.getOrDefault("soilType", "Black (Regur)"));
 
         Object expObj = request.get("farmingExperienceYears");
-        profile.setFarmingExperienceYears(expObj != null ? Integer.parseInt(expObj.toString()) : 5);
+        profile.setFarmingExperienceYears(expObj != null && !expObj.toString().isBlank() ? Integer.parseInt(expObj.toString()) : 5);
         
         profile.setIrrigationSource((String) request.getOrDefault("irrigationSource", request.getOrDefault("irrigationType", "Borewell / Tubewell")));
         profile.setPrimarycrops((String) request.getOrDefault("primarycrops", request.getOrDefault("primaryCrop", "Wheat")));
         
         Object loanObj = request.get("loanNeedAmount");
-        profile.setLoanNeedAmount(loanObj != null ? new BigDecimal(loanObj.toString()) : new BigDecimal("50000"));
+        profile.setLoanNeedAmount(loanObj != null && !loanObj.toString().isBlank() ? new BigDecimal(loanObj.toString()) : new BigDecimal("50000"));
         
         profile.setBureauScore(720);
 
