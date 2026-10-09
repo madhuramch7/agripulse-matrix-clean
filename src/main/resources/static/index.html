@@ -15,7 +15,7 @@
             transition: all 0.2s ease-in-out;
         }
         .news-bulletin-item:hover {
-            background-color: #F3ECE1;
+            background-color: rgba(212, 175, 55, 0.15);
             transform: translateX(4px);
         }
         /* Rolling Carousel Fade Animation */
@@ -31,25 +31,29 @@
         .hero-slide.active {
             opacity: 1;
         }
+        /* Golden Tree / Forest Geometric Watermark Pattern */
+        .forest-pattern-bg {
+            background-color: #0D2318;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cpath fill='%23D4AF37' fill-opacity='0.08' d='M80 0l20 40h-10l15 35h-10l20 45H45l20-45h-10l15-35H60zM30 60l15 30H35l20 40H10l20-40H20zM130 60l15 30h-10l20 40H110l20-40h-10l15-30z'/%3E%3C/svg%3E");
+        }
     </style>
 </head>
-<body class="bg-[#FAF8F5] text-[#2C241E] font-sans min-h-screen flex flex-col relative overflow-x-hidden">
+<body class="bg-[#0D2318] text-[#F4EBE1] font-sans min-h-screen flex flex-col relative overflow-x-hidden">
 
-    <!-- Top Navigation Header (Unfixed, Professional Gradient, No Leaf Icon, Larger Dynamic Font) -->
-    <header class="bg-gradient-to-r from-[#1B3022] via-[#2D5A27] to-[#1F3A1E] text-white px-8 py-5 flex items-center justify-between shadow-lg z-30">
+    <!-- Transparent Header Banner Overlaid on Carousel -->
+    <header class="absolute top-0 left-0 w-full bg-[#1B3022]/40 backdrop-blur-md text-white px-8 py-5 flex items-center justify-between shadow-lg z-30 border-b border-white/10">
         <div class="flex items-center space-x-4">
             <div>
-                <h1 class="text-2xl md:text-3xl font-black tracking-wider text-[#F4EBE1] font-serif uppercase">AgriPulse Matrix</h1>
-                <p class="text-xs text-[#A3C1AD] font-semibold tracking-widest uppercase">Smart Agricultural Intelligence & Financial Ledger</p>
+                <h1 class="text-2xl md:text-3xl font-black tracking-wider text-[#F4EBE1] font-serif uppercase drop-shadow-md">AgriPulse Matrix</h1>
+                <p class="text-xs text-[#D9A378] font-semibold tracking-widest uppercase drop-shadow">Smart Agricultural Intelligence & Financial Ledger</p>
             </div>
         </div>
 
         <div class="flex items-center space-x-6">
-            <!-- Authentication Container -->
             <div class="flex items-center pl-6">
                 <!-- Google Sign-In Button (When Logged Out) -->
                 <div id="google-signin-btn">
-                    <a href="/welcome.html" class="inline-flex items-center space-x-2 bg-white text-[#1B3022] text-xs font-bold px-5 py-2.5 rounded-full border border-[#A3C1AD] hover:bg-[#F4EBE1] transition-all shadow-md">
+                    <a href="/welcome.html" class="inline-flex items-center space-x-2 bg-white/90 text-[#1B3022] text-xs font-bold px-5 py-2.5 rounded-full border border-[#D4AF37]/50 hover:bg-[#F4EBE1] transition-all shadow-md">
                         <i class="fa-solid fa-right-to-bracket"></i>
                         <span>Sign in</span>
                     </a>
@@ -57,9 +61,9 @@
 
                 <!-- Profile Badge (When Logged In) -->
                 <div id="user-profile-badge" class="hidden flex items-center space-x-3">
-                    <img id="user-avatar" src="" alt="Profile" class="w-9 h-9 rounded-full border-2 border-[#D9A378] object-cover">
+                    <img id="user-avatar" src="" alt="Profile" class="w-9 h-9 rounded-full border-2 border-[#D4AF37] object-cover">
                     <div class="text-xs">
-                        <span class="text-[#F4EBE1] block font-medium">Welcome, <strong id="user-name" class="text-[#D9A378]">Farmer John</strong></span>
+                        <span class="text-[#F4EBE1] block font-medium">Welcome, <strong id="user-name" class="text-[#D4AF37]">Farmer John</strong></span>
                         <span id="user-email" class="text-[10px] text-[#A3C1AD] block">john@agripulse.gov.in</span>
                     </div>
                     <button onclick="logoutGoogle()" title="Sign Out" class="ml-2 text-[#A3C1AD] hover:text-red-400 text-sm p-1 transition-colors">
@@ -74,8 +78,8 @@
     <main class="flex-1 w-full space-y-8 pb-12">
 
         <!-- 1. ROLLING SEQUENCE MULTI-IMAGE CAROUSEL HEADER -->
-        <section class="w-full relative bg-[#2C241E]">
-            <div id="hero-carousel" class="w-full relative min-h-[380px] md:min-h-[480px] flex items-center overflow-hidden">
+        <section class="w-full relative bg-[#0D2318]">
+            <div id="hero-carousel" class="w-full relative min-h-[420px] md:min-h-[520px] flex items-center overflow-hidden pt-16">
                 <!-- Slide 1 -->
                 <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1920&q=80" alt="Smart Farm 1" class="hero-slide active">
                 <!-- Slide 2 -->
@@ -85,257 +89,260 @@
                 <!-- Slide 4 -->
                 <img src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?auto=format&fit=crop&w=1920&q=80" alt="Harvest Crops 4" class="hero-slide">
                 
-                <div class="absolute inset-0 bg-gradient-to-r from-[#1B3022]/95 via-[#1B3022]/60 to-transparent z-10"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-[#0D2318]/95 via-[#0D2318]/60 to-transparent z-10"></div>
                 
-                <div class="relative z-20 w-full max-w-7xl mx-auto px-6 py-12 md:py-16 text-white space-y-3">
-                    <span class="inline-block bg-[#D9A378] text-xs font-bold uppercase tracking-wider text-[#1B3022] px-3.5 py-1 rounded-full shadow-sm">
+                <div class="relative z-20 w-full max-w-7xl mx-auto px-6 py-16 md:py-20 text-white space-y-3">
+                    <span class="inline-block bg-[#D4AF37] text-xs font-bold uppercase tracking-wider text-[#0D2318] px-3.5 py-1 rounded-full shadow-sm">
                         ROBUST NATIONAL AGRICULTURE
                     </span>
-                    <h2 class="text-3xl md:text-5xl font-black text-white leading-tight max-w-2xl drop-shadow-lg font-serif">
+                    <h2 class="text-3xl md:text-5xl font-black text-[#F4EBE1] leading-tight max-w-2xl drop-shadow-lg font-serif">
                         Smart Water & Resource Management
                     </h2>
-                    <p class="text-sm md:text-base text-[#F4EBE1] max-w-xl font-medium drop-shadow">
+                    <p class="text-sm md:text-base text-[#EFE9DF] max-w-xl font-medium drop-shadow">
                         Optimize irrigation schedules using real-time satellite data and AI weather forecasts directly connected to your plot sensors.
                     </p>
                 </div>
             </div>
         </section>
 
-        <div class="max-w-7xl mx-auto px-6 space-y-8">
+        <!-- Content Section Below Carousel with Dark Green Background & Golden Tree/Forest Pattern -->
+        <div class="forest-pattern-bg w-full py-10">
+            <div class="max-w-7xl mx-auto px-6 space-y-8">
 
-            <!-- QUICK ACCESS PORTAL CARDS -->
-            <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <a href="dashboard.html" class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm hover:shadow-md transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-[#FAF8F5] text-[#A0522D] flex items-center justify-center text-xl mb-4 group-hover:bg-[#A0522D] group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-chart-line"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-[#3D312A] mb-1">Farm Analytics</h3>
-                    <p class="text-xs text-[#6B574B]">View plot metrics, soil N-P-K levels, and live radar nutrient diagnostics.</p>
-                </a>
-
-                <a href="sbi-portal.html" class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm hover:shadow-md transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-[#FAF8F5] text-[#3D312A] flex items-center justify-center text-xl mb-4 group-hover:bg-[#3D312A] group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-building-columns"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-[#3D312A] mb-1">SBI Banking Portal</h3>
-                    <p class="text-xs text-[#6B574B]">Directly access bank services, subsidy disbursements, and loan transfers.</p>
-                </a>
-
-                <a href="traceability.html" class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm hover:shadow-md transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-[#FAF8F5] text-[#8A9A86] flex items-center justify-center text-xl mb-4 group-hover:bg-[#8A9A86] group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-barcode"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-[#3D312A] mb-1">Crop Traceability</h3>
-                    <p class="text-xs text-[#6B574B]">Generate verified QR batch codes for market transparent produce tracking.</p>
-                </a>
-            </section>
-
-            <!-- COMPLETE PLATFORM FEATURES & MODULES SHOWCASE -->
-            <section class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-6">
-                <div class="border-b border-[#EAE3D2] pb-4">
-                    <h2 class="text-xl font-extrabold text-[#3D312A] tracking-tight">
-                        Complete Website Features & Modules <span class="text-xs font-semibold text-[#8C7A6D] ml-2">(Full Platform Capabilities)</span>
-                    </h2>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
-                        <div class="w-10 h-10 rounded-lg bg-white text-blue-600 flex items-center justify-center text-lg shadow-sm">
-                            <i class="fa-solid fa-language"></i>
+                <!-- QUICK ACCESS PORTAL CARDS -->
+                <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <a href="dashboard.html" class="bg-[#122E21]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-xl hover:border-[#D4AF37] transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-[#1B3022] text-[#D4AF37] flex items-center justify-center text-xl mb-4 group-hover:bg-[#D4AF37] group-hover:text-[#0D2318] transition-colors">
+                            <i class="fa-solid fa-chart-line"></i>
                         </div>
-                        <h4 class="text-sm font-bold text-[#3D312A]">Multilingual Conversational Hub</h4>
-                        <p class="text-xs text-[#6B574B]">Interact via voice or chat in all 22 official regional languages powered by IndicTrans2 and LLMs.</p>
-                    </div>
+                        <h3 class="text-lg font-bold text-[#F4EBE1] mb-1">Farm Analytics</h3>
+                        <p class="text-xs text-[#C2D0C5]">View plot metrics, soil N-P-K levels, and live radar nutrient diagnostics.</p>
+                    </a>
 
-                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
-                        <div class="w-10 h-10 rounded-lg bg-white text-[#A0522D] flex items-center justify-center text-lg shadow-sm">
-                            <i class="fa-solid fa-hand-holding-dollar"></i>
-                        </div>
-                        <h4 class="text-sm font-bold text-[#3D312A]">APCI Credit Underwriting</h4>
-                        <p class="text-xs text-[#6B574B]">Computes dynamic credit scores using satellite NDVI history and soil health cards for institutional loans.</p>
-                    </div>
-
-                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
-                        <div class="w-10 h-10 rounded-lg bg-white text-green-600 flex items-center justify-center text-lg shadow-sm">
+                    <a href="sbi-portal.html" class="bg-[#122E21]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-xl hover:border-[#D4AF37] transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-[#1B3022] text-[#D4AF37] flex items-center justify-center text-xl mb-4 group-hover:bg-[#D4AF37] group-hover:text-[#0D2318] transition-colors">
                             <i class="fa-solid fa-building-columns"></i>
                         </div>
-                        <h4 class="text-sm font-bold text-[#3D312A]">Direct Bank Portal Redirection</h4>
-                        <p class="text-xs text-[#6B574B]">Integrates partner bank APIs (SBI, NABARD) to route approved credit profiles for one-click disbursement.</p>
-                    </div>
+                        <h3 class="text-lg font-bold text-[#F4EBE1] mb-1">SBI Banking Portal</h3>
+                        <p class="text-xs text-[#C2D0C5]">Directly access bank services, subsidy disbursements, and loan transfers.</p>
+                    </a>
 
-                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
-                        <div class="w-10 h-10 rounded-lg bg-white text-amber-600 flex items-center justify-center text-lg shadow-sm">
-                            <i class="fa-solid fa-shield-heart"></i>
-                        </div>
-                        <h4 class="text-sm font-bold text-[#3D312A]">Automated Disaster Relief Triggers</h4>
-                        <p class="text-xs text-[#6B574B]">Monitors real-time weather feeds and executes SQL triggers to file insurance claims during extreme weather.</p>
-                    </div>
-
-                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
-                        <div class="w-10 h-10 rounded-lg bg-white text-purple-600 flex items-center justify-center text-lg shadow-sm">
+                    <a href="traceability.html" class="bg-[#122E21]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-xl hover:border-[#D4AF37] transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-[#1B3022] text-[#D4AF37] flex items-center justify-center text-xl mb-4 group-hover:bg-[#D4AF37] group-hover:text-[#0D2318] transition-colors">
                             <i class="fa-solid fa-barcode"></i>
                         </div>
-                        <h4 class="text-sm font-bold text-[#3D312A]">Crop Traceability Ledger</h4>
-                        <p class="text-xs text-[#6B574B]">Generates server-side QR codes linking consumers directly to verified farm harvest batches and soil health records.</p>
-                    </div>
+                        <h3 class="text-lg font-bold text-[#F4EBE1] mb-1">Crop Traceability</h3>
+                        <p class="text-xs text-[#C2D0C5]">Generate verified QR batch codes for market transparent produce tracking.</p>
+                    </a>
+                </section>
 
-                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
-                        <div class="w-10 h-10 rounded-lg bg-white text-teal-600 flex items-center justify-center text-lg shadow-sm">
-                            <i class="fa-solid fa-camera"></i>
-                        </div>
-                        <h4 class="text-sm font-bold text-[#3D312A]">AI Pest & Disease Diagnostic</h4>
-                        <p class="text-xs text-[#6B574B]">Allows uploading leaf photos directly to Gemini Vision models for instant pathology detection and remedies.</p>
-                    </div>
-
-                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
-                        <div class="w-10 h-10 rounded-lg bg-white text-orange-600 flex items-center justify-center text-lg shadow-sm">
-                            <i class="fa-solid fa-file-contract"></i>
-                        </div>
-                        <h4 class="text-sm font-bold text-[#3D312A]">Smart Government Scheme Matcher</h4>
-                        <p class="text-xs text-[#6B574B]">Catalogs and recommends central and state agricultural subsidies based on farm profile parameters.</p>
-                    </div>
-
-                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
-                        <div class="w-10 h-10 rounded-lg bg-white text-red-600 flex items-center justify-center text-lg shadow-sm">
-                            <i class="fa-solid fa-scale-balanced"></i>
-                        </div>
-                        <h4 class="text-sm font-bold text-[#3D312A]">Multi-Market Price Arbitrage Finder</h4>
-                        <p class="text-xs text-[#6B574B]">Compares wholesale prices across mandis within a 50 km radius to highlight profitable market locations.</p>
-                    </div>
-
-                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl p-5 space-y-2">
-                        <div class="w-10 h-10 rounded-lg bg-white text-indigo-600 flex items-center justify-center text-lg shadow-sm">
-                            <i class="fa-solid fa-satellite"></i>
-                        </div>
-                        <h4 class="text-sm font-bold text-[#3D312A]">Satellite Vegetation & Moisture Overlay</h4>
-                        <p class="text-xs text-[#6B574B]">Uses Open-Meteo and Copernicus open APIs to provide root-zone soil moisture estimates.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 2. LATEST NEWS RELATED TO AGRICULTURE SECTOR (कृषि समाचार) -->
-            <section class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-6">
-                <div class="flex items-center justify-between border-b border-[#EAE3D2] pb-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-3 h-7 bg-[#A0522D] rounded-full"></div>
-                        <h2 class="text-xl font-extrabold text-[#3D312A] tracking-tight">
-                            कृषि समाचार <span class="text-xs font-semibold text-[#8C7A6D] ml-2">(Agriculture News & Policy Articles)</span>
+                <!-- COMPLETE PLATFORM FEATURES & MODULES SHOWCASE -->
+                <section class="bg-[#122E21]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-2xl space-y-6">
+                    <div class="border-b border-[#D4AF37]/20 pb-4">
+                        <h2 class="text-xl font-extrabold text-[#F4EBE1] tracking-tight">
+                            Complete Website Features & Modules <span class="text-xs font-semibold text-[#D4AF37] ml-2">(Full Platform Capabilities)</span>
                         </h2>
                     </div>
-                    <a href="javascript:void(0)" class="text-xs font-bold bg-[#6B513E] text-white px-3 py-1.5 rounded-lg hover:bg-[#523E2F] transition-colors flex items-center space-x-1">
-                        <span>और देखें</span>
-                        <i class="fa-solid fa-angles-right text-[10px]"></i>
-                    </a>
-                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- News Card 1 -->
-                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl overflow-hidden hover:shadow-md transition-shadow flex flex-col justify-between">
-                        <div class="p-5 space-y-3">
-                            <div class="flex items-center justify-between text-xs text-[#8C7A6D]">
-                                <span class="bg-[#EFE9DF] text-[#6B513E] px-2.5 py-0.5 rounded font-bold">DAFW Scheme</span>
-                                <span>Updated May 2026</span>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-blue-400 flex items-center justify-center text-lg shadow-sm">
+                                <i class="fa-solid fa-language"></i>
                             </div>
-                            <h3 class="text-base font-bold text-[#3D312A] leading-snug">
-                                Clean Plant Programme under Mission for Integrated Development of Horticulture (MIDH)
-                            </h3>
-                            <p class="text-xs text-[#6B574B] leading-relaxed">
-                                Under MIDH, the Ministry of Agriculture grants 40% to 90% subsidies for fruit nurseries, tissue culture, greenhouse polyhouses, and cold-chain infrastructure across Indian states.
-                            </p>
+                            <h4 class="text-sm font-bold text-[#F4EBE1]">Multilingual Conversational Hub</h4>
+                            <p class="text-xs text-[#C2D0C5]">Interact via voice or chat in all 22 official regional languages powered by IndicTrans2 and LLMs.</p>
                         </div>
-                        <div class="bg-[#EAE3D2]/50 px-5 py-3 border-t border-[#EAE3D2] flex justify-between items-center text-xs text-[#6B513E] font-medium">
-                            <span>Official Portal: nhb.gov.in</span>
-                            <span class="font-bold text-[#A0522D]">PDF Guidelines (2025-26)</span>
-                        </div>
-                    </div>
 
-                    <!-- News Card 2 -->
-                    <div class="bg-[#FAF8F5] border border-[#EAE3D2] rounded-xl overflow-hidden hover:shadow-md transition-shadow flex flex-col justify-between">
-                        <div class="p-5 space-y-3">
-                            <div class="flex items-center justify-between text-xs text-[#8C7A6D]">
-                                <span class="bg-[#EFE9DF] text-[#6B513E] px-2.5 py-0.5 rounded font-bold">National Conference</span>
-                                <span>28–29 May 2026</span>
+                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-[#D4AF37] flex items-center justify-center text-lg shadow-sm">
+                                <i class="fa-solid fa-hand-holding-dollar"></i>
                             </div>
-                            <h3 class="text-base font-bold text-[#3D312A] leading-snug">
-                                National Conference on Agriculture for Kharif Campaign 2026
-                            </h3>
-                            <p class="text-xs text-[#6B574B] leading-relaxed">
-                                Inaugurated by Union Minister Shri Shivraj Singh Chouhan at NASC Complex, New Delhi. Key focus on climate-resilient agriculture, digital farming, and self-reliance in pulses and oilseeds.
-                            </p>
+                            <h4 class="text-sm font-bold text-[#F4EBE1]">APCI Credit Underwriting</h4>
+                            <p class="text-xs text-[#C2D0C5]">Computes dynamic credit scores using satellite NDVI history and soil health cards for institutional loans.</p>
                         </div>
-                        <div class="bg-[#EAE3D2]/50 px-5 py-3 border-t border-[#EAE3D2] flex justify-between items-center text-xs text-[#6B513E] font-medium">
-                            <span>PIB Delhi Release</span>
-                            <span class="font-bold text-[#8A9A86]">Khet Bachao Initiative</span>
+
+                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-green-400 flex items-center justify-center text-lg shadow-sm">
+                                <i class="fa-solid fa-building-columns"></i>
+                            </div>
+                            <h4 class="text-sm font-bold text-[#F4EBE1]">Direct Bank Portal Redirection</h4>
+                            <p class="text-xs text-[#C2D0C5]">Integrates partner bank APIs (SBI, NABARD) to route approved credit profiles for one-click disbursement.</p>
                         </div>
-                    </div>
-                </div>
-            </section>
 
-            <!-- 3. LATEST NEWS BULLETINS AND IMPORTANT ANNOUNCEMENTS (नया क्या है) -->
-            <section class="bg-white border border-[#EAE3D2] rounded-2xl p-6 shadow-sm space-y-5">
-                <div class="flex items-center justify-between border-b border-[#EAE3D2] pb-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-3 h-7 bg-[#6B513E] rounded-full"></div>
-                        <h2 class="text-xl font-extrabold text-[#3D312A] tracking-tight">
-                            नया क्या है <span class="text-xs font-semibold text-[#8C7A6D] ml-2">(Latest Bulletins & Government Announcements)</span>
-                        </h2>
-                    </div>
-                    <a href="javascript:void(0)" class="text-xs font-bold bg-[#6B513E] text-white px-3 py-1.5 rounded-lg hover:bg-[#523E2F] transition-colors flex items-center space-x-1">
-                        <span>और देखें</span>
-                        <i class="fa-solid fa-angles-right text-[10px]"></i>
-                    </a>
-                </div>
-
-                <div class="space-y-3">
-                    <div class="news-bulletin-item bg-[#FAF8F5] border border-[#EAE3D2] p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
-                        <div class="flex items-start space-x-3">
-                            <span class="text-[#A0522D] font-black text-base mt-0.5">❯</span>
-                            <p class="text-xs md:text-sm font-medium text-[#3D312A]">
-                                DAFW का विस्तार निदेशालय (Directorate of Extension) में संयुक्त निदेशक (फार्म सूचना), संयुक्त निदेशक (विस्तार) और संयुक्त निदेशक (महिला कार्यक्रम) के पदों के लिए ड्राफ्ट RR (भर्ती नियमों) पर टिप्पणियाँ आमंत्रण।
-                            </p>
+                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-amber-400 flex items-center justify-center text-lg shadow-sm">
+                                <i class="fa-solid fa-shield-heart"></i>
+                            </div>
+                            <h4 class="text-sm font-bold text-[#F4EBE1]">Automated Disaster Relief Triggers</h4>
+                            <p class="text-xs text-[#C2D0C5]">Monitors real-time weather feeds and executes SQL triggers to file insurance claims during extreme weather.</p>
                         </div>
-                        <span class="bg-[#A0522D] text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase self-start md:self-center shrink-0">NEW</span>
-                    </div>
 
-                    <div class="news-bulletin-item bg-[#FAF8F5] border border-[#EAE3D2] p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
-                        <div class="flex items-start space-x-3">
-                            <span class="text-[#A0522D] font-black text-base mt-0.5">❯</span>
-                            <p class="text-xs md:text-sm font-medium text-[#3D312A]">
-                                कृषि और किसान कल्याण विभाग के अंतर्गत विपणन और निरीक्षण निदेशालय में स्टेनोग्राफर ग्रेड-I (सब-ऑफिस कैडर) के पद के लिए संशोधित भर्ती नियमों के मसौदे पर सभी संबंधित पक्षों से टिप्पणियां।
-                            </p>
+                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-purple-400 flex items-center justify-center text-lg shadow-sm">
+                                <i class="fa-solid fa-barcode"></i>
+                            </div>
+                            <h4 class="text-sm font-bold text-[#F4EBE1]">Crop Traceability Ledger</h4>
+                            <p class="text-xs text-[#C2D0C5]">Generates server-side QR codes linking consumers directly to verified farm harvest batches and soil health records.</p>
                         </div>
-                        <span class="bg-[#A0522D] text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase self-start md:self-center shrink-0">NEW</span>
-                    </div>
 
-                    <div class="news-bulletin-item bg-[#FAF8F5] border border-[#EAE3D2] p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
-                        <div class="flex items-start space-x-3">
-                            <span class="text-[#A0522D] font-black text-base mt-0.5">❯</span>
-                            <p class="text-xs md:text-sm font-medium text-[#3D312A]">
-                                DAFW के लिए क्लाउड सर्विसेज उपलब्ध कराने और उसके एप्लीकेशन/वेबसाइट को होस्ट करने हेतु मैनेज्ड सर्विस प्रोवाइडर (MSP) के चयन के लिए एक्सप्रेशन ऑफ़ इंटरेस्ट (EoI)。
-                            </p>
+                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-teal-400 flex items-center justify-center text-lg shadow-sm">
+                                <i class="fa-solid fa-camera"></i>
+                            </div>
+                            <h4 class="text-sm font-bold text-[#F4EBE1]">AI Pest & Disease Diagnostic</h4>
+                            <p class="text-xs text-[#C2D0C5]">Allows uploading leaf photos directly to Gemini Vision models for instant pathology detection and remedies.</p>
                         </div>
-                    </div>
 
-                    <div class="news-bulletin-item bg-[#FAF8F5] border border-[#EAE3D2] p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
-                        <div class="flex items-start space-x-3">
-                            <span class="text-[#A0522D] font-black text-base mt-0.5">❯</span>
-                            <p class="text-xs md:text-sm font-medium text-[#3D312A]">
-                                खरीफ अभियान 2026 के लिए राष्ट्रीय कृषि सम्मेलन - नेशनल कांफ्रेंस की विस्तृत रिपोर्ट व गाइडलाइंस जारी।
-                            </p>
+                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-orange-400 flex items-center justify-center text-lg shadow-sm">
+                                <i class="fa-solid fa-file-contract"></i>
+                            </div>
+                            <h4 class="text-sm font-bold text-[#F4EBE1]">Smart Government Scheme Matcher</h4>
+                            <p class="text-xs text-[#C2D0C5]">Catalogs and recommends central and state agricultural subsidies based on farm profile parameters.</p>
+                        </div>
+
+                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-red-400 flex items-center justify-center text-lg shadow-sm">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <h4 class="text-sm font-bold text-[#F4EBE1]">Multi-Market Price Arbitrage Finder</h4>
+                            <p class="text-xs text-[#C2D0C5]">Compares wholesale prices across mandis within a 50 km radius to highlight profitable market locations.</p>
+                        </div>
+
+                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl p-5 space-y-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#0D2318] text-indigo-400 flex items-center justify-center text-lg shadow-sm">
+                                <i class="fa-solid fa-satellite"></i>
+                            </div>
+                            <h4 class="text-sm font-bold text-[#F4EBE1]">Satellite Vegetation & Moisture Overlay</h4>
+                            <p class="text-xs text-[#C2D0C5]">Uses Open-Meteo and Copernicus open APIs to provide root-zone soil moisture estimates.</p>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
+                <!-- 2. LATEST NEWS RELATED TO AGRICULTURE SECTOR (कृषि समाचार) -->
+                <section class="bg-[#122E21]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-2xl space-y-6">
+                    <div class="flex items-center justify-between border-b border-[#D4AF37]/20 pb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-7 bg-[#D4AF37] rounded-full"></div>
+                            <h2 class="text-xl font-extrabold text-[#F4EBE1] tracking-tight">
+                                कृषि समाचार <span class="text-xs font-semibold text-[#D4AF37] ml-2">(Agriculture News & Policy Articles)</span>
+                            </h2>
+                        </div>
+                        <a href="javascript:void(0)" class="text-xs font-bold bg-[#1B3022] text-[#F4EBE1] border border-[#D4AF37]/40 px-3 py-1.5 rounded-lg hover:bg-[#D4AF37] hover:text-[#0D2318] transition-colors flex items-center space-x-1">
+                            <span>और देखें</span>
+                            <i class="fa-solid fa-angles-right text-[10px]"></i>
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- News Card 1 -->
+                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between">
+                            <div class="p-5 space-y-3">
+                                <div class="flex items-center justify-between text-xs text-[#C2D0C5]">
+                                    <span class="bg-[#0D2318] text-[#D4AF37] px-2.5 py-0.5 rounded font-bold border border-[#D4AF37]/30">DAFW Scheme</span>
+                                    <span>Updated May 2026</span>
+                                </div>
+                                <h3 class="text-base font-bold text-[#F4EBE1] leading-snug">
+                                    Clean Plant Programme under Mission for Integrated Development of Horticulture (MIDH)
+                                </h3>
+                                <p class="text-xs text-[#C2D0C5] leading-relaxed">
+                                    Under MIDH, the Ministry of Agriculture grants 40% to 90% subsidies for fruit nurseries, tissue culture, greenhouse polyhouses, and cold-chain infrastructure across Indian states.
+                                </p>
+                            </div>
+                            <div class="bg-[#0D2318] px-5 py-3 border-t border-[#D4AF37]/20 flex justify-between items-center text-xs text-[#D4AF37] font-medium">
+                                <span>Official Portal: nhb.gov.in</span>
+                                <span class="font-bold">PDF Guidelines (2025-26)</span>
+                            </div>
+                        </div>
+
+                        <!-- News Card 2 -->
+                        <div class="bg-[#1B3022] border border-[#D4AF37]/20 rounded-xl overflow-hidden hover:shadow-lg transition-shadow flex flex-col justify-between">
+                            <div class="p-5 space-y-3">
+                                <div class="flex items-center justify-between text-xs text-[#C2D0C5]">
+                                    <span class="bg-[#0D2318] text-[#D4AF37] px-2.5 py-0.5 rounded font-bold border border-[#D4AF37]/30">National Conference</span>
+                                    <span>28–29 May 2026</span>
+                                </div>
+                                <h3 class="text-base font-bold text-[#F4EBE1] leading-snug">
+                                    National Conference on Agriculture for Kharif Campaign 2026
+                                </h3>
+                                <p class="text-xs text-[#C2D0C5] leading-relaxed">
+                                    Inaugurated by Union Minister Shri Shivraj Singh Chouhan at NASC Complex, New Delhi. Key focus on climate-resilient agriculture, digital farming, and self-reliance in pulses and oilseeds.
+                                </p>
+                            </div>
+                            <div class="bg-[#0D2318] px-5 py-3 border-t border-[#D4AF37]/20 flex justify-between items-center text-xs text-[#D4AF37] font-medium">
+                                <span>PIB Delhi Release</span>
+                                <span class="font-bold">Khet Bachao Initiative</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. LATEST NEWS BULLETINS AND IMPORTANT ANNOUNCEMENTS (नया क्या है) -->
+                <section class="bg-[#122E21]/95 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl p-6 shadow-2xl space-y-5">
+                    <div class="flex items-center justify-between border-b border-[#D4AF37]/20 pb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-7 bg-[#D4AF37] rounded-full"></div>
+                            <h2 class="text-xl font-extrabold text-[#F4EBE1] tracking-tight">
+                                नया क्या है <span class="text-xs font-semibold text-[#D4AF37] ml-2">(Latest Bulletins & Government Announcements)</span>
+                            </h2>
+                        </div>
+                        <a href="javascript:void(0)" class="text-xs font-bold bg-[#1B3022] text-[#F4EBE1] border border-[#D4AF37]/40 px-3 py-1.5 rounded-lg hover:bg-[#D4AF37] hover:text-[#0D2318] transition-colors flex items-center space-x-1">
+                            <span>और देखें</span>
+                            <i class="fa-solid fa-angles-right text-[10px]"></i>
+                        </a>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="news-bulletin-item bg-[#1B3022] border border-[#D4AF37]/20 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
+                            <div class="flex items-start space-x-3">
+                                <span class="text-[#D4AF37] font-black text-base mt-0.5">❯</span>
+                                <p class="text-xs md:text-sm font-medium text-[#F4EBE1]">
+                                    DAFW का विस्तार निदेशालय (Directorate of Extension) में संयुक्त निदेशक (फार्म सूचना), संयुक्त निदेशक (विस्तार) और संयुक्त निदेशक (महिला कार्यक्रम) के पदों के लिए ड्राफ्ट RR (भर्ती नियमों) पर टिप्पणियाँ आमंत्रण।
+                                </p>
+                            </div>
+                            <span class="bg-[#D4AF37] text-[#0D2318] text-[10px] font-bold px-2 py-0.5 rounded uppercase self-start md:self-center shrink-0">NEW</span>
+                        </div>
+
+                        <div class="news-bulletin-item bg-[#1B3022] border border-[#D4AF37]/20 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
+                            <div class="flex items-start space-x-3">
+                                <span class="text-[#D4AF37] font-black text-base mt-0.5">❯</span>
+                                <p class="text-xs md:text-sm font-medium text-[#F4EBE1]">
+                                    कृषि और किसान कल्याण विभाग के अंतर्गत विपणन और निरीक्षण निदेशालय में स्टेनोग्राफर ग्रेड-I (सब-ऑफिस कैडर) के पद के लिए संशोधित भर्ती नियमों के मसौदे पर सभी संबंधित पक्षों से टिप्पणियां।
+                                </p>
+                            </div>
+                            <span class="bg-[#D4AF37] text-[#0D2318] text-[10px] font-bold px-2 py-0.5 rounded uppercase self-start md:self-center shrink-0">NEW</span>
+                        </div>
+
+                        <div class="news-bulletin-item bg-[#1B3022] border border-[#D4AF37]/20 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
+                            <div class="flex items-start space-x-3">
+                                <span class="text-[#D4AF37] font-black text-base mt-0.5">❯</span>
+                                <p class="text-xs md:text-sm font-medium text-[#F4EBE1]">
+                                    DAFW के लिए क्लाउड सर्विसेज उपलब्ध कराने और उसके एप्लीकेशन/वेबसाइट को होस्ट करने हेतु मैनेज्ड सर्विस प्रोवाइडर (MSP) के चयन के लिए एक्सप्रेशन ऑफ़ इंटरेस्ट (EoI)।
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="news-bulletin-item bg-[#1B3022] border border-[#D4AF37]/20 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer">
+                            <div class="flex items-start space-x-3">
+                                <span class="text-[#D4AF37] font-black text-base mt-0.5">❯</span>
+                                <p class="text-xs md:text-sm font-medium text-[#F4EBE1]">
+                                    खरीफ अभियान 2026 के लिए राष्ट्रीय कृषि सम्मेलन - नेशनल कांफ्रेंस की विस्तृत रिपोर्ट व गाइडलाइंस जारी।
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-[#3D312A] text-[#B8A79B] text-xs py-6 px-6 border-t border-[#524238] mt-auto">
+    <footer class="bg-[#0A1A12] text-[#D4AF37] text-xs py-6 px-6 border-t border-[#D4AF37]/20 mt-auto">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div>
-                <p class="font-semibold text-[#FAF8F5]">AgriPulse Matrix Intelligence System</p>
-                <p>Ministry of Agriculture & Farmers Welfare Integrated Portal</p>
+                <p class="font-semibold text-[#F4EBE1]">AgriPulse Matrix Intelligence System</p>
+                <p class="text-[#A3C1AD]">Ministry of Agriculture & Farmers Welfare Integrated Portal</p>
             </div>
         </div>
     </footer>
@@ -357,7 +364,7 @@
         function renderUserProfile(user) {
             document.getElementById('google-signin-btn').classList.add('hidden');
             document.getElementById('user-profile-badge').classList.remove('hidden');
-            document.getElementById('user-avatar').src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="%23A0522D"/><text x="20" y="26" font-size="18" text-anchor="middle" fill="white">' + (user.email || '?').charAt(0).toUpperCase() + '</text></svg>';
+            document.getElementById('user-avatar').src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="%23D4AF37"/><text x="20" y="26" font-size="18" text-anchor="middle" fill="%230D2318">' + (user.email || '?').charAt(0).toUpperCase() + '</text></svg>';
             document.getElementById('user-name').textContent = (user.email || '').split('@')[0];
             document.getElementById('user-email').textContent = user.email || '';
         }
