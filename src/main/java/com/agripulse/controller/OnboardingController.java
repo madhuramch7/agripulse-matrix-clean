@@ -55,52 +55,54 @@ public class OnboardingController {
         return ResponseEntity.status(404).body(Map.of("error", "Profile not found"));
     }
 
+    private static String str(Map<String, Object> m, String def, String... keys) {
+        for (String k : keys) {
+            Object v = m.get(k);
+            if (v != null && !v.toString().isBlank()) return v.toString();
+        }
+        return def;
+    }
+
     @PostMapping("/submit")
     public ResponseEntity<?> submitOnboarding(@RequestBody Map<String, Object> request, Principal principal) {
         if (principal == null) {
-            return ResponseEntity.status(401).body(Map.of("error", "Unauthorized"));
+            return ResponseEntity.status(401).body(Map.of("error", "Unauthorized", "message", "Please log in again."));
         }
+        try {
+            Optional<UserAccount> userOpt = userAccountRepository.findByEmail(principal.getName());
+            if (userOpt.isEmpty()) {
+                return ResponseEntity.status(404).body(Map.of("error", "User not found", "message", "User not found"));
+            }
+            UserAccount user = userOpt.get();
 
-        Optional<UserAccount> userOpt = userAccountRepository.findByEmail(principal.getName());
-        if (userOpt.isEmpty()) {
-            return ResponseEntity.status(404).body(Map.of("error", "User not found"));
+            FarmerProfile profile = farmerProfileRepository.findByUserId(user.getId()).orElse(new FarmerProfile());
+            profile.setUserId(user.getId());
+            profile.setFullName(str(request, "Farmer", "fullName"));
+            profile.setState(str(request, "Maharashtra", "state"));
+            profile.setDistrict(str(request, "Pune", "district"));
+            profile.setVillage(str(request, "Goverdhan", "village"));
+            profile.setPreferredLanguage(str(request, "hi", "preferredLanguage"));
+            profile.setFarmSize(new BigDecimal(str(request, "20", "farmSize", "areaInAcres")));
+            profile.setSoilType(str(request, "Black (Regur)", "soilType"));
+            profile.setFarmingExperienceYears((int) Double.parseDouble(str(request, "5", "farmingExperienceYears")));
+            profile.setIrrigationSource(str(request, "Borewell / Tubewell", "irrigationSource", "irrigationType"));
+            profile.setPrimarycrops(str(request, "Wheat", "primarycrops", "primaryCrop"));
+            profile.setLoanNeedAmount(new BigDecimal(str(request, "50000", "loanNeedAmount")));
+            profile.setBureauScore(720);
+            if (profile.getMobileHash() == null) profile.setMobileHash("");
+            if (profile.getAadhaarHash() == null) profile.setAadhaarHash("");
+            if (profile.getPanHash() == null) profile.setPanHash("");
+            if (profile.getBankAccountNo() == null) profile.setBankAccountNo("");
+
+            farmerProfileRepository.save(profile);
+
+            user.setOnboardingComplete(true);
+            userAccountRepository.save(user);
+
+            return ResponseEntity.ok(Map.of("message", "Onboarding completed successfully"));
+        } catch (Exception e) {
+            String msg = e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage();
+            return ResponseEntity.status(400).body(Map.of("error", msg, "message", "Onboarding failed: " + msg));
         }
-
-        UserAccount user = userOpt.get();
-
-        FarmerProfile profile = farmerProfileRepository.findByUserId(user.getId()).orElse(new FarmerProfile());
-        profile.setUserId(user.getId());
-        profile.setFullName((String) request.getOrDefault("fullName", "Farmer"));
-        profile.setState((String) request.getOrDefault("state", "Maharashtra"));
-        profile.setDistrict((String) request.getOrDefault("district", "Pune"));
-        profile.setVillage((String) request.getOrDefault("village", "Goverdhan"));
-        profile.setPreferredLanguage((String) request.getOrDefault("preferredLanguage", "hi"));
-        
-        Object farmSizeObj = request.get("farmSize");
-        if (farmSizeObj != null && !farmSizeObj.toString().isBlank()) {
-            profile.setFarmSize(new BigDecimal(farmSizeObj.toString()));
-        } else {
-            profile.setFarmSize(new BigDecimal("20"));
-        }
-
-        profile.setSoilType((String) request.getOrDefault("soilType", "Black (Regur)"));
-
-        Object expObj = request.get("farmingExperienceYears");
-        profile.setFarmingExperienceYears(expObj != null && !expObj.toString().isBlank() ? Integer.parseInt(expObj.toString()) : 5);
-        
-        profile.setIrrigationSource((String) request.getOrDefault("irrigationSource", request.getOrDefault("irrigationType", "Borewell / Tubewell")));
-        profile.setPrimarycrops((String) request.getOrDefault("primarycrops", request.getOrDefault("primaryCrop", "Wheat")));
-        
-        Object loanObj = request.get("loanNeedAmount");
-        profile.setLoanNeedAmount(loanObj != null && !loanObj.toString().isBlank() ? new BigDecimal(loanObj.toString()) : new BigDecimal("50000"));
-        
-        profile.setBureauScore(720);
-
-        farmerProfileRepository.save(profile);
-
-        user.setOnboardingComplete(true);
-        userAccountRepository.save(user);
-
-        return ResponseEntity.ok(Map.of("message", "Onboarding completed successfully"));
     }
 }
